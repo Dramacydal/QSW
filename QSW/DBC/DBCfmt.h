@@ -1,7 +1,11 @@
 #ifndef DBCSFRM_H
 #define DBCSFRM_H
 
+#ifdef V505_16136
+const char* SkillLinefmt = "nissisix";
+#else
 const char* SkillLinefmt = "nissisixx";
+#endif
 const char* SkillLineAbilityfmt = "niiiiiiiiiixx";
 const char* SpellAuraOptionsfmt = "dixiiii";
 const char* SpellAuraRestrictionsfmt = "dixiiiiiiii";

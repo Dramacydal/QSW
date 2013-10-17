@@ -4,6 +4,7 @@
 
 #include <QtCore/QFile>
 #include <QtCore/QStringList>
+#include <QMessageBox>
 
 SpellEffectMap sSpellEffectMap;
 
@@ -60,6 +61,7 @@ inline void LoadDBC(StoreProblemList& errlist, DBCStorage<T>& storage, const QSt
             char buf[100];
             sprintf(buf, " (exist, but have %u fields instead %i) Wrong client version DBC file?", storage.GetFieldCount(), strlen(storage.GetFormat()));
             errlist.push_back(dbc_filename + QString(buf));
+            QMessageBox::warning(NULL, "Error", dbc_filename + QString(buf));
             file.close();
         }
         else

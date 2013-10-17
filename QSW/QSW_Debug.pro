@@ -64,6 +64,7 @@ FORMS += \
 RESOURCES += \
     SpellWork.qrc
 
+DEFINES += V505_16136
 
 
 
