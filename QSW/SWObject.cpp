@@ -1257,18 +1257,26 @@ void SWObject::appendTriggerInfo(SpellEntry const* spellInfo, quint8 index, quin
 void SWObject::appendRadiusInfo(SpellEntry const* spellInfo, quint8 index, quint8 num)
 {
     quint16 rIndex = spellInfo->getEffectRadiusIndex(index);
-    if (rIndex != 0)
-    {
-        SpellRadiusEntry const* spellRadius = sSpellRadiusStore.LookupEntry(rIndex);
-        if (spellRadius)
-        {
-            html.append(QString("<li>Radius (Id %0) %1</li>")
-                .arg(rIndex)
-                .arg(spellRadius->Radius, 0, 'f', 2));
-        }
-        else
-            html.append(QString("<li>Radius (Id %0) Not found</li>").arg(rIndex));
-    }
+    quint16 rIndexMax = spellInfo->getEffectRadiusMaxIndex(index);
+    if (!rIndex && !rIndexMax)
+        return;
+
+    SpellRadiusEntry const* spellRadius = sSpellRadiusStore.LookupEntry(rIndex);
+    SpellRadiusEntry const* spellRadiusMax = sSpellRadiusStore.LookupEntry(rIndexMax);
+
+    QString str = QString("<li>Radius (Id %0) %1 Max: (Id %2) %3</li>");
+    str = str.arg(rIndex);
+    if (spellRadius)
+        str = str.arg(spellRadius->Radius, 0, 'f', 2);
+    else
+        str = str.arg("Not found");
+    str = str.arg(rIndexMax);
+    if (spellRadiusMax)
+        str = str.arg(spellRadiusMax->Radius, 0, 'f', 2);
+    else
+        str = str.arg("Not found");
+
+    html.append(str);
 }
 
 void SWObject::appendAuraInfo(SpellEntry const* spellInfo, quint8 index, quint8 num)
