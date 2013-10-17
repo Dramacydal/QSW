@@ -58,7 +58,7 @@
         <value value="MECHANIC_IMMUNE_SHIELD" key="29" />
         <value value="MECHANIC_SAPPED" key="30" />
         <value value="MECHANIC_ENRAGED" key="31" />
-        <value value="MECHANIC_32" key="32" />
+        <value value="MECHANIC_WOUNDED" key="32" />
     </Mechanic>
     <PreventionType>
         <value value="SPELL_PREVENTION_TYPE_NONE" key="0" />
@@ -101,6 +101,7 @@
         <value value="POWER_SHADOW_ORBS" key="13" />
         <value value="POWER_BURNING_EMBERS" key="14" />
         <value value="POWER_DEMONIC_FURY" key="15" />
+        <value value="POWER_UNKNOWN" key="16" />
         <value value="POWER_HEALTH" key="-2" />
     </Power>
     <SpellMod>
@@ -133,6 +134,10 @@
         <value value="SPELLMOD_FREQUENCY_OF_SUCCESS" key="26" />
         <value value="SPELLMOD_MULTIPLE_VALUE" key="27" />
         <value value="SPELLMOD_RESIST_DISPEL_CHANCE" key="28" />
+        <value value="SPELLMOD_CRIT_DAMAGE_BONUS_2" key="29" />
+        <value value="SPELLMOD_SPELL_COST_REFUND_ON_FAIL" key="30" />
+        <value value="SPELLMOD_STACKAMOUNT" key="31" />
+        <value value="SPELLMOD_EFFECT4" key="32" />
     </SpellMod>
     <UnitMod>
         <value value="UNIT_MOD_STAT_STRENGTH" key="0" />
@@ -148,18 +153,22 @@
         <value value="UNIT_MOD_HAPPINESS" key="10" />
         <value value="UNIT_MOD_RUNE" key="11" />
         <value value="UNIT_MOD_RUNIC_POWER" key="12" />
-        <value value="UNIT_MOD_ARMOR" key="13" />
-        <value value="UNIT_MOD_RESISTANCE_HOLY" key="14" />
-        <value value="UNIT_MOD_RESISTANCE_FIRE" key="15" />
-        <value value="UNIT_MOD_RESISTANCE_NATURE" key="16" />
-        <value value="UNIT_MOD_RESISTANCE_FROST" key="17" />
-        <value value="UNIT_MOD_RESISTANCE_SHADOW" key="18" />
-        <value value="UNIT_MOD_RESISTANCE_ARCANE" key="19" />
-        <value value="UNIT_MOD_ATTACK_POWER" key="20" />
-        <value value="UNIT_MOD_ATTACK_POWER_RANGED" key="21" />
-        <value value="UNIT_MOD_DAMAGE_MAINHAND" key="22" />
-        <value value="UNIT_MOD_DAMAGE_OFFHAND" key="23" />
-        <value value="UNIT_MOD_DAMAGE_RANGED" key="24" />
+        <value value="UNIT_MOD_SOUL_SHARDS" key="13" />
+        <value value="UNIT_MOD_ECLIPSE" key="14" />
+        <value value="UNIT_MOD_HOLY_POWER" key="15" />
+        <value value="UNIT_MOD_ALTERNATIVE" key="16" />
+        <value value="UNIT_MOD_ARMOR" key="17" />
+        <value value="UNIT_MOD_RESISTANCE_HOLY" key="18" />
+        <value value="UNIT_MOD_RESISTANCE_FIRE" key="19" />
+        <value value="UNIT_MOD_RESISTANCE_NATURE" key="20" />
+        <value value="UNIT_MOD_RESISTANCE_FROST" key="21" />
+        <value value="UNIT_MOD_RESISTANCE_SHADOW" key="22" />
+        <value value="UNIT_MOD_RESISTANCE_ARCANE" key="23" />
+        <value value="UNIT_MOD_ATTACK_POWER" key="24" />
+        <value value="UNIT_MOD_ATTACK_POWER_RANGED" key="25" />
+        <value value="UNIT_MOD_DAMAGE_MAINHAND" key="26" />
+        <value value="UNIT_MOD_DAMAGE_OFFHAND" key="27" />
+        <value value="UNIT_MOD_DAMAGE_RANGED" key="28" />
     </UnitMod>
     <AuraState>
         <value value="AURA_STATE_NONE" key="0" />
@@ -199,6 +208,7 @@
         <value value="DISPEL_SPE_NPC_ONLY" key="8" />
         <value value="DISPEL_ENRAGE" key="9" />
         <value value="DISPEL_ZG_TICKET" key="10" />
+        <value value="DESPEL_OLD_UNUSED" key="10" />
     </DispelType>
     <ItemClass>
         <value value="CONSUMABLE" key="0" />
@@ -865,11 +875,11 @@
         <value value="FORM_BATTLESTANCE" key="0x00010000" />
         <value value="FORM_DEFENSIVESTANCE" key="0x00020000" />
         <value value="FORM_BERSERKERSTANCE" key="0x00040000" />
-        <value value="FORM_TEST" key="0x00080000" />
+        <value value="FORM_WISE_SERPENT" key="0x00080000" />
         <value value="FORM_ZOMBIE" key="0x00100000" />
         <value value="FORM_METAMORPHOSIS" key="0x00200000" />
-        <value value="FORM_UNK1" key="0x00400000" />
-        <value value="FORM_UNK2" key="0x00800000" />
+        <value value="FORM_STURDY_OX" key="0x00400000" />
+        <value value="FORM_FIERCE_TIGER" key="0x00800000" />
         <value value="FORM_UNDEAD" key="0x01000000" />
         <value value="FORM_FRENZY" key="0x02000000" />
         <value value="FORM_FLIGHT_EPIC" key="0x04000000" />
@@ -894,29 +904,31 @@
         <value value="TOTEM_CREATURE" key="0x0400" />
         <value value="NON_COMBAT_PET" key="0x0800" />
         <value value="GAS_CLOUD" key="0x1000" />
+        <value value="WILD_PET" key="0x2000" />
     </CreatureType>
     <TargetFlag>
-        <value value="TARGET_FLAG_SELF" key="0x00000" />
+        <value value="TARGET_FLAG_NONE" key="0x00000" />
         <value value="TARGET_FLAG_UNUSED1" key="0x00001" />
         <value value="TARGET_FLAG_UNIT" key="0x00002" />
-        <value value="TARGET_FLAG_UNUSED2" key="0x00004" />
-        <value value="TARGET_FLAG_UNUSED3" key="0x00008" />
+        <value value="TARGET_FLAG_UNIT_RAID" key="0x00004" />
+        <value value="TARGET_FLAG_UNIT_PARTY" key="0x00008" />
         <value value="TARGET_FLAG_ITEM" key="0x00010" />
         <value value="TARGET_FLAG_SOURCE_LOCATION" key="0x00020" />
         <value value="TARGET_FLAG_DEST_LOCATION" key="0x00040" />
-        <value value="TARGET_FLAG_OBJECT_UNK" key="0x00080" />
-        <value value="TARGET_FLAG_UNIT_UNK" key="0x00100" />
-        <value value="TARGET_FLAG_PVP_CORPSE" key="0x00200" />
-        <value value="TARGET_FLAG_UNIT_CORPSE" key="0x00400" />
-        <value value="TARGET_FLAG_OBJECT" key="0x00800" />
+        <value value="TARGET_FLAG_UNIT_ENEMY" key="0x00080" />
+        <value value="TARGET_FLAG_UNIT_ALLY" key="0x00100" />
+        <value value="TARGET_FLAG_CORPSE_ENEMY" key="0x00200" />
+        <value value="TARGET_FLAG_UNIT_DEAD" key="0x00400" />
+        <value value="TARGET_FLAG_GAMEOBJECT" key="0x00800" />
         <value value="TARGET_FLAG_TRADE_ITEM" key="0x01000" />
         <value value="TARGET_FLAG_STRING" key="0x02000" />
-        <value value="TARGET_FLAG_UNK1" key="0x04000" />
-        <value value="TARGET_FLAG_CORPSE" key="0x08000" />
-        <value value="TARGET_FLAG_UNK2" key="0x10000" />
-        <value value="TARGET_FLAG_GLYPH" key="0x20000" />
-        <value value="TARGET_FLAG_UNK3" key="0x40000" />
-        <value value="TARGET_FLAG_UNK4" key="0x80000" />
+        <value value="TARGET_FLAG_GAMEOBJECT_ITEM" key="0x04000" />
+        <value value="TARGET_FLAG_CORPSE_ALLY" key="0x08000" />
+        <value value="TARGET_FLAG_UNIT_MINIPET" key="0x10000" />
+        <value value="TARGET_FLAG_GLYPH_SLOT" key="0x20000" />
+        <value value="TARGET_FLAG_DEST_TARGET" key="0x40000" />
+        <value value="TARGET_FLAG_EXTRA_TARGETS" key="0x80000" />
+        <value value="TARGET_FLAG_UNIT_PASSENGER" key="0x100000" />
     </TargetFlag>
     <SpellEffect>
         <value value="SPELL_EFFECT_NONE" key="0" />
@@ -1536,6 +1548,12 @@
         <value value="SPELL_AURA_410" key="410" />
         <value value="SPELL_AURA_411" key="411" />
         <value value="SPELL_AURA_412" key="412" />
+        <value value="SPELL_AURA_413" key="413" />
+        <value value="SPELL_AURA_414" key="414" />
+        <value value="SPELL_AURA_415" key="415" />
+        <value value="SPELL_AURA_416" key="416" />
+        <value value="SPELL_AURA_417" key="417" />
+        <value value="SPELL_AURA_418" key="418" />
     </SpellAura>
     <CombatRating>
         <value value="CR_WEAPON_SKILL" key="0x000000" />
@@ -1563,5 +1581,7 @@
         <value value="CR_WEAPON_SKILL_RANGED" key="0x200000" />
         <value value="CR_EXPERTISE" key="0x400000" />
         <value value="CR_ARMOR_PENETRATION" key="0x800000" />
+        <value value="CR_MASTERY" key="0x1000000" />
+        <value value="CR_PVP_POWER" key="0x2000000" />
     </CombatRating>
 </Enums>
