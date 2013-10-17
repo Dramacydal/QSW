@@ -1057,7 +1057,7 @@ void SWObject::appendSpellEffectInfo(SpellEntry const* spellInfo, quint8 num)
     quint8 effectsCount = getEffectsCount(spellInfo->Id);
     for (quint8 eff = 0; eff < effectsCount; ++eff)
     {
-        if (!spellInfo->getEffect(eff))
+        if (!spellInfo->getSpellEffect(eff))
         {
             html.append(QString("<div class='b-effect_name'>Effect %0:</div>"
                                 "<ul>"
