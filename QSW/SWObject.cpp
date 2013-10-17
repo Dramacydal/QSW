@@ -1714,19 +1714,24 @@ void SWObject::appendSkillInfo(SpellEntry const* spellInfo, quint8 num)
         SkillLineAbilityEntry const* skillInfo = sSkillLineAbilityStore.LookupEntry(i);
         if (skillInfo && skillInfo->SpellId == spellInfo->Id)
         {
-            SkillLineEntry const* skill = sSkillLineStore.LookupEntry(skillInfo->SkillId);
-            html.append(QString("<li>Skill (Id %0) \"%1\"</li>"
-                                "<ul><li>ReqSkillValue = %2</li>"
-                                "<li>Forward Spell = %3</li>"
-                                "<li>MinMaxValue (%4, %5)</li>"
-                                "<li>CharacterPoints = %6</li></ul>")
-                .arg(skill->Id)
-                .arg(QString::fromUtf8(skill->Name))
-                .arg(skillInfo->ReqSkillValue)
-                .arg(skillInfo->ForwardSpellId)
-                .arg(skillInfo->MinValue)
-                .arg(skillInfo->MaxValue)
-                .arg(skillInfo->CharPoints));
+            if (SkillLineEntry const* skill = sSkillLineStore.LookupEntry(skillInfo->SkillId))
+            {
+                html.append(QString("<li>Skill (Id %0) \"%1\"</li>"
+                                    "<ul><li>ReqSkillValue = %2</li>"
+                                    "<li>Forward Spell = %3</li>"
+                                    "<li>MinMaxValue (%4, %5)</li>"
+                                    "<li>CharacterPoints = %6</li></ul>")
+                    .arg(skill->Id)
+                    .arg(QString::fromUtf8(skill->Name))
+                    .arg(skillInfo->ReqSkillValue)
+                    .arg(skillInfo->ForwardSpellId)
+                    .arg(skillInfo->MinValue)
+                    .arg(skillInfo->MaxValue)
+                    .arg(skillInfo->CharPoints));
+            }
+            else
+                html.append(QString("<li>Skill (Id %0) (not found)</li>")
+                    .arg(skillInfo->SkillId));
             break;
         }
     }

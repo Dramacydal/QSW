@@ -152,10 +152,10 @@ struct SpellEffect
     SpellEffect()
     {
         count = 0;
-        for (quint8 i = 0; i < 21; ++i)
+        for (quint8 i = 0; i < MAX_EFFECT_INDEX; ++i)
             effects[i] = NULL;
     }
-    SpellEffectEntry const* effects[21];
+    SpellEffectEntry const* effects[MAX_EFFECT_INDEX];
     quint8 count;
 };
 
@@ -219,6 +219,7 @@ struct SpellReagentsEntry
     // quint32 Unk19                                         // 19
 };
 
+// FIXME: structure is not updated
 struct SpellScalingEntry
 {
     // quint32    Id;                                        // 0        m_ID
@@ -226,9 +227,9 @@ struct SpellScalingEntry
     quint32    CastTimeMax;                                  // 2
     quint32    CastScalingMaxLevel;                          // 3
     quint32    PlayerClass;                                  // 4        (index * 100) + charLevel => gtSpellScaling.dbc
-    float      Coeff1[MAX_EFFECT_INDEX];                     // 5-7
-    float      Coeff2[MAX_EFFECT_INDEX];                     // 8-10
-    float      Coeff3[MAX_EFFECT_INDEX];                     // 11-13
+    float      Coeff1[3];                                    // 5-7
+    float      Coeff2[3];                                    // 8-10
+    float      Coeff3[3];                                    // 11-13
     float      CoefBase;                                     // 14        some coefficient, mostly 1.0f
     quint32    CoefLevelBase;                                // 15        some level
 };

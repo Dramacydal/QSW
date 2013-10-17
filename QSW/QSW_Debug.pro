@@ -6,7 +6,7 @@
 # Remove it when you are finished editing this file.
 message("You are running qmake on a generated .pro file. This may not work!")
 
-QT += webkitwidgets webkit core gui widgets sql xml
+QT += webkitwidgets webkit core gui script widgets sql xml
 TEMPLATE = app
 TARGET = QSW
 DESTDIR = ../Debug
