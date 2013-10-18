@@ -590,6 +590,7 @@ void SWObject::showInfo(SpellEntry const* spellInfo, quint8 num)
     QString sSpellFamilyFlags0(QString("%0").arg(spellInfo->getSpellFamilyFlags(0), 8, 16, QChar('0')));
     QString sSpellFamilyFlags1(QString("%0").arg(spellInfo->getSpellFamilyFlags(1), 8, 16, QChar('0')));
     QString sSpellFamilyFlags2(QString("%0").arg(spellInfo->getSpellFamilyFlags(2), 8, 16, QChar('0')));
+    QString sSpellFamilyFlags3(QString("%0").arg(spellInfo->getSpellFamilyFlags(3), 8, 16, QChar('0')));
     QString sAttributes(QString("%0").arg(spellInfo->getAttributes(), 8, 16, QChar('0')));
     QString sAttributesEx1(QString("%0").arg(spellInfo->getAttributesEx1(), 8, 16, QChar('0')));
     QString sAttributesEx2(QString("%0").arg(spellInfo->getAttributesEx2(), 8, 16, QChar('0')));
@@ -679,11 +680,16 @@ void SWObject::showInfo(SpellEntry const* spellInfo, quint8 num)
         .arg(spellInfo->getSpellVisual(0))
         .arg(spellInfo->getSpellVisual(1)));
 
-    html.append(QString("<li>SpellFamilyName = %0, SpellFamilyFlags = 0x%1 %2 %3</li>")
+    html.append(QString("<li>SpellFamilyName = %0, SpellFamilyFlags = 0x%1 %2 %3 %4 (%5 %6 %7 %8)</li>")
         .arg(m_enums->getSpellFamilies()[spellInfo->getSpellFamilyName()])
+        .arg(sSpellFamilyFlags3.toUpper())
         .arg(sSpellFamilyFlags2.toUpper())
         .arg(sSpellFamilyFlags1.toUpper())
-        .arg(sSpellFamilyFlags0.toUpper()));
+        .arg(sSpellFamilyFlags0.toUpper())
+        .arg(spellInfo->getSpellFamilyFlags(3))
+        .arg(spellInfo->getSpellFamilyFlags(2))
+        .arg(spellInfo->getSpellFamilyFlags(1))
+        .arg(spellInfo->getSpellFamilyFlags(0)));
 
     html.append(QString("<li>SpellSchoolMask = %0 (%1)</li>")
         .arg(spellInfo->getSchoolMask())
@@ -1128,34 +1134,21 @@ void SWObject::appendSpellEffectInfo(SpellEntry const* spellInfo, quint8 num)
                     .arg(m_enums->getMechanics()[spellInfo->getEffectMechanic(eff)]));
             }
 
-            quint32 ClassMask[3];
+            quint32 ClassMask[4];
+            ClassMask[0] = spellInfo->getEffectSpellClassMask(eff, 0);
+            ClassMask[1] = spellInfo->getEffectSpellClassMask(eff, 1);
+            ClassMask[2] = spellInfo->getEffectSpellClassMask(eff, 2);
+            ClassMask[3] = spellInfo->getEffectSpellClassMask(eff, 3);
 
-            switch (eff)
+            if (ClassMask[0] || ClassMask[1] || ClassMask[2] || ClassMask[3])
             {
-                case 0: 
-                    ClassMask[0] = spellInfo->getEffectSpellClassMaskA(0);
-                    ClassMask[1] = spellInfo->getEffectSpellClassMaskA(1);
-                    ClassMask[2] = spellInfo->getEffectSpellClassMaskA(2); 
-                    break;
-                case 1:
-                    ClassMask[0] = spellInfo->getEffectSpellClassMaskB(0);
-                    ClassMask[1] = spellInfo->getEffectSpellClassMaskB(1);
-                    ClassMask[2] = spellInfo->getEffectSpellClassMaskB(2); 
-                    break;
-                case 2:
-                    ClassMask[0] = spellInfo->getEffectSpellClassMaskC(0);
-                    ClassMask[1] = spellInfo->getEffectSpellClassMaskC(1);
-                    ClassMask[2] = spellInfo->getEffectSpellClassMaskC(2); 
-                    break;
-            }
-
-            if (ClassMask[0] || ClassMask[1] || ClassMask[2])
-            {
+                QString sClassMask3(QString("%0").arg(ClassMask[3], 8, 16, QChar('0')));
                 QString sClassMask2(QString("%0").arg(ClassMask[2], 8, 16, QChar('0')));
                 QString sClassMask1(QString("%0").arg(ClassMask[1], 8, 16, QChar('0')));
                 QString sClassMask0(QString("%0").arg(ClassMask[0], 8, 16, QChar('0')));
 
-                html.append(QString("<li>SpellClassMask = %0 %1 %2</li>")
+                html.append(QString("<li>SpellClassMask = %0 %1 %2 %3</li>")
+                                .arg(sClassMask3.toUpper())
                                 .arg(sClassMask2.toUpper())
                                 .arg(sClassMask1.toUpper())
                                 .arg(sClassMask0.toUpper()));
@@ -1170,7 +1163,8 @@ void SWObject::appendSpellEffectInfo(SpellEntry const* spellInfo, quint8 num)
                         if ((t_spellInfo->getSpellFamilyName() == spellInfo->getSpellFamilyName()) &&
                             ((t_spellInfo->getSpellFamilyFlags(0) & ClassMask[0]) ||
                              (t_spellInfo->getSpellFamilyFlags(1) & ClassMask[1]) ||
-                             (t_spellInfo->getSpellFamilyFlags(2) & ClassMask[2])))
+                             (t_spellInfo->getSpellFamilyFlags(2) & ClassMask[2]) ||
+                             (t_spellInfo->getSpellFamilyFlags(3) & ClassMask[3])))
                         {
                             QString sName(QString::fromUtf8(t_spellInfo->SpellName));
                             QString sRank(QString::fromUtf8(t_spellInfo->Rank));

@@ -100,8 +100,7 @@ struct SpellClassOptionsEntry
 {
     // quint32    Id;                                        // 0        m_ID
     quint32    ModalNextSpell;                               // 1        m_modalNextSpell not used
-    quint32    SpellFamilyFlags[3];                          // 2-4      m_spellClassMask NOTE: size is 12 bytes!!!
-    // quint32 Unk5                                          // 5
+    quint32    SpellFamilyFlags[4];                          // 2-5      m_spellClassMask NOTE: size is 16 bytes!!!
     quint32    SpellFamilyName;                              // 6        m_spellClassSet
 };
 
@@ -136,8 +135,7 @@ struct SpellEffectEntry
     quint32    EffectRadiusIndex;                            // 16       m_effectRadiusIndex - spellradius.dbc
     quint32    EffectRadiusMaxIndex;                         // 17       4.0.0
     float      EffectRealPointsPerLevel;                     // 18       m_effectRealPointsPerLevel
-    quint32    EffectSpellClassMask[3];                      // 19-21       m_effectSpellClassMask, effect 0
-    // quint32    Unk22                                      // 22
+    quint32    EffectSpellClassMask[4];                      // 19-22    m_effectSpellClassMask
     quint32    EffectTriggerSpell;                           // 23       m_effectTriggerSpell
     // quint32    Unk24                                      // 24
     quint32    EffectImplicitTargetA;                        // 25       m_implicitTargetA
@@ -472,9 +470,7 @@ struct SpellEntry
     quint32 getEffectImplicitTargetB(quint8 index) const;                        // 21       m_implicitTargetB
     quint32 getEffectSpellId(quint8 index) const;                                // 22       new 4.0.0
     quint32 getEffectIndex(quint8 index) const;                                  // 23       new 4.0.0
-    quint32 getEffectSpellClassMaskA(quint8 index) const;
-    quint32 getEffectSpellClassMaskB(quint8 index) const;
-    quint32 getEffectSpellClassMaskC(quint8 index) const;
+    quint32 getEffectSpellClassMask(quint8 eff, quint8 index) const;
 
     private:
         SpellEntry(SpellEntry const&);

@@ -108,9 +108,7 @@ class MetaSpell : public QObject
         quint32 StartRecoveryTime() { return m_spellInfo->getStartRecoveryTime(); }
         quint32 MaxTargetLevel() { return m_spellInfo->getMaxTargetLevel(); }
         quint32 SpellFamilyName() { return m_spellInfo->getSpellFamilyName(); }
-        quint32 EffectSpellClassMaskA(quint8 index) { return m_spellInfo->getEffectSpellClassMaskA(index); }
-        quint32 EffectSpellClassMaskB(quint8 index) { return m_spellInfo->getEffectSpellClassMaskB(index); }
-        quint32 EffectSpellClassMaskC(quint8 index) { return m_spellInfo->getEffectSpellClassMaskC(index); }
+        quint32 EffectSpellClassMask(quint8 eff, quint8 index) { return m_spellInfo->getEffectSpellClassMask(eff, index); }
         quint32 SpellFamilyFlags(quint8 index) { return m_spellInfo->getSpellFamilyFlags(index); }
         quint32 MaxAffectedTargets() { return m_spellInfo->getMaxAffectedTargets(); }
         quint32 DamageClass() { return m_spellInfo->getDamageClass(); }

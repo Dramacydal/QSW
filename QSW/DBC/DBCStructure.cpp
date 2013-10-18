@@ -580,24 +580,11 @@ float SpellEntry::getMaxTargetRadius() const
     SpellEffect methods
  */
 
-quint32 SpellEntry::getEffectSpellClassMaskA(quint8 index) const
+quint32 SpellEntry::getEffectSpellClassMask(quint8 eff, quint8 index) const
 {
-    SpellEffectEntry const* effect = getSpellEffect(0);
+    SpellEffectEntry const* effect = getSpellEffect(eff);
     return effect ? effect->EffectSpellClassMask[index] : 0;
 }
-
-quint32 SpellEntry::getEffectSpellClassMaskB(quint8 index) const
-{
-    SpellEffectEntry const* effect = getSpellEffect(1);
-    return effect ? effect->EffectSpellClassMask[index] : 0;
-}
-
-quint32 SpellEntry::getEffectSpellClassMaskC(quint8 index) const
-{
-    SpellEffectEntry const* effect = getSpellEffect(2);
-    return effect ? effect->EffectSpellClassMask[index] : 0;
-}
-
 
 quint32 SpellEntry::getEffect(quint8 index) const
 {
@@ -704,7 +691,7 @@ float SpellEntry::getEffectRealPointsPerLevel(quint8 index) const
 const quint32* SpellEntry::getEffectSpellClassMask(quint8 index) const
 {
     SpellEffectEntry const* effect = getSpellEffect(index);
-    quint32 nullClassMask[3] = { 0, 0, 0 };
+    static quint32 nullClassMask[4] = { 0, 0, 0, 0 };
     return effect ? effect->EffectSpellClassMask : nullClassMask;
 }
 
