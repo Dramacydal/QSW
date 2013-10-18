@@ -100,7 +100,7 @@ struct SpellClassOptionsEntry
 {
     // quint32    Id;                                        // 0        m_ID
     quint32    ModalNextSpell;                               // 1        m_modalNextSpell not used
-    quint32    SpellFamilyFlags[4];                          // 2-5      m_spellClassMask NOTE: size is 16 bytes!!!
+    quint32    SpellFamilyFlags[MAX_CLASS_MASK];             // 2-5      m_spellClassMask NOTE: size is 16 bytes!!!
     quint32    SpellFamilyName;                              // 6        m_spellClassSet
 };
 
@@ -135,7 +135,7 @@ struct SpellEffectEntry
     quint32    EffectRadiusIndex;                            // 16       m_effectRadiusIndex - spellradius.dbc
     quint32    EffectRadiusMaxIndex;                         // 17       4.0.0
     float      EffectRealPointsPerLevel;                     // 18       m_effectRealPointsPerLevel
-    quint32    EffectSpellClassMask[4];                      // 19-22    m_effectSpellClassMask
+    quint32    EffectSpellClassMask[MAX_CLASS_MASK];         // 19-22    m_effectSpellClassMask
     quint32    EffectTriggerSpell;                           // 23       m_effectTriggerSpell
     // quint32    Unk24                                      // 24
     quint32    EffectImplicitTargetA;                        // 25       m_implicitTargetA

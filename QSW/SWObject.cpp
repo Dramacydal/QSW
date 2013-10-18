@@ -587,10 +587,9 @@ void SWObject::showInfo(SpellEntry const* spellInfo, quint8 num)
     QString sDescription(QString::fromUtf8(spellInfo->Description));
     QString sRank(QString::fromUtf8(spellInfo->Rank));
     QString sToolTip(QString::fromUtf8(spellInfo->ToolTip));
-    QString sSpellFamilyFlags0(QString("%0").arg(spellInfo->getSpellFamilyFlags(0), 8, 16, QChar('0')));
-    QString sSpellFamilyFlags1(QString("%0").arg(spellInfo->getSpellFamilyFlags(1), 8, 16, QChar('0')));
-    QString sSpellFamilyFlags2(QString("%0").arg(spellInfo->getSpellFamilyFlags(2), 8, 16, QChar('0')));
-    QString sSpellFamilyFlags3(QString("%0").arg(spellInfo->getSpellFamilyFlags(3), 8, 16, QChar('0')));
+    QString sSpellFamilyFlags[MAX_CLASS_MASK];
+    for (auto i = 0; i < MAX_CLASS_MASK; ++i)
+        sSpellFamilyFlags[i] = QString("%0").arg(spellInfo->getSpellFamilyFlags(i), 8, 16, QChar('0'));
     QString sAttributes(QString("%0").arg(spellInfo->getAttributes(), 8, 16, QChar('0')));
     QString sAttributesEx1(QString("%0").arg(spellInfo->getAttributesEx1(), 8, 16, QChar('0')));
     QString sAttributesEx2(QString("%0").arg(spellInfo->getAttributesEx2(), 8, 16, QChar('0')));
@@ -618,7 +617,7 @@ void SWObject::showInfo(SpellEntry const* spellInfo, quint8 num)
 
     html.append(QString("<body>"
                         "<div class='b-tooltip_icon'>"
-	                    "<style>"
+                        "<style>"
                         "div.icon { width: 68px; height: 68px; background: url(http://wow.zamimg.com/images/wow/icons/large/%0.jpg) no-repeat center; }"
                         "div.icon div { background: url(http://wow.zamimg.com/images/Icon/large/border/default.png) no-repeat center;}"
                         "div.icon div div:hover { background: url(http://wow.zamimg.com/images/Icon/large/hilite/default.png) no-repeat center; }"
@@ -682,10 +681,10 @@ void SWObject::showInfo(SpellEntry const* spellInfo, quint8 num)
 
     html.append(QString("<li>SpellFamilyName = %0, SpellFamilyFlags = 0x%1 %2 %3 %4 (%5 %6 %7 %8)</li>")
         .arg(m_enums->getSpellFamilies()[spellInfo->getSpellFamilyName()])
-        .arg(sSpellFamilyFlags3.toUpper())
-        .arg(sSpellFamilyFlags2.toUpper())
-        .arg(sSpellFamilyFlags1.toUpper())
-        .arg(sSpellFamilyFlags0.toUpper())
+        .arg(sSpellFamilyFlags[3].toUpper())
+        .arg(sSpellFamilyFlags[2].toUpper())
+        .arg(sSpellFamilyFlags[1].toUpper())
+        .arg(sSpellFamilyFlags[0].toUpper())
         .arg(spellInfo->getSpellFamilyFlags(3))
         .arg(spellInfo->getSpellFamilyFlags(2))
         .arg(spellInfo->getSpellFamilyFlags(1))
@@ -1023,7 +1022,7 @@ void SWObject::showInfo(SpellEntry const* spellInfo, quint8 num)
     browser->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
 }
 
-void SWObject::appendRangeInfo(SpellEntry const* spellInfo, quint8 num)
+void SWObject::appendRangeInfo(SpellEntry const* spellInfo, quint8 /*num*/)
 {
     SpellRangeEntry const* range = sSpellRangeStore.LookupEntry(spellInfo->getRangeIndex());
     if (range)
@@ -1038,7 +1037,7 @@ void SWObject::appendRangeInfo(SpellEntry const* spellInfo, quint8 num)
     }
 }
 
-void SWObject::appendProcInfo(SpellEntry const* spellInfo, quint8 num)
+void SWObject::appendProcInfo(SpellEntry const* spellInfo, quint8 /*num*/)
 {
     quint8 i = 0;
     quint64 proc = spellInfo->getProcFlags();
@@ -1134,14 +1133,15 @@ void SWObject::appendSpellEffectInfo(SpellEntry const* spellInfo, quint8 num)
                     .arg(m_enums->getMechanics()[spellInfo->getEffectMechanic(eff)]));
             }
 
-            quint32 ClassMask[4];
-            ClassMask[0] = spellInfo->getEffectSpellClassMask(eff, 0);
-            ClassMask[1] = spellInfo->getEffectSpellClassMask(eff, 1);
-            ClassMask[2] = spellInfo->getEffectSpellClassMask(eff, 2);
-            ClassMask[3] = spellInfo->getEffectSpellClassMask(eff, 3);
+            quint32 ClassMask[MAX_CLASS_MASK];
+            for (auto i = 0; i < MAX_CLASS_MASK; ++i)
+                ClassMask[i] = spellInfo->getEffectSpellClassMask(eff, i);
 
-            if (ClassMask[0] || ClassMask[1] || ClassMask[2] || ClassMask[3])
+            for (auto i = 0; i < MAX_CLASS_MASK; ++i)
             {
+                if (!ClassMask[i])
+                    continue;
+
                 QString sClassMask3(QString("%0").arg(ClassMask[3], 8, 16, QChar('0')));
                 QString sClassMask2(QString("%0").arg(ClassMask[2], 8, 16, QChar('0')));
                 QString sClassMask1(QString("%0").arg(ClassMask[1], 8, 16, QChar('0')));
@@ -1195,6 +1195,7 @@ void SWObject::appendSpellEffectInfo(SpellEntry const* spellInfo, quint8 num)
                     }
                 }
                 html.append("</ul>");
+                break;
             }
             html.append("</ul>");
         }
@@ -1248,7 +1249,7 @@ void SWObject::appendTriggerInfo(SpellEntry const* spellInfo, quint8 index, quin
     }
 }
 
-void SWObject::appendRadiusInfo(SpellEntry const* spellInfo, quint8 index, quint8 num)
+void SWObject::appendRadiusInfo(SpellEntry const* spellInfo, quint8 index, quint8 /*num*/)
 {
     quint16 rIndex = spellInfo->getEffectRadiusIndex(index);
     quint16 rIndexMax = spellInfo->getEffectRadiusMaxIndex(index);
@@ -1273,7 +1274,7 @@ void SWObject::appendRadiusInfo(SpellEntry const* spellInfo, quint8 index, quint
     html.append(str);
 }
 
-void SWObject::appendAuraInfo(SpellEntry const* spellInfo, quint8 index, quint8 num)
+void SWObject::appendAuraInfo(SpellEntry const* spellInfo, quint8 index, quint8 /*num*/)
 {
     QString sAura(m_enums->getSpellAuras()[spellInfo->getEffectApplyAuraName(index)]);
     quint32 misc = spellInfo->getEffectMiscValue(index);
@@ -1709,7 +1710,7 @@ QString SWObject::containAttributes(SpellEntry const* spellInfo, AttrType attr, 
     return str;
 }
 
-void SWObject::appendSkillInfo(SpellEntry const* spellInfo, quint8 num)
+void SWObject::appendSkillInfo(SpellEntry const* spellInfo, quint8 /*num*/)
 {
     for (quint32 i = 0; i < sSkillLineAbilityStore.GetNumRows(); ++i)
     {
@@ -1739,7 +1740,7 @@ void SWObject::appendSkillInfo(SpellEntry const* spellInfo, quint8 num)
     }
 }
 
-void SWObject::appendCastTimeInfo(SpellEntry const* spellInfo, quint8 num)
+void SWObject::appendCastTimeInfo(SpellEntry const* spellInfo, quint8 /*num*/)
 {
     SpellCastTimesEntry const* castInfo = sSpellCastTimesStore.LookupEntry(spellInfo->getCastingTimeIndex());
     if (castInfo)
@@ -1750,7 +1751,7 @@ void SWObject::appendCastTimeInfo(SpellEntry const* spellInfo, quint8 num)
     }
 }
 
-void SWObject::appendDurationInfo(SpellEntry const* spellInfo, quint8 num)
+void SWObject::appendDurationInfo(SpellEntry const* spellInfo, quint8 /*num*/)
 {
     SpellDurationEntry const* durationInfo = sSpellDurationStore.LookupEntry(spellInfo->getDurationIndex());
     if (durationInfo)

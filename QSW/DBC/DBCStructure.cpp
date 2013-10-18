@@ -691,7 +691,8 @@ float SpellEntry::getEffectRealPointsPerLevel(quint8 index) const
 const quint32* SpellEntry::getEffectSpellClassMask(quint8 index) const
 {
     SpellEffectEntry const* effect = getSpellEffect(index);
-    static quint32 nullClassMask[4] = { 0, 0, 0, 0 };
+    static quint32 nullClassMask[MAX_CLASS_MASK];
+    memset(nullClassMask, 0, sizeof(nullClassMask));
     return effect ? effect->EffectSpellClassMask : nullClassMask;
 }
 

@@ -37,7 +37,7 @@ DBCStorage <SpellIconEntry> sSpellIconStore(SpellIconfmt);
 
 typedef QStringList StoreProblemList;
 
-static bool LoadDBC_assert_print(quint32 fsize, quint32 rsize, const QString& filename)
+static bool LoadDBC_assert_print(quint32 /*fsize*/, quint32 /*rsize*/, const QString& /*filename*/)
 {
     // ASSERT must fail after function call
     return false;
@@ -106,7 +106,7 @@ void LoadDBCStores()
         if(SpellEffectEntry const *spellEffect = sSpellEffectStore.LookupEntry(i))
         {
             sSpellEffectMap[spellEffect->EffectSpellId].effects[spellEffect->EffectIndex] = spellEffect;
-            sSpellEffectMap[spellEffect->EffectSpellId].count++;
+            ++sSpellEffectMap[spellEffect->EffectSpellId].count;
         }
     }
 }

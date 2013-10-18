@@ -15,6 +15,7 @@ extern QString ProcFlagDesc[];
 #define MAX_SPELL_REAGENTS 8
 #define MAX_SPELL_TOTEMS 2
 #define MAX_SPELL_TOTEM_CATEGORIES 2
+#define MAX_CLASS_MASK 4
 
 #define arrayLength(a, b) sizeof(a) / sizeof(b)
 
