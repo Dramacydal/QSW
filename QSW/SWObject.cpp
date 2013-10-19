@@ -944,9 +944,12 @@ void SWObject::showInfo(SpellEntry const* spellInfo, quint8 num)
     {
         if(SpellEntry const* spell = sSpellStore.LookupEntry(spellInfo->getCasterAuraSpell()))
         {
-            html.append(QString("<li>Caster Aura Spell (%0) %1</li>")
-                .arg(spellInfo->getCasterAuraSpell())
-                .arg(QString::fromUtf8(spell->SpellName)));
+            QString link = QString("<a href='http://spellwork/%0' class='blue_link'>%0 - %1</a>")
+                .arg(spell->Id)
+                .arg(spell->SpellName);
+
+            html.append(QString("<li>Caster Aura Spell: %0</li>")
+                .arg(link));
         }
         else
             html.append(QString("<li>Caster Aura Spell (%0) ?????</li>").arg(spellInfo->getCasterAuraSpell()));
@@ -956,9 +959,12 @@ void SWObject::showInfo(SpellEntry const* spellInfo, quint8 num)
     {
         if(SpellEntry const* spell = sSpellStore.LookupEntry(spellInfo->getTargetAuraSpell()))
         {
-            html.append(QString("<li>Target Aura Spell (%0) %1</li>")
-                .arg(spellInfo->getTargetAuraSpell())
-                .arg(QString::fromUtf8(spell->SpellName)));
+            QString link = QString("<a href='http://spellwork/%0' class='blue_link'>%0 - %1</a>")
+                .arg(spell->Id)
+                .arg(spell->SpellName);
+
+            html.append(QString("<li>Target Aura Spell: %0</li>")
+                .arg(link));
         }
         else
             html.append(QString("<li>Target Aura Spell (%0) ?????</li>").arg(spellInfo->getTargetAuraSpell()));
@@ -968,9 +974,12 @@ void SWObject::showInfo(SpellEntry const* spellInfo, quint8 num)
     {
         if(SpellEntry const* spell = sSpellStore.LookupEntry(spellInfo->getExcludeCasterAuraSpell()))
         {
-            html.append(QString("<li>Ex Caster Aura Spell (%0) %1</li>")
-                .arg(spellInfo->getExcludeCasterAuraSpell())
-                .arg(QString::fromUtf8(spell->SpellName)));
+            QString link = QString("<a href='http://spellwork/%0' class='blue_link'>%0 - %1</a>")
+                .arg(spell->Id)
+                .arg(spell->SpellName);
+
+            html.append(QString("<li>Ex Caster Aura Spell: %0</li>")
+                .arg(link));
         }
         else
             html.append(QString("<li>Ex Caster Aura Spell (%0) ?????</li>").arg(spellInfo->getExcludeCasterAuraSpell()));
@@ -980,9 +989,12 @@ void SWObject::showInfo(SpellEntry const* spellInfo, quint8 num)
     {
         if(SpellEntry const* spell = sSpellStore.LookupEntry(spellInfo->getExcludeTargetAuraSpell()))
         {
-            html.append(QString("<li>Ex Target Aura Spell (%0) %1</li>")
-                .arg(spellInfo->getExcludeTargetAuraSpell())
-                .arg(QString::fromUtf8(spell->SpellName)));
+            QString link = QString("<a href='http://spellwork/%0' class='blue_link'>%0 - %1</a>")
+                .arg(spell->Id)
+                .arg(spell->SpellName);
+
+            html.append(QString("<li>Ex Target Aura Spell: %0</li>")
+                .arg(link));
         }
         else
             html.append(QString("<li>Ex Target Aura Spell (%0) ?????</li>").arg(spellInfo->getExcludeTargetAuraSpell()));

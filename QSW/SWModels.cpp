@@ -98,7 +98,7 @@ RelationItem::RelationItem()
     index = "";
 }
 
-QWidget *RelationDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
+QWidget *RelationDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &/*option*/, const QModelIndex &index) const
 {
     switch (index.column())
     {
@@ -143,7 +143,7 @@ void RelationDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, 
     }
 }
 
-QWidget *SpellDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
+QWidget *SpellDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &/*option*/, const QModelIndex &index) const
 {
     RelationList relationList = ((RelationModel*)m_form->fieldsView->model())->getRelations();
     if (RelationItem* item = relationList.at(index.column()))

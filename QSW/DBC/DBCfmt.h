@@ -1,7 +1,7 @@
 #ifndef DBCSFRM_H
 #define DBCSFRM_H
 
-#ifdef V505_16136
+#ifdef V505_16135
 const char* SkillLinefmt = "nissisix";
 #else
 const char* SkillLinefmt = "nissisixx";
