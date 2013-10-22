@@ -1,5 +1,6 @@
 #include "SWObject.h"
 #include "SWSearch.h"
+#include <QMessageBox>
 
 SWObject::SWObject(SWMainForm* form)
     : m_form(form), m_regExp(false), m_type(0), m_enums(form->getEnums())
@@ -521,34 +522,54 @@ QString SWObject::getDescription(QString str, SpellEntry const* spellInfo)
     if (!m_form->isRegExp())
         return str;
 
-    QRegExp rx("\\$+(([/,*])?([0-9]*);)?([d+\\;)(\\d*)?([1-9]*)([A-z])([1-31]*)(([A-z, ]*)\\:([A-z, ]*)\\;)?");
+    QRegExp rx("\\$+(([/,*])?([0-9]*);)?([d+\\;)(\\d*)?([1-9@]*)([A-z]+)(\\d*)(([A-z, ]*)\\:([A-z, ]*)\\;)?");
     while (str.contains(rx))
     {
         if (rx.indexIn(str) != -1)
         {
-            QChar symbol = rx.cap(5)[0].toLower();
-            switch (symbol.toLatin1())
+            /*QString st = "";
+            for (auto i = 0; i < rx.captureCount(); ++i)
+                st += QString("%0 ").arg(i) + rx.cap(i) + "\n";
+
+            QMessageBox::warning(NULL, "Desc", st);
+            return str;*/
+
+            if (rx.cap(5).toLower() == "spelldesc")
             {
-                case 'u': RegExpU(spellInfo, rx, str); break;
-                case 'h': RegExpH(spellInfo, rx, str); break;
-                case 'z': str.replace(rx.cap(0), QString("[Home]")); break;
-                case 'v': RegExpV(spellInfo, rx, str); break;
-                case 'q': RegExpQ(spellInfo, rx, str); break;
-                case 'i': RegExpI(spellInfo, rx, str); break;
-                case 'b': RegExpB(spellInfo, rx, str); break;
-                case 'm':
-                case 's':
-                    RegExpS(spellInfo, rx, str);
-                    break;
-                case 'a': RegExpA(spellInfo, rx, str); break;
-                case 'd': RegExpD(spellInfo, rx, str); break;
-                case 'o': RegExpO(spellInfo, rx, str); break;
-                case 't': RegExpT(spellInfo, rx, str); break;
-                case 'l': str.replace(rx.cap(0), rx.cap(9)); break;
-                case 'g': str.replace(rx.cap(0), rx.cap(8)); break;
-                case 'n': RegExpN(spellInfo, rx, str); break;
-                case 'x': RegExpX(spellInfo, rx, str); break;
-                default: return str;
+                quint32 spellId = rx.cap(6).toInt();
+                if (SpellEntry const* other = sSpellStore.LookupEntry(spellId))
+                {
+                    str.replace(rx.cap(0), other->Description);
+                }
+                else
+                    str.replace(rx.cap(0), QString("<Spell %0 needed for description not found>").arg(spellId));
+            }
+            else
+            {
+                QChar symbol = rx.cap(5)[0].toLower();
+                switch (symbol.toLatin1())
+                {
+                    case 'u': RegExpU(spellInfo, rx, str); break;
+                    case 'h': RegExpH(spellInfo, rx, str); break;
+                    case 'z': str.replace(rx.cap(0), QString("[Home]")); break;
+                    case 'v': RegExpV(spellInfo, rx, str); break;
+                    case 'q': RegExpQ(spellInfo, rx, str); break;
+                    case 'i': RegExpI(spellInfo, rx, str); break;
+                    case 'b': RegExpB(spellInfo, rx, str); break;
+                    case 'm':
+                    case 's':
+                        RegExpS(spellInfo, rx, str);
+                        break;
+                    case 'a': RegExpA(spellInfo, rx, str); break;
+                    case 'd': RegExpD(spellInfo, rx, str); break;
+                    case 'o': RegExpO(spellInfo, rx, str); break;
+                    case 't': RegExpT(spellInfo, rx, str); break;
+                    case 'l': str.replace(rx.cap(0), rx.cap(9)); break;
+                    case 'g': str.replace(rx.cap(0), rx.cap(8)); break;
+                    case 'n': RegExpN(spellInfo, rx, str); break;
+                    case 'x': RegExpX(spellInfo, rx, str); break;
+                    default: return str;
+                }
             }
         }
     }
