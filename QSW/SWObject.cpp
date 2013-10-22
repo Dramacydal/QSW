@@ -521,7 +521,7 @@ QString SWObject::getDescription(QString str, SpellEntry const* spellInfo)
     if (!m_form->isRegExp())
         return str;
 
-    QRegExp rx("\\$+(([/,*])?([0-9]*);)?([d+\\;)(\\d*)?([1-9]*)([A-z])([1-3]*)(([A-z, ]*)\\:([A-z, ]*)\\;)?");
+    QRegExp rx("\\$+(([/,*])?([0-9]*);)?([d+\\;)(\\d*)?([1-9]*)([A-z])([1-31]*)(([A-z, ]*)\\:([A-z, ]*)\\;)?");
     while (str.contains(rx))
     {
         if (rx.indexIn(str) != -1)
