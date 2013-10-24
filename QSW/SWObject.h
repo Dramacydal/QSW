@@ -37,6 +37,7 @@ class SWObject
         QString getDescription(QString str, SpellEntry const *spellInfo);
         QString getSpellIconName(quint32 iconId);
         QString getClassName(quint32 unitClass);
+        QString getSpellLink(quint32 spellId);
 
         quint8 getType() const { return m_type; }
         void setType(quint8 type) { m_type = type; }
