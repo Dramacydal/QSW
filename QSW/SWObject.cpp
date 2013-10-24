@@ -1075,8 +1075,8 @@ void SWObject::appendSpellEffectInfo(SpellEntry const* spellInfo, quint8 num)
         {
             html.append(QString("<div class='b-effect_name'>Effect %0:</div>"
                                 "<ul>"
-		                        "<li>NO EFFECT</li>"
-		                        "</ul>").arg(eff));
+                                "<li>NO EFFECT</li>"
+                                "</ul>").arg(eff));
         }
         else
         {

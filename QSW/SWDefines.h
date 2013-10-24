@@ -51,7 +51,7 @@ enum SpellEffectIndex
     EFFECT_INDEX_0     = 0,
     EFFECT_INDEX_1     = 1,
     EFFECT_INDEX_2     = 2,
-	EFFECT_INDEX_3     = 3,
+    EFFECT_INDEX_3     = 3,
     EFFECT_INDEX_4     = 4,
     EFFECT_INDEX_5     = 5,
     EFFECT_INDEX_6     = 6,
