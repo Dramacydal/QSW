@@ -184,7 +184,7 @@ quint32 SpellInfo::getExcludeTargetAuraSpell() const
 
 quint32 SpellInfo::getFacingCasterFlags() const
 {
-    return spellCastingRequirements ? spellCastingRequirements->FacingCasterFlags : -1;
+    return spellCastingRequirements ? spellCastingRequirements->FacingCasterFlags : 0;
 }
 
 qint32 SpellInfo::getAreaGroupId() const
