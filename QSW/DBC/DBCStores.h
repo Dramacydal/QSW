@@ -5,7 +5,7 @@
 #include "DBCStructure.h"
 
 SpellEffectEntry const* GetSpellEffectEntry(quint32 spellId, quint8 effect);
-quint8 getEffectsCount(quint32 spellId);
+SpellInfo const* GetSpellInfo(quint32 id);
 
 extern DBCStorage <ChrClassesEntry>              sChrClassesStore;
 extern DBCStorage <ChrSpecializationsEntry>      sChrSpecializationStore;
@@ -36,7 +36,7 @@ extern DBCStorage <SpellShapeshiftEntry>         sSpellShapeshiftStore;
 extern DBCStorage <SpellTargetRestrictionsEntry> sSpellTargetRestrictionsStore;
 extern DBCStorage <SpellTotemsEntry>             sSpellTotemsStore;
 extern DBCStorage <TalentEntry>                  sTalentStore;
-
+extern SpellStore sSpellInfoStore;
 void LoadDBCStores();
 
 #endif

@@ -37,6 +37,7 @@ DBCStorage <SpellRadiusEntry> sSpellRadiusStore(SpellRadiusfmt);
 DBCStorage <SpellRangeEntry> sSpellRangeStore(SpellRangefmt);
 DBCStorage <SpellIconEntry> sSpellIconStore(SpellIconfmt);
 DBCStorage <TalentEntry> sTalentStore(Talentfmt);
+SpellStore sSpellInfoStore;
 
 typedef QStringList StoreProblemList;
 
@@ -61,10 +62,12 @@ inline void LoadDBC(StoreProblemList& errlist, DBCStorage<T>& storage, const QSt
         
         if (file.open(QIODevice::ReadOnly))
         {
-            char buf[100];
-            sprintf(buf, " (exist, but have %u fields instead %i) Wrong client version DBC file?", storage.GetFieldCount(), strlen(storage.GetFormat()));
-            errlist.push_back(dbc_filename + QString(buf));
-            QMessageBox::warning(NULL, "Error", dbc_filename + QString(buf));
+            QString buf = dbc_filename;
+            buf += QString(" (exist, but have %0 fields instead %1) Wrong client version DBC file?")
+                    .arg(storage.GetFieldCount())
+                    .arg(strlen(storage.GetFormat()));
+            errlist.push_back(dbc_filename + buf);
+            QMessageBox::warning(NULL, "Error", dbc_filename + buf);
             file.close();
         }
         else
@@ -116,6 +119,10 @@ void LoadDBCStores()
             ++sSpellEffectMap[spellEffect->EffectSpellId].count;
         }
     }
+
+    for (quint32 i = 0; i < sSpellStore.GetNumRows(); ++i)
+        if (SpellEntry const* entry = sSpellStore.LookupEntry(i))
+            sSpellInfoStore[i] = new SpellInfo(entry);
 }
 
 SpellEffectEntry const* GetSpellEffectEntry(quint32 spellId, quint8 effect)
@@ -127,11 +134,8 @@ SpellEffectEntry const* GetSpellEffectEntry(quint32 spellId, quint8 effect)
     return itr->second.effects[effect];
 }
 
-quint8 getEffectsCount(quint32 spellId)
+SpellInfo const* GetSpellInfo(quint32 id)
 {
-    SpellEffectMap::const_iterator itr = sSpellEffectMap.find(spellId);
-    if(itr == sSpellEffectMap.end())
-        return 0;
-
-    return itr->second.count;
+    SpellStore::const_iterator itr = sSpellInfoStore.find(id);
+    return itr != sSpellInfoStore.end() ? itr->second : NULL;
 }

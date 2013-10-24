@@ -1,759 +1,669 @@
 #include "DBCStructure.h"
 #include "DBCStores.h"
 
-SpellAuraOptionsEntry const* SpellEntry::getSpellAuraOptions() const
-{
-    return SpellAuraOptionsId ? sSpellAuraOptionsStore.LookupEntry(SpellAuraOptionsId) : NULL;
-}
-
-SpellAuraRestrictionsEntry const* SpellEntry::getSpellAuraRestrictions() const
-{
-    return SpellAuraRestrictionsId ? sSpellAuraRestrictionsStore.LookupEntry(SpellAuraRestrictionsId) : NULL;
-}
-
-SpellCastingRequirementsEntry const* SpellEntry::getSpellCastingRequirements() const
-{
-    return SpellCastingRequirementsId ? sSpellCastingRequirementsStore.LookupEntry(SpellCastingRequirementsId) : NULL;
-}
-
-SpellCategoriesEntry const* SpellEntry::getSpellCategories() const
-{
-    return SpellCategoriesId ? sSpellCategoriesStore.LookupEntry(SpellCategoriesId) : NULL;
-}
-
-SpellClassOptionsEntry const* SpellEntry::getSpellClassOptions() const
-{
-    return SpellClassOptionsId ? sSpellClassOptionsStore.LookupEntry(SpellClassOptionsId) : NULL;
-}
-
-SpellCooldownsEntry const* SpellEntry::getSpellCooldowns() const
-{
-    return SpellCooldownsId ? sSpellCooldownsStore.LookupEntry(SpellCooldownsId) : NULL;
-}
-
-SpellEffectEntry const* SpellEntry::getSpellEffect(quint8 eff) const
-{
-    return GetSpellEffectEntry(Id, eff);
-}
-
-SpellEquippedItemsEntry const* SpellEntry::getSpellEquippedItems() const
-{
-    return SpellEquippedItemsId ? sSpellEquippedItemsStore.LookupEntry(SpellEquippedItemsId) : NULL;
-}
-
-SpellInterruptsEntry const* SpellEntry::getSpellInterrupts() const
-{
-    return SpellInterruptsId ? sSpellInterruptsStore.LookupEntry(SpellInterruptsId) : NULL;
-}
-
-SpellLevelsEntry const* SpellEntry::getSpellLevels() const
-{
-    return SpellLevelsId ? sSpellLevelsStore.LookupEntry(SpellLevelsId) : NULL;
-}
-
-SpellPowerEntry const* SpellEntry::getSpellPower() const
-{
-    return Id ? sSpellPowerStore.LookupEntry(Id) : NULL;
-}
-
-SpellReagentsEntry const* SpellEntry::getSpellReagents() const
-{
-    return SpellReagentsId ? sSpellReagentsStore.LookupEntry(SpellReagentsId) : NULL;
-}
-
-SpellScalingEntry const* SpellEntry::getSpellScaling() const
-{
-    return SpellScalingId ? sSpellScalingStore.LookupEntry(SpellScalingId) : NULL;
-}
-
-SpellShapeshiftEntry const* SpellEntry::getSpellShapeshift() const
-{
-    return SpellShapeshiftId ? sSpellShapeshiftStore.LookupEntry(SpellShapeshiftId) : NULL;
-}
-
-SpellTargetRestrictionsEntry const* SpellEntry::getSpellTargetRestrictions() const
-{
-    return SpellTargetRestrictionsId ? sSpellTargetRestrictionsStore.LookupEntry(SpellTargetRestrictionsId) : NULL;
-}
-
-SpellTotemsEntry const* SpellEntry::getSpellTotems() const
-{
-    return SpellTotemsId ? sSpellTotemsStore.LookupEntry(SpellTotemsId) : NULL;
-}
-
-SpellMiscEntry const* SpellEntry::getSpellMisc() const
-{
-    return SpellMiscId ? sSpellMiscStore.LookupEntry(SpellMiscId) : NULL;
-}
-
 /**
     SpellMisc methods
 */
 
-quint32 SpellEntry::getAttributes() const
+quint32 SpellInfo::getAttributes() const
 {
-    SpellMiscEntry const* misc = getSpellMisc();
-    return misc ? misc->Attributes : 0;
+    return spellMisc ? spellMisc->Attributes : 0;
 }
 
-quint32 SpellEntry::getAttributesEx1() const
+quint32 SpellInfo::getAttributesEx1() const
 {
-    SpellMiscEntry const* misc = getSpellMisc();
-    return misc ? misc->AttributesEx1 : 0;
+    return spellMisc ? spellMisc->AttributesEx1 : 0;
 }
 
-quint32 SpellEntry::getAttributesEx2() const
+quint32 SpellInfo::getAttributesEx2() const
 {
-    SpellMiscEntry const* misc = getSpellMisc();
-    return misc ? misc->AttributesEx2 : 0;
+    return spellMisc ? spellMisc->AttributesEx2 : 0;
 }
 
-quint32 SpellEntry::getAttributesEx3() const
+quint32 SpellInfo::getAttributesEx3() const
 {
-    SpellMiscEntry const* misc = getSpellMisc();
-    return misc ? misc->AttributesEx3 : 0;
+    return spellMisc ? spellMisc->AttributesEx3 : 0;
 }
 
-quint32 SpellEntry::getAttributesEx4() const
+quint32 SpellInfo::getAttributesEx4() const
 {
-    SpellMiscEntry const* misc = getSpellMisc();
-    return misc ? misc->AttributesEx4 : 0;
+    return spellMisc ? spellMisc->AttributesEx4 : 0;
 }
 
-quint32 SpellEntry::getAttributesEx5() const
+quint32 SpellInfo::getAttributesEx5() const
 {
-    SpellMiscEntry const* misc = getSpellMisc();
-    return misc ? misc->AttributesEx5 : 0;
+    return spellMisc ? spellMisc->AttributesEx5 : 0;
 }
 
-quint32 SpellEntry::getAttributesEx6() const
+quint32 SpellInfo::getAttributesEx6() const
 {
-    SpellMiscEntry const* misc = getSpellMisc();
-    return misc ? misc->AttributesEx6 : 0;
+    return spellMisc ? spellMisc->AttributesEx6 : 0;
 }
 
-quint32 SpellEntry::getAttributesEx7() const
+quint32 SpellInfo::getAttributesEx7() const
 {
-    SpellMiscEntry const* misc = getSpellMisc();
-    return misc ? misc->AttributesEx7 : 0;
+    return spellMisc ? spellMisc->AttributesEx7 : 0;
 }
 
-quint32 SpellEntry::getAttributesEx8() const
+quint32 SpellInfo::getAttributesEx8() const
 {
-    SpellMiscEntry const* misc = getSpellMisc();
-    return misc ? misc->AttributesEx8 : 0;
+    return spellMisc ? spellMisc->AttributesEx8 : 0;
 }
 
-quint32 SpellEntry::getAttributesEx9() const
+quint32 SpellInfo::getAttributesEx9() const
 {
-    SpellMiscEntry const* misc = getSpellMisc();
-    return misc ? misc->AttributesEx9 : 0;
+    return spellMisc ? spellMisc->AttributesEx9 : 0;
 }
 
-quint32 SpellEntry::getAttributesEx10() const
+quint32 SpellInfo::getAttributesEx10() const
 {
-    SpellMiscEntry const* misc = getSpellMisc();
-    return misc ? misc->AttributesEx10 : 0;
+    return spellMisc ? spellMisc->AttributesEx10 : 0;
 }
 
-quint32 SpellEntry::getAttributesEx11() const
+quint32 SpellInfo::getAttributesEx11() const
 {
-    SpellMiscEntry const* misc = getSpellMisc();
-    return misc ? misc->AttributesEx11 : 0;
+    return spellMisc ? spellMisc->AttributesEx11 : 0;
 }
 
-quint32 SpellEntry::getCastingTimeIndex() const
+quint32 SpellInfo::getCastingTimeIndex() const
 {
-    SpellMiscEntry const* misc = getSpellMisc();
-    return misc ? misc->CastTimeIndex : 0;
+    return spellMisc ? spellMisc->CastTimeIndex : 0;
 }
 
-quint32 SpellEntry::getDurationIndex() const
+quint32 SpellInfo::getDurationIndex() const
 {
-    SpellMiscEntry const* misc = getSpellMisc();
-    return misc ? misc->DurationIndex : 0;
+    return spellMisc ? spellMisc->DurationIndex : 0;
 }
 
-quint32 SpellEntry::getRangeIndex() const
+quint32 SpellInfo::getRangeIndex() const
 {
-    SpellMiscEntry const* misc = getSpellMisc();
-    return misc ? misc->RangeIndex : 0;
+    return spellMisc ? spellMisc->RangeIndex : 0;
 }
 
-float SpellEntry::getSpeed() const
+float SpellInfo::getSpeed() const
 {
-    SpellMiscEntry const* misc = getSpellMisc();
-    return misc ? misc->Speed : 0;
+    return spellMisc ? spellMisc->Speed : 0;
 }
 
-quint32 SpellEntry::getSpellVisual(quint8 index) const
+quint32 SpellInfo::getSpellVisual(quint8 index) const
 {
-    SpellMiscEntry const* misc = getSpellMisc();
-    return misc ? misc->SpellVisual[index] : 0;
+    return spellMisc ? spellMisc->SpellVisual[index] : 0;
 }
 
-quint32 SpellEntry::getSpellIconId() const
+quint32 SpellInfo::getSpellIconId() const
 {
-    SpellMiscEntry const* misc = getSpellMisc();
-    return misc ? misc->SpellIconId : 0;
+    return spellMisc ? spellMisc->SpellIconId : 0;
 }
 
-quint32 SpellEntry::getSpellBuffIconId() const
+quint32 SpellInfo::getSpellBuffIconId() const
 {
-    SpellMiscEntry const* misc = getSpellMisc();
-    return misc ? misc->SpellBuffIconId : 0;
+    return spellMisc ? spellMisc->SpellBuffIconId : 0;
 }
 
-quint32 SpellEntry::getSchoolMask() const
+quint32 SpellInfo::getSchoolMask() const
 {
-    SpellMiscEntry const* misc = getSpellMisc();
-    return misc ? misc->SchoolMask : 0;
+    return spellMisc ? spellMisc->SchoolMask : 0;
 }
 
-qint32 SpellEntry::getPowerType() const
+qint32 SpellInfo::getPowerType() const
 {
-    SpellPowerEntry const* power = getSpellPower();
-    return power ? power->PowerType : 0;
+    return spellPower ? spellPower->PowerType : 0;
 }
 
 /**
     SpellAuraOptions methods
  */
 
-quint32 SpellEntry::getStackAmount() const
+quint32 SpellInfo::getStackAmount() const
 {
-    SpellAuraOptionsEntry const* aura = getSpellAuraOptions();
-    return aura ? aura->StackAmount : 0;
+    return spellAuraOptions ? spellAuraOptions->StackAmount : 0;
 }
 
-quint32 SpellEntry::getProcCharges() const
+quint32 SpellInfo::getProcCharges() const
 {
-    SpellAuraOptionsEntry const* aura = getSpellAuraOptions();
-    return aura ? aura->ProcCharges : 0;
+    return spellAuraOptions ? spellAuraOptions->ProcCharges : 0;
 }
 
-quint32 SpellEntry::getProcChance() const
+quint32 SpellInfo::getProcChance() const
 {
-    SpellAuraOptionsEntry const* aura = getSpellAuraOptions();
-    return aura ? aura->ProcChance : 0;
+    return spellAuraOptions ? spellAuraOptions->ProcChance : 0;
 }
 
-quint32 SpellEntry::getProcFlags() const
+quint32 SpellInfo::getProcFlags() const
 {
-    SpellAuraOptionsEntry const* aura = getSpellAuraOptions();
-    return aura ? aura->ProcFlags : 0;
+    return spellAuraOptions ? spellAuraOptions->ProcFlags : 0;
 }
 
 /**
     SpellAuraRestrictions methods
  */
 
-quint32 SpellEntry::getCasterAuraState() const
+quint32 SpellInfo::getCasterAuraState() const
 {
-    SpellAuraRestrictionsEntry const* aura = getSpellAuraRestrictions();
-    return aura ? aura->CasterAuraState : 0;
+    return spellAuraRestrictions ? spellAuraRestrictions->CasterAuraState : 0;
 }
 
-quint32 SpellEntry::getTargetAuraState() const
+quint32 SpellInfo::getTargetAuraState() const
 {
-    SpellAuraRestrictionsEntry const* aura = getSpellAuraRestrictions();
-    return aura ? aura->TargetAuraState : 0;
+    return spellAuraRestrictions ? spellAuraRestrictions->TargetAuraState : 0;
 }
 
-quint32 SpellEntry::getCasterAuraStateNot() const
+quint32 SpellInfo::getCasterAuraStateNot() const
 {
-    SpellAuraRestrictionsEntry const* aura = getSpellAuraRestrictions();
-    return aura ? aura->CasterAuraStateNot : 0;
+    return spellAuraRestrictions ? spellAuraRestrictions->CasterAuraStateNot : 0;
 }
 
-quint32 SpellEntry::getTargetAuraStateNot() const
+quint32 SpellInfo::getTargetAuraStateNot() const
 {
-    SpellAuraRestrictionsEntry const* aura = getSpellAuraRestrictions();
-    return aura ? aura->TargetAuraStateNot : 0;
+    return spellAuraRestrictions ? spellAuraRestrictions->TargetAuraStateNot : 0;
 }
 
-quint32 SpellEntry::getCasterAuraSpell() const
+quint32 SpellInfo::getCasterAuraSpell() const
 {
-    SpellAuraRestrictionsEntry const* aura = getSpellAuraRestrictions();
-    return aura ? aura->CasterAuraSpell : 0;
+    return spellAuraRestrictions ? spellAuraRestrictions->CasterAuraSpell : 0;
 }
 
-quint32 SpellEntry::getTargetAuraSpell() const
+quint32 SpellInfo::getTargetAuraSpell() const
 {
-    SpellAuraRestrictionsEntry const* aura = getSpellAuraRestrictions();
-    return aura ? aura->TargetAuraSpell : 0;
+    return spellAuraRestrictions ? spellAuraRestrictions->TargetAuraSpell : 0;
 }
 
-quint32 SpellEntry::getExcludeCasterAuraSpell() const
+quint32 SpellInfo::getExcludeCasterAuraSpell() const
 {
-    SpellAuraRestrictionsEntry const* aura = getSpellAuraRestrictions();
-    return aura ? aura->ExcludeCasterAuraSpell : 0;
+    return spellAuraRestrictions ? spellAuraRestrictions->ExcludeCasterAuraSpell : 0;
 }
 
-quint32 SpellEntry::getExcludeTargetAuraSpell() const
+quint32 SpellInfo::getExcludeTargetAuraSpell() const
 {
-    SpellAuraRestrictionsEntry const* aura = getSpellAuraRestrictions();
-    return aura ? aura->ExcludeTargetAuraSpell : 0;
+    return spellAuraRestrictions ? spellAuraRestrictions->ExcludeTargetAuraSpell : 0;
 }
 
 /**
     SpellCastingRequirements methods
  */
 
-quint32 SpellEntry::getFacingCasterFlags() const
+quint32 SpellInfo::getFacingCasterFlags() const
 {
-    SpellCastingRequirementsEntry const* castReq = getSpellCastingRequirements();
-    return castReq ? castReq->FacingCasterFlags : -1;
+    return spellCastingRequirements ? spellCastingRequirements->FacingCasterFlags : -1;
 }
 
-qint32 SpellEntry::getAreaGroupId() const
+qint32 SpellInfo::getAreaGroupId() const
 {
-    SpellCastingRequirementsEntry const* castReq = getSpellCastingRequirements();
-    return castReq ? castReq->AreaGroupId : -1;
+    return spellCastingRequirements ? spellCastingRequirements->AreaGroupId : -1;
 }
 
-quint32 SpellEntry::getRequiresSpellFocus() const
+quint32 SpellInfo::getRequiresSpellFocus() const
 {
-    SpellCastingRequirementsEntry const* castReq = getSpellCastingRequirements();
-    return castReq ? castReq->RequiresSpellFocus : 0;
+    return spellCastingRequirements ? spellCastingRequirements->RequiresSpellFocus : 0;
 }
 
-quint32 SpellEntry::getMinFactionId() const
+quint32 SpellInfo::getMinFactionId() const
 {
-    SpellCastingRequirementsEntry const* castReq = getSpellCastingRequirements();
-    return castReq ? castReq->MinFactionId : 0;
+    return spellCastingRequirements ? spellCastingRequirements->MinFactionId : 0;
 }
 
-quint32 SpellEntry::getMinReputation() const
+quint32 SpellInfo::getMinReputation() const
 {
-    SpellCastingRequirementsEntry const* castReq = getSpellCastingRequirements();
-    return castReq ? castReq->MinReputation : 0;
+    return spellCastingRequirements ? spellCastingRequirements->MinReputation : 0;
 }
 
-quint32 SpellEntry::getRequiredAuraVision() const
+quint32 SpellInfo::getRequiredAuraVision() const
 {
-    SpellCastingRequirementsEntry const* castReq = getSpellCastingRequirements();
-    return castReq ? castReq->RequiredAuraVision : 0;
+    return spellCastingRequirements ? spellCastingRequirements->RequiredAuraVision : 0;
 }
 
 /**
     SpellCategories methods
  */
 
-quint32 SpellEntry::getCategory() const
+quint32 SpellInfo::getCategory() const
 {
-    SpellCategoriesEntry const* cat = getSpellCategories();
-    return cat ? cat->Category : 0;
+    return spellCategories ? spellCategories->Category : 0;
 }
 
-quint32 SpellEntry::getDamageClass() const
+quint32 SpellInfo::getDamageClass() const
 {
-    SpellCategoriesEntry const* cat = getSpellCategories();
-    return cat ? cat->DamageClass : 0;
+    return spellCategories ? spellCategories->DamageClass : 0;
 }
 
-quint32 SpellEntry::getDispel() const
+quint32 SpellInfo::getDispel() const
 {
-    SpellCategoriesEntry const* cat = getSpellCategories();
-    return cat ? cat->Dispel : 0;
+    return spellCategories ? spellCategories->Dispel : 0;
 }
 
-quint32 SpellEntry::getMechanic() const
+quint32 SpellInfo::getMechanic() const
 {
-    SpellCategoriesEntry const* cat = getSpellCategories();
-    return cat ? cat->Mechanic : 0;
+    return spellCategories ? spellCategories->Mechanic : 0;
 }
 
-quint32 SpellEntry::getPreventionType() const
+quint32 SpellInfo::getPreventionType() const
 {
-    SpellCategoriesEntry const* cat = getSpellCategories();
-    return cat ? cat->PreventionType : 0;
+    return spellCategories ? spellCategories->PreventionType : 0;
 }
 
-quint32 SpellEntry::getStartRecoveryCategory() const
+quint32 SpellInfo::getStartRecoveryCategory() const
 {
-    SpellCategoriesEntry const* cat = getSpellCategories();
-    return cat ? cat->StartRecoveryCategory : 0;
+    return spellCategories ? spellCategories->StartRecoveryCategory : 0;
 }
 
 /**
     SpellClassOptions methods
  */
 
-quint32 SpellEntry::getSpellFamilyName() const
+quint32 SpellInfo::getSpellFamilyName() const
 {
-    SpellClassOptionsEntry const* classOpt = getSpellClassOptions();
-    return classOpt ? classOpt->SpellFamilyName : 0;
+    return spellClassOptions ? spellClassOptions->SpellFamilyName : 0;
 }
 
-quint32 SpellEntry::getSpellFamilyFlags(quint8 index) const
+quint32 SpellInfo::getSpellFamilyFlags(quint8 index) const
 {
-    SpellClassOptionsEntry const* option = getSpellClassOptions();
-    return option ? option->SpellFamilyFlags[index] : 0;
+    return spellClassOptions ? spellClassOptions->SpellFamilyFlags[index] : 0;
 }
 
-quint32 SpellEntry::getModalNextSpell() const
+quint32 SpellInfo::getModalNextSpell() const
 {
-    SpellClassOptionsEntry const* option = getSpellClassOptions();
-    return option ? option->ModalNextSpell : 0;
+    return spellClassOptions ? spellClassOptions->ModalNextSpell : 0;
 }
 
 /**
     SpellCooldowns methods
  */
 
-quint32 SpellEntry::getStartRecoveryTime() const
+quint32 SpellInfo::getStartRecoveryTime() const
 {
-    SpellCooldownsEntry const* cd = getSpellCooldowns();
-    return cd ? cd->StartRecoveryTime : 0;
+    return spellCooldowns ? spellCooldowns->StartRecoveryTime : 0;
 }
 
-quint32 SpellEntry::getRecoveryTime() const
+quint32 SpellInfo::getRecoveryTime() const
 {
-    SpellCooldownsEntry const* cd = getSpellCooldowns();
-    return cd ? cd->RecoveryTime : 0;
+    return spellCooldowns ? spellCooldowns->RecoveryTime : 0;
 }
 
-quint32 SpellEntry::getCategoryRecoveryTime() const
+quint32 SpellInfo::getCategoryRecoveryTime() const
 {
-    SpellCooldownsEntry const* cd = getSpellCooldowns();
-    return cd ? cd->CategoryRecoveryTime : 0;
+    return spellCooldowns ? spellCooldowns->CategoryRecoveryTime : 0;
 }
 
 /**
     SpellEquippedItems methods
  */
 
-qint32 SpellEntry::getEquippedItemClass() const
+qint32 SpellInfo::getEquippedItemClass() const
 {
-    SpellEquippedItemsEntry const* items = getSpellEquippedItems();
-    return items ? items->EquippedItemClass : -1;
+    return spellEquippedItems ? spellEquippedItems->EquippedItemClass : -1;
 }
 
-qint32 SpellEntry::getEquippedItemSubClassMask() const
+qint32 SpellInfo::getEquippedItemSubClassMask() const
 {
-    SpellEquippedItemsEntry const* items = getSpellEquippedItems();
-    return items ? items->EquippedItemSubClassMask : -1;
+    return spellEquippedItems ? spellEquippedItems->EquippedItemSubClassMask : -1;
 }
 
-qint32 SpellEntry::getEquippedItemInventoryTypeMask() const
+qint32 SpellInfo::getEquippedItemInventoryTypeMask() const
 {
-    SpellEquippedItemsEntry const* items = getSpellEquippedItems();
-    return items ? items->EquippedItemInventoryTypeMask : -1;
+    return spellEquippedItems ? spellEquippedItems->EquippedItemInventoryTypeMask : -1;
 }
 
 /**
     SpellInterrupts methods
  */
 
-quint32 SpellEntry::getInterruptFlags() const
+quint32 SpellInfo::getInterruptFlags() const
 {
-    SpellInterruptsEntry const* interrupt = getSpellInterrupts();
-    return interrupt ? interrupt->InterruptFlags : 0;
+    return spellInterrupts ? spellInterrupts->InterruptFlags : 0;
 }
 
-quint32 SpellEntry::getAuraInterruptFlags() const
+quint32 SpellInfo::getAuraInterruptFlags() const
 {
-    SpellInterruptsEntry const* interrupt = getSpellInterrupts();
-    return interrupt ? interrupt->AuraInterruptFlags : 0;
+    return spellInterrupts ? spellInterrupts->AuraInterruptFlags : 0;
 }
 
-quint32 SpellEntry::getChannelInterruptFlags() const
+quint32 SpellInfo::getChannelInterruptFlags() const
 {
-    SpellInterruptsEntry const* interrupt = getSpellInterrupts();
-    return interrupt ? interrupt->ChannelInterruptFlags : 0;
+    return spellInterrupts ? spellInterrupts->ChannelInterruptFlags : 0;
 }
 
 /**
     SpellLevels methods
  */
 
-quint32 SpellEntry::getBaseLevel() const
+quint32 SpellInfo::getBaseLevel() const
 {
-    SpellLevelsEntry const* levels = getSpellLevels();
-    return levels ? levels->BaseLevel : 0;
+    return spellLevels ? spellLevels->BaseLevel : 0;
 }
 
-quint32 SpellEntry::getMaxLevel() const
+quint32 SpellInfo::getMaxLevel() const
 {
-    SpellLevelsEntry const* levels = getSpellLevels();
-    return levels ? levels->MaxLevel : 0;
+    return spellLevels ? spellLevels->MaxLevel : 0;
 }
 
-quint32 SpellEntry::getSpellLevel() const
+quint32 SpellInfo::getSpellLevel() const
 {
-    SpellLevelsEntry const* levels = getSpellLevels();
-    return levels ? levels->SpellLevel : 0;
+    return spellLevels ? spellLevels->SpellLevel : 0;
 }
 
 /**
     SpellPower methods
  */
 
-quint32 SpellEntry::getManaCost() const
+quint32 SpellInfo::getManaCost() const
 {
-    SpellPowerEntry const* power = getSpellPower();
-    return power ? power->ManaCost : 0;
+    return spellPower ? spellPower->ManaCost : 0;
 }
 
-float SpellEntry::getManaCostPercentage() const
+float SpellInfo::getManaCostPercentage() const
 {
-    SpellPowerEntry const* power = getSpellPower();
-    return power ? power->ManaCostPercentage : 0;
+    return spellPower ? spellPower->ManaCostPercentage : 0;
 }
 
-quint32 SpellEntry::getManaPerSecond() const
+quint32 SpellInfo::getManaPerSecond() const
 {
-    SpellPowerEntry const* power = getSpellPower();
-    return power ? power->ManaPerSecond : 0;
+    return spellPower ? spellPower->ManaPerSecond : 0;
 }
 
-quint32 SpellEntry::getManaCostPerLevel() const
+quint32 SpellInfo::getManaCostPerLevel() const
 {
-    SpellPowerEntry const* power = getSpellPower();
-    return power ? power->ManaCostPerlevel : 0;
+    return spellPower ? spellPower->ManaCostPerlevel : 0;
 }
 
-quint32 SpellEntry::getPowerDisplayId() const
+quint32 SpellInfo::getPowerDisplayId() const
 {
-    SpellPowerEntry const* power = getSpellPower();
-    return power ? power->PowerDisplayId : 0;
+    return spellPower ? spellPower->PowerDisplayId : 0;
 }
 
 /**
     SpellShapeshift methods
  */
 
-quint32 SpellEntry::getStances() const
+quint32 SpellInfo::getStances() const
 {
-    SpellShapeshiftEntry const* ss = getSpellShapeshift();
-    return ss ? ss->Stances : 0;
+    return spellShapeshift ? spellShapeshift->Stances : 0;
 }
 
-quint32 SpellEntry::getStancesNot() const
+quint32 SpellInfo::getStancesNot() const
 {
-    SpellShapeshiftEntry const* ss = getSpellShapeshift();
-    return ss ? ss->StancesNot : 0;
+    return spellShapeshift ? spellShapeshift->StancesNot : 0;
 }
 
-quint32 SpellEntry::getStanceBarOrder() const
+quint32 SpellInfo::getStanceBarOrder() const
 {
-    SpellShapeshiftEntry const* ss = getSpellShapeshift();
-    return ss ? ss->StanceBarOrder : 0;
+    return spellShapeshift ? spellShapeshift->StanceBarOrder : 0;
 }
 
 /**
     SpellTargetRestrictions methods
  */
 
-quint32 SpellEntry::getTargets() const
+quint32 SpellInfo::getTargets() const
 {
-    SpellTargetRestrictionsEntry const* target = getSpellTargetRestrictions();
-    return target ? target->Targets : 0;
+    return spellTargetRestrictions ? spellTargetRestrictions->Targets : 0;
 }
 
-quint32 SpellEntry::getTargetCreatureType() const
+quint32 SpellInfo::getTargetCreatureType() const
 {
-    SpellTargetRestrictionsEntry const* target = getSpellTargetRestrictions();
-    return target ? target->TargetCreatureType : 0;
+    return spellTargetRestrictions ? spellTargetRestrictions->TargetCreatureType : 0;
 }
 
-quint32 SpellEntry::getMaxAffectedTargets() const
+quint32 SpellInfo::getMaxAffectedTargets() const
 {
-    SpellTargetRestrictionsEntry const* target = getSpellTargetRestrictions();
-    return target ? target->MaxAffectedTargets : 0;
+    return spellTargetRestrictions ? spellTargetRestrictions->MaxAffectedTargets : 0;
 }
 
-quint32 SpellEntry::getMaxTargetLevel() const
+quint32 SpellInfo::getMaxTargetLevel() const
 {
-    SpellTargetRestrictionsEntry const* target = getSpellTargetRestrictions();
-    return target ? target->MaxTargetLevel : 0;
+    return spellTargetRestrictions ? spellTargetRestrictions->MaxTargetLevel : 0;
 }
 
-float SpellEntry::getMaxTargetRadius() const
+float SpellInfo::getMaxTargetRadius() const
 {
-    SpellTargetRestrictionsEntry const* target = getSpellTargetRestrictions();
-    return target ? target->MaxTargetRadius : 0.0f;
+    return spellTargetRestrictions ? spellTargetRestrictions->MaxTargetRadius : 0.0f;
 }
 
 /**
     SpellEffect methods
  */
 
-quint32 SpellEntry::getEffectSpellClassMask(quint8 eff, quint8 index) const
+quint32 SpellInfo::getEffectSpellClassMask(quint8 eff, quint8 index) const
 {
-    SpellEffectEntry const* effect = getSpellEffect(eff);
-    return effect ? effect->EffectSpellClassMask[index] : 0;
+    return spellEffects[eff] ? spellEffects[eff]->EffectSpellClassMask[index] : 0;
 }
 
-quint32 SpellEntry::getEffect(quint8 index) const
+quint32 SpellInfo::getEffect(quint8 index) const
 {
-    SpellEffectEntry const* effect = getSpellEffect(index);
-    return effect ? effect->Effect : 0;
+    return spellEffects[index] ? spellEffects[index]->Effect : 0;
 }
 
-float SpellEntry::getEffectValueMultiplier(quint8 index) const
+float SpellInfo::getEffectValueMultiplier(quint8 index) const
 {
-    SpellEffectEntry const* effect = getSpellEffect(index);
-    return effect ? effect->EffectValueMultiplier : 0.0f;
+    return spellEffects[index] ? spellEffects[index]->EffectValueMultiplier : 0.0f;
 }
 
-quint32 SpellEntry::getEffectApplyAuraName(quint8 index) const
+quint32 SpellInfo::getEffectApplyAuraName(quint8 index) const
 {
-    SpellEffectEntry const* effect = getSpellEffect(index);
-    return effect ? effect->EffectApplyAuraName : 0;
+    return spellEffects[index] ? spellEffects[index]->EffectApplyAuraName : 0;
 }
 
-quint32 SpellEntry::getEffectAmplitude(quint8 index) const
+quint32 SpellInfo::getEffectAmplitude(quint8 index) const
 {
-    SpellEffectEntry const* effect = getSpellEffect(index);
-    return effect ? effect->EffectAmplitude : 0;
+    return spellEffects[index] ? spellEffects[index]->EffectAmplitude : 0;
 }
 
-qint32 SpellEntry::getEffectBasePoints(quint8 index) const
+qint32 SpellInfo::getEffectBasePoints(quint8 index) const
 {
-    SpellEffectEntry const* effect = getSpellEffect(index);
-    return effect ? effect->EffectBasePoints : 0;
+    return spellEffects[index] ? spellEffects[index]->EffectBasePoints : 0;
 }
 
-float SpellEntry::getEffectBonusCoefficient(quint8 index) const
+float SpellInfo::getEffectBonusCoefficient(quint8 index) const
 {
-    SpellEffectEntry const* effect = getSpellEffect(index);
-    return effect ? effect->EffectBonusCoefficient : 0;
+    return spellEffects[index] ? spellEffects[index]->EffectBonusCoefficient : 0;
 }
 
-float SpellEntry::getEffectDamageMultiplier(quint8 index) const
+float SpellInfo::getEffectDamageMultiplier(quint8 index) const
 {
-    SpellEffectEntry const* effect = getSpellEffect(index);
-    return effect ? effect->EffectDamageMultiplier : 0;
+    return spellEffects[index] ? spellEffects[index]->EffectDamageMultiplier : 0;
 }
 
-quint32 SpellEntry::getEffectChainTarget(quint8 index) const
+quint32 SpellInfo::getEffectChainTarget(quint8 index) const
 {
-    SpellEffectEntry const* effect = getSpellEffect(index);
-    return effect ? effect->EffectChainTarget : 0;
+    return spellEffects[index] ? spellEffects[index]->EffectChainTarget : 0;
 }
 
-qint32 SpellEntry::getEffectDieSides(quint8 index) const
+qint32 SpellInfo::getEffectDieSides(quint8 index) const
 {
-    SpellEffectEntry const* effect = getSpellEffect(index);
-    return effect ? effect->EffectDieSides : 0;
+    return spellEffects[index] ? spellEffects[index]->EffectDieSides : 0;
 }
 
-quint32 SpellEntry::getEffectItemType(quint8 index) const
+quint32 SpellInfo::getEffectItemType(quint8 index) const
 {
-    SpellEffectEntry const* effect = getSpellEffect(index);
-    return effect ? effect->EffectItemType : 0;
+    return spellEffects[index] ? spellEffects[index]->EffectItemType : 0;
 }
 
-quint32 SpellEntry::getEffectMechanic(quint8 index) const
+quint32 SpellInfo::getEffectMechanic(quint8 index) const
 {
-    SpellEffectEntry const* effect = getSpellEffect(index);
-    return effect ? effect->EffectMechanic : 0;
+    return spellEffects[index] ? spellEffects[index]->EffectMechanic : 0;
 }
 
-qint32 SpellEntry::getEffectMiscValue(quint8 index) const
+qint32 SpellInfo::getEffectMiscValue(quint8 index) const
 {
-    SpellEffectEntry const* effect = getSpellEffect(index);
-    return effect ? effect->EffectMiscValue : 0;
+    return spellEffects[index] ? spellEffects[index]->EffectMiscValue : 0;
 }
 
-qint32 SpellEntry::getEffectMiscValueB(quint8 index) const
+qint32 SpellInfo::getEffectMiscValueB(quint8 index) const
 {
-    SpellEffectEntry const* effect = getSpellEffect(index);
-    return effect ? effect->EffectMiscValueB : 0;
+    return spellEffects[index] ? spellEffects[index]->EffectMiscValueB : 0;
 }
 
-float SpellEntry::getEffectPointsPerComboPoint(quint8 index) const
+float SpellInfo::getEffectPointsPerComboPoint(quint8 index) const
 {
-    SpellEffectEntry const* effect = getSpellEffect(index);
-    return effect ? effect->EffectPointsPerComboPoint : 0.0f;
+    return spellEffects[index] ? spellEffects[index]->EffectPointsPerComboPoint : 0.0f;
 }
 
-quint32 SpellEntry::getEffectRadiusIndex(quint8 index) const
+quint32 SpellInfo::getEffectRadiusIndex(quint8 index) const
 {
-    SpellEffectEntry const* effect = getSpellEffect(index);
-    return effect ? effect->EffectRadiusIndex : 0;
+    return spellEffects[index] ? spellEffects[index]->EffectRadiusIndex : 0;
 }
 
-quint32 SpellEntry::getEffectRadiusMaxIndex(quint8 index) const
+quint32 SpellInfo::getEffectRadiusMaxIndex(quint8 index) const
 {
-    SpellEffectEntry const* effect = getSpellEffect(index);
-    return effect ? effect->EffectRadiusMaxIndex : 0;
+    return spellEffects[index] ? spellEffects[index]->EffectRadiusMaxIndex : 0;
 }
 
-float SpellEntry::getEffectRealPointsPerLevel(quint8 index) const
+float SpellInfo::getEffectRealPointsPerLevel(quint8 index) const
 {
-    SpellEffectEntry const* effect = getSpellEffect(index);
-    return effect ? effect->EffectRealPointsPerLevel : 0.0f;
+    return spellEffects[index] ? spellEffects[index]->EffectRealPointsPerLevel : 0.0f;
 }
 
-const quint32* SpellEntry::getEffectSpellClassMask(quint8 index) const
+const quint32* SpellInfo::getEffectSpellClassMask(quint8 index) const
 {
-    SpellEffectEntry const* effect = getSpellEffect(index);
     static quint32 nullClassMask[MAX_CLASS_MASK];
     memset(nullClassMask, 0, sizeof(nullClassMask));
-    return effect ? effect->EffectSpellClassMask : nullClassMask;
+    return spellEffects[index] ? spellEffects[index]->EffectSpellClassMask : nullClassMask;
 }
 
-quint32 SpellEntry::getEffectTriggerSpell(quint8 index) const
+quint32 SpellInfo::getEffectTriggerSpell(quint8 index) const
 {
-    SpellEffectEntry const* effect = getSpellEffect(index);
-    return effect ? effect->EffectTriggerSpell : 0;
+    return spellEffects[index] ? spellEffects[index]->EffectTriggerSpell : 0;
 }
 
-quint32 SpellEntry::getEffectImplicitTargetA(quint8 index) const
+quint32 SpellInfo::getEffectImplicitTargetA(quint8 index) const
 {
-    SpellEffectEntry const* effect = getSpellEffect(index);
-    return effect ? effect->EffectImplicitTargetA : 0;
+    return spellEffects[index] ? spellEffects[index]->EffectImplicitTargetA : 0;
 }
 
-quint32 SpellEntry::getEffectImplicitTargetB(quint8 index) const
+quint32 SpellInfo::getEffectImplicitTargetB(quint8 index) const
 {
-    SpellEffectEntry const* effect = getSpellEffect(index);
-    return effect ? effect->EffectImplicitTargetB : 0;
+    return spellEffects[index] ? spellEffects[index]->EffectImplicitTargetB : 0;
 }
 
-quint32 SpellEntry::getEffectSpellId(quint8 index) const
+quint32 SpellInfo::getEffectSpellId(quint8 index) const
 {
-    SpellEffectEntry const* effect = getSpellEffect(index);
-    return effect ? effect->EffectSpellId : 0;
+    return spellEffects[index] ? spellEffects[index]->EffectSpellId : 0;
 }
 
-quint32 SpellEntry::getEffectIndex(quint8 index) const
+quint32 SpellInfo::getEffectIndex(quint8 index) const
 {
-    SpellEffectEntry const* effect = getSpellEffect(index);
-    return effect ? effect->EffectIndex : 0;
+    return spellEffects[index] ? spellEffects[index]->EffectIndex : 0;
 }
 
 /**
     SpellTotems methods
  */
 
-quint32 SpellEntry::getTotem(quint8 index) const
+quint32 SpellInfo::getTotem(quint8 index) const
 {
-    SpellTotemsEntry const* totem = getSpellTotems();
-    return totem ? totem->Totem[index] : 0;
+    return spellTotems ? spellTotems->Totem[index] : 0;
 }
 
-quint32 SpellEntry::getTotemCategory(quint8 index) const
+quint32 SpellInfo::getTotemCategory(quint8 index) const
 {
-    SpellTotemsEntry const* totem = getSpellTotems();
-    return totem ? totem->TotemCategory[index] : 0;
+    return spellTotems ? spellTotems->TotemCategory[index] : 0;
 }
 
 /**
     SpellReagents methods
  */
 
-qint32 SpellEntry::getReagent(quint8 index) const
+qint32 SpellInfo::getReagent(quint8 index) const
 {
-    SpellReagentsEntry const* reagent = getSpellReagents();
-    return reagent ? reagent->Reagent[index] : 0;
+    return spellReagents ? spellReagents->Reagent[index] : 0;
 }
 
-quint32 SpellEntry::getReagentCount(quint8 index) const
+quint32 SpellInfo::getReagentCount(quint8 index) const
 {
-    SpellReagentsEntry const* reagent = getSpellReagents();
-    return reagent ? reagent->ReagentCount[index] : 0;
+    return spellReagents ? spellReagents->ReagentCount[index] : 0;
+}
+
+QString SpellInfo::getSpellIconName() const
+{
+    return spellIcon ? QString(spellIcon->IconPath).section('\\', -1) : QString("");
+}
+
+SpellInfo::SpellInfo(SpellEntry const* spellInfo)
+{
+    if (!spellInfo)
+        return;
+
+    spellEntry = spellInfo;
+
+    Id = spellInfo->Id;
+    SpellName = spellInfo->SpellName;
+    Rank = spellInfo->Rank;
+    Description = spellInfo->Description;
+    ToolTip = spellInfo->ToolTip;
+    RuneCostId = spellInfo->RuneCostId;
+    SpellMissileId = spellInfo->SpellMissileId;
+    SpellDescriptionVariableId = spellInfo->SpellDescriptionVariableId;
+    //unk_f1;
+    SpellScalingId = spellInfo->SpellScalingId;
+    SpellAuraOptionsId = spellInfo->SpellAuraOptionsId;
+    SpellAuraRestrictionsId = spellInfo->SpellAuraRestrictionsId;
+    SpellCastingRequirementsId = spellInfo->SpellCastingRequirementsId;
+    SpellCategoriesId = spellInfo->SpellCategoriesId;
+    SpellClassOptionsId = spellInfo->SpellClassOptionsId;
+    SpellCooldownsId = spellInfo->SpellCooldownsId;
+    SpellEquippedItemsId = spellInfo->SpellEquippedItemsId;
+    SpellInterruptsId = spellInfo->SpellInterruptsId;
+    SpellLevelsId = spellInfo->SpellReagentsId;
+    //SpellPowerId;
+    SpellReagentsId = spellInfo->SpellReagentsId;
+    SpellShapeshiftId = spellInfo->SpellShapeshiftId;
+    SpellTargetRestrictionsId = spellInfo->SpellTargetRestrictionsId;
+    SpellTotemsId = spellInfo->SpellTotemsId;
+    SpellMiscId = spellInfo->SpellMiscId;
+
+    spellMisc = spellEntry->SpellMiscId ? sSpellMiscStore.LookupEntry(spellEntry->SpellMiscId) : NULL;
+    spellAuraOptions = spellEntry->SpellAuraOptionsId ? sSpellAuraOptionsStore.LookupEntry(spellEntry->SpellAuraOptionsId) : NULL;
+    spellAuraRestrictions = spellEntry->SpellAuraRestrictionsId ? sSpellAuraRestrictionsStore.LookupEntry(spellEntry->SpellAuraRestrictionsId) : NULL;
+    spellCastingRequirements = spellEntry->SpellCastingRequirementsId ? sSpellCastingRequirementsStore.LookupEntry(spellEntry->SpellCastingRequirementsId) : NULL;
+    spellCategories = spellEntry->SpellCategoriesId ? sSpellCategoriesStore.LookupEntry(spellEntry->SpellCategoriesId) : NULL;
+    spellClassOptions = spellEntry->SpellClassOptionsId ? sSpellClassOptionsStore.LookupEntry(spellEntry->SpellClassOptionsId) : NULL;
+    spellCooldowns = spellEntry->SpellCooldownsId ? sSpellCooldownsStore.LookupEntry(spellEntry->SpellCooldownsId) : NULL;
+    spellEquippedItems = spellEntry->SpellEquippedItemsId ? sSpellEquippedItemsStore.LookupEntry(spellEntry->SpellEquippedItemsId) : NULL;
+    spellInterrupts = spellEntry->SpellInterruptsId ? sSpellInterruptsStore.LookupEntry(spellEntry->SpellInterruptsId) : NULL;
+    spellLevels = spellEntry->SpellLevelsId ? sSpellLevelsStore.LookupEntry(spellEntry->SpellLevelsId) : NULL;
+    spellPower = sSpellPowerStore.LookupEntry(spellEntry->Id);
+    spellReagents = spellEntry->SpellReagentsId ? sSpellReagentsStore.LookupEntry(spellEntry->SpellReagentsId) : NULL;
+    spellScaling = spellEntry->SpellScalingId ? sSpellScalingStore.LookupEntry(spellEntry->SpellScalingId) : NULL;
+    spellShapeshift = spellEntry->SpellShapeshiftId ? sSpellShapeshiftStore.LookupEntry(spellEntry->SpellShapeshiftId) : NULL;
+    spellTargetRestrictions = spellEntry->SpellTargetRestrictionsId ? sSpellTargetRestrictionsStore.LookupEntry(spellEntry->SpellTargetRestrictionsId) : NULL;
+    spellTotems = spellEntry->SpellTotemsId ? sSpellTotemsStore.LookupEntry(spellEntry->SpellTotemsId) : NULL;
+    durationInfo = spellMisc ? sSpellDurationStore.LookupEntry(spellMisc->DurationIndex) : NULL;
+    spellIcon = spellMisc ? sSpellIconStore.LookupEntry(spellMisc->SpellIconId) : NULL;
+    castTimeEntry = sSpellCastTimesStore.LookupEntry(getCastingTimeIndex());
+    rangeEntry = sSpellRangeStore.LookupEntry(getRangeIndex());
+
+    for (quint8 i = 0; i < MAX_EFFECT_INDEX; ++i)
+    {
+        spellEffects[i] = GetSpellEffectEntry(spellEntry->Id, i);
+        spellRadius[i] = sSpellRadiusStore.LookupEntry(getEffectRadiusIndex(i));
+        spellRadiusMax[i] = sSpellRadiusStore.LookupEntry(getEffectRadiusMaxIndex(i));
+    }
+
+    talentEntry = NULL;
+    for (quint32 i = 0; i < sTalentStore.GetNumRows(); ++i)
+    {
+        TalentEntry const* entry = sTalentStore.LookupEntry(i);
+        if (!entry)
+            continue;
+
+        if (entry->spell != spellInfo->Id)
+            continue;
+
+        talentEntry = entry;
+        break;
+    }
+}
+
+SpellEffectEntry const* SpellInfo::getSpellEffect(quint8 idx) const
+{
+    return spellEffects[idx];
+}
+
+quint8 SpellInfo::getMaxEffect() const
+{
+    quint8 eff = 0;
+    for (quint32 i = 0; i < MAX_EFFECT_INDEX; ++i)
+        if (spellEffects[i])
+            eff = i + 1;
+
+    return eff;
 }

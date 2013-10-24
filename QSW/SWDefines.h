@@ -80,7 +80,7 @@ enum SpellEffectIndex
     EFFECT_INDEX_29    = 29,
     EFFECT_INDEX_30    = 30,
     EFFECT_INDEX_31    = 31,
-    MAX_EFFECT_INDEX
+    MAX_EFFECT_INDEX   = 32,
 };
 
 #endif // SWDEFINES_H

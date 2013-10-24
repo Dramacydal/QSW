@@ -78,5 +78,7 @@
 
 #endif //COMPILER
 
+//#define UNORDERED_MAP std::tr1::unordered_map
+#define UNORDERED_MAP std::map
 
 #endif //QSW_DEFINE_H

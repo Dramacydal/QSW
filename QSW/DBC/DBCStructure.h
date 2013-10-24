@@ -368,24 +368,126 @@ struct SpellEntry
     quint32     SpellTotemsId;                                // 23 - SpellTotems.dbc
     quint32     SpellMiscId;                                  // 24 - S.dbc
 
-    // struct access functions
-    SpellMiscEntry const* getSpellMisc() const;
-    SpellAuraOptionsEntry const* getSpellAuraOptions() const;
-    SpellAuraRestrictionsEntry const* getSpellAuraRestrictions() const;
-    SpellCastingRequirementsEntry const* getSpellCastingRequirements() const;
-    SpellCategoriesEntry const* getSpellCategories() const;
-    SpellClassOptionsEntry const* getSpellClassOptions() const;
-    SpellCooldownsEntry const* getSpellCooldowns() const;
-    SpellEffectEntry const* getSpellEffect(quint8 eff) const;
-    SpellEquippedItemsEntry const* getSpellEquippedItems() const;
-    SpellInterruptsEntry const* getSpellInterrupts() const;
-    SpellLevelsEntry const* getSpellLevels() const;
-    SpellPowerEntry const* getSpellPower() const;
-    SpellReagentsEntry const* getSpellReagents() const;
-    SpellScalingEntry const* getSpellScaling() const;
-    SpellShapeshiftEntry const* getSpellShapeshift() const;
-    SpellTargetRestrictionsEntry const* getSpellTargetRestrictions() const;
-    SpellTotemsEntry const* getSpellTotems() const;
+private:
+        SpellEntry(SpellEntry const&);
+};
+
+struct SpellCastTimesEntry
+{
+    quint32    Id;                                              // 0
+    qint32     CastTime;                                        // 1
+    float      CastTimePerLevel;                                // 2 unsure / per skill?
+    qint32     MinCastTime;                                     // 3 unsure
+};
+
+struct SpellRadiusEntry
+{
+    quint32    Id;
+    float      Radius;
+                                                            // 2        m_radiusPerLevel
+    //float                                                 // 3        5.x
+    //float     RadiusMax;                                  // 4        m_radiusMax
+};
+
+struct SpellRangeEntry
+{
+    quint32    Id;                                              // 0
+    float      MinRangeHostile;                                        // 1
+    float      MinRangeFriendly;                                // 2
+    float      MaxRangeHostile;                                        // 3
+    float      MaxRangeFriendly;                                // 4
+    quint32    Flags;                                           // 5
+    char*      Name;                                        // 6-21 unused
+    char*      ShortName;                                   // 23-38 unused
+};
+
+struct SpellDurationEntry
+{
+    quint32    Id;
+    qint32     Duration[3];
+};
+
+struct SpellIconEntry
+{
+    quint32    IconId;
+    char*      IconPath;
+};
+
+struct TalentEntry
+{
+    quint32    Id;                                              // 0
+    //quint32    TalentTab;                                       // 1
+    //quint32    row;                                             // 2
+    //quint32    column;                                          // 3
+    quint32    spell;                                           // 4
+    //quint32    needAddInSpellBook;                              // 5
+    //quint32    flags;                                           // 6
+    //quint32    flags2;                                          // 7
+    quint32    Class;                                           // 8
+    quint32    replaceSpellId;                                  // 9
+    //char*      description;                                     // 10
+};
+
+
+struct SpellInfo
+{
+    SpellInfo(SpellEntry const* spellInfo);
+    SpellEffectEntry const* getSpellEffect(quint8 idx) const;
+    quint8 getMaxEffect() const;
+
+    quint32     Id;                                           // 0        m_ID
+    char*       SpellName;                                    // 1 - m_name_lang
+    char*       Rank;                                         // 2 - m_nameSubtext_lang
+    char*       Description;                                  // 3 - m_description_lang not used
+    char*       ToolTip;                                      // 4 - m_auraDescription_lang not used
+    quint32     RuneCostId;                                   // 5 - m_runeCostID
+    quint32     SpellMissileId;                               // 6 - m_spellMissileID not used
+    quint32     SpellDescriptionVariableId;                   // 7 - m_spellDescriptionVariableID, 3.2.0
+    // float       unk_f1;                                    // 8 - 4.0.1
+    quint32     SpellScalingId;                               // 9 - SpellScaling.dbc
+    quint32     SpellAuraOptionsId;                           // 10 - SpellAuraOptions.dbc
+    quint32     SpellAuraRestrictionsId;                      // 11 - SpellAuraRestrictions.dbc
+    quint32     SpellCastingRequirementsId;                   // 12 - SpellCastingRequirements.dbc
+    quint32     SpellCategoriesId;                            // 13 - SpellCategories.dbc
+    quint32     SpellClassOptionsId;                          // 14 - SpellClassOptions.dbc
+    quint32     SpellCooldownsId;                             // 15 - SpellCooldowns.dbc
+    quint32     SpellEquippedItemsId;                         // 16 - SpellEquippedItems.dbc
+    quint32     SpellInterruptsId;                            // 17 - SpellInterrupts.dbc
+    quint32     SpellLevelsId;                                // 18 - SpellLevels.dbc
+    //quint32     SpellPowerId;                                 // 19 - SpellPower.dbc
+    quint32     SpellReagentsId;                              // 20 - SpellReagents.dbc
+    quint32     SpellShapeshiftId;                            // 21 - SpellShapeshift.dbc
+    quint32     SpellTargetRestrictionsId;                    // 22 - SpellTargetRestrictions.dbc
+    quint32     SpellTotemsId;                                // 23 - SpellTotems.dbc
+    quint32     SpellMiscId;                                  // 24 - S.dbc
+
+    SpellEntry const* spellEntry;
+    SpellMiscEntry const* spellMisc;
+    SpellAuraOptionsEntry const* spellAuraOptions;
+    SpellAuraRestrictionsEntry const* spellAuraRestrictions;
+    SpellCastingRequirementsEntry const* spellCastingRequirements;
+    SpellCategoriesEntry const* spellCategories;
+    SpellClassOptionsEntry const* spellClassOptions;
+    SpellCooldownsEntry const* spellCooldowns;
+    SpellEquippedItemsEntry const* spellEquippedItems;
+    SpellInterruptsEntry const* spellInterrupts;
+    SpellLevelsEntry const* spellLevels;
+    SpellPowerEntry const* spellPower;
+    SpellReagentsEntry const* spellReagents;
+    SpellScalingEntry const* spellScaling;
+    SpellShapeshiftEntry const* spellShapeshift;
+    SpellTargetRestrictionsEntry const* spellTargetRestrictions;
+    SpellTotemsEntry const* spellTotems;
+    SpellDurationEntry const* durationInfo;
+    SpellIconEntry const* spellIcon;
+    SpellCastTimesEntry const* castTimeEntry;
+    SpellRangeEntry const* rangeEntry;
+
+    SpellRadiusEntry const* spellRadius[MAX_EFFECT_INDEX];
+    SpellRadiusEntry const* spellRadiusMax[MAX_EFFECT_INDEX];
+    SpellEffectEntry const* spellEffects[MAX_EFFECT_INDEX];
+
+    TalentEntry const* talentEntry;
 
     // SpellMisc methods
     quint32 getAttributes() const;
@@ -523,67 +625,12 @@ struct SpellEntry
     quint32 getEffectIndex(quint8 index) const;                                  // 23       new 4.0.0
     quint32 getEffectSpellClassMask(quint8 eff, quint8 index) const;
 
-    private:
-        SpellEntry(SpellEntry const&);
+    QString getSpellIconName() const;
 };
 
-Q_DECLARE_METATYPE(const SpellEntry*);
+typedef UNORDERED_MAP<quint32, SpellInfo const*> SpellStore;
 
-struct SpellCastTimesEntry
-{
-    quint32    Id;                                              // 0
-    qint32     CastTime;                                        // 1
-    float      CastTimePerLevel;                                // 2 unsure / per skill?
-    qint32     MinCastTime;                                     // 3 unsure
-};
-
-struct SpellRadiusEntry
-{
-    quint32    Id;
-    float      Radius;
-                                                            // 2        m_radiusPerLevel
-    //float                                                 // 3        5.x
-    //float     RadiusMax;                                  // 4        m_radiusMax
-};
-
-struct SpellRangeEntry
-{
-    quint32    Id;                                              // 0
-    float      MinRangeHostile;                                        // 1
-    float      MinRangeFriendly;                                // 2
-    float      MaxRangeHostile;                                        // 3
-    float      MaxRangeFriendly;                                // 4
-    quint32    Flags;                                           // 5
-    char*      Name;                                        // 6-21 unused
-    char*      ShortName;                                   // 23-38 unused
-};
-
-struct SpellDurationEntry
-{
-    quint32    Id;
-    qint32     Duration[3];
-};
-
-struct SpellIconEntry
-{
-    quint32    IconId;
-    char*      IconPath;
-};
-
-struct TalentEntry
-{
-    quint32    Id;                                              // 0
-    //quint32    TalentTab;                                       // 1
-    //quint32    row;                                             // 2
-    //quint32    column;                                          // 3
-    quint32    spell;                                           // 4
-    //quint32    needAddInSpellBook;                              // 5
-    //quint32    flags;                                           // 6
-    //quint32    flags2;                                          // 7
-    quint32    Class;                                           // 8
-    quint32    replaceSpellId;                                  // 9
-    //char*      description;                                     // 10
-};
+Q_DECLARE_METATYPE(const SpellInfo*);
 
 // GCC have alternative #pragma pack() syntax and old gcc version not support pack(pop), also any gcc version not support it at some platform
 #if defined( __GNUC__ )

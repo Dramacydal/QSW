@@ -15,27 +15,26 @@ class SWObject
         SWObject(SWMainForm *form);
         ~SWObject();
 
-        void showInfo(SpellEntry const* spellInfo, quint8 num = 0);
+        void showInfo(SpellInfo const* spellInfo, quint8 num = 0);
         std::list<quint32> getParentSpellIds(quint32 triggerId);
         void compare();
         void search();
 
-        void appendSpecInfo(SpellEntry const* spellInfo, quint8 num);
-        void appendTalentInfo(SpellEntry const* spellInfo, quint8 num);
-        void appendReplacementInfo(SpellEntry const* spellInfo, quint8 num);
-        void appendSkillInfo(SpellEntry const* spellInfo, quint8 num);
-        void appendCastTimeInfo(SpellEntry const* spellInfo, quint8 num);
-        void appendDurationInfo(SpellEntry const* spellInfo, quint8 num);
-        void appendRangeInfo(SpellEntry const* spellInfo, quint8 num);
-        void appendSpellEffectInfo(SpellEntry const* spellInfo, quint8 num);
-        void appendAuraInfo(SpellEntry const* spellInfo, quint8 index, quint8 num);
-        void appendRadiusInfo(SpellEntry const* spellInfo, quint8 index, quint8 num);
-        void appendTriggerInfo(SpellEntry const* spellInfo, quint8 index, quint8 num);
-        void appendProcInfo(SpellEntry const *spellInfo, quint8 num);
+        void appendSpecInfo(SpellInfo const* spellInfo, quint8 num);
+        void appendTalentInfo(SpellInfo const* spellInfo, quint8 num);
+        void appendReplacementInfo(SpellInfo const* spellInfo, quint8 num);
+        void appendSkillInfo(SpellInfo const* spellInfo, quint8 num);
+        void appendCastTimeInfo(SpellInfo const* spellInfo, quint8 num);
+        void appendDurationInfo(SpellInfo const* spellInfo, quint8 num);
+        void appendRangeInfo(SpellInfo const* spellInfo, quint8 num);
+        void appendSpellEffectInfo(SpellInfo const* spellInfo, quint8 num);
+        void appendAuraInfo(SpellInfo const* spellInfo, quint8 index, quint8 num);
+        void appendRadiusInfo(SpellInfo const* spellInfo, quint8 index, quint8 num);
+        void appendTriggerInfo(SpellInfo const* spellInfo, quint8 index, quint8 num);
+        void appendProcInfo(SpellInfo const *spellInfo, quint8 num);
 
-        QString containAttributes(SpellEntry const* spellInfo, AttrType attr, quint8 index = 0);
-        QString getDescription(QString str, SpellEntry const *spellInfo);
-        QString getSpellIconName(quint32 iconId);
+        QString containAttributes(SpellInfo const* spellInfo, AttrType attr, quint8 index = 0);
+        QString getDescription(QString str, SpellInfo const *spellInfo);
         QString getClassName(quint32 unitClass);
         QString getSpellLink(quint32 spellId);
 

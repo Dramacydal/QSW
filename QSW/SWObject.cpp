@@ -15,34 +15,29 @@ void SWObject::search()
     delete search;
 }
 
-float getRadius(SpellEntry const* spellInfo, quint8 effIndex)
+float getRadius(SpellInfo const* spellInfo, quint8 effIndex)
 {
-    SpellRadiusEntry const* spellRadius = sSpellRadiusStore.LookupEntry(spellInfo->getEffectRadiusIndex(effIndex));
-    if (spellRadius)
-        return spellRadius->Radius;
-
-    return 0.0f;
+    return spellInfo->spellRadius[effIndex] ? spellInfo->spellRadius[effIndex]->Radius : 0.0f;
 }
 
-quint32 getDuration(SpellEntry const* spellInfo)
+quint32 getDuration(SpellInfo const* spellInfo)
 {
-    SpellDurationEntry const* durationInfo = sSpellDurationStore.LookupEntry(spellInfo->getDurationIndex());
-    if (durationInfo)
-        return quint32(durationInfo->Duration[0] / 1000);
+    if (spellInfo->durationInfo)
+        return quint32(spellInfo->durationInfo->Duration[0] / 1000);
 
     return 1;
 }
 
-quint32 getRealDuration(SpellEntry const* spellInfo, quint8 effIndex)
+quint32 getRealDuration(SpellInfo const* spellInfo, quint8 effIndex)
 {
     return quint32(getDuration(spellInfo) / (spellInfo->getEffectAmplitude(effIndex) ? quint32(spellInfo->getEffectAmplitude(effIndex) / 1000) : 5));
 }
 
-void RegExpU(SpellEntry const* spellInfo, QRegExp rx, QString &str)
+void RegExpU(SpellInfo const* spellInfo, QRegExp rx, QString &str)
 {
     if (!rx.cap(4).isEmpty())
     {
-        SpellEntry const* tSpell = sSpellStore.LookupEntry(rx.cap(4).toInt());
+        SpellInfo const* tSpell = GetSpellInfo(rx.cap(4).toInt());
         if (tSpell)
         {
             str.replace(rx.cap(0), QString("%0")
@@ -56,11 +51,11 @@ void RegExpU(SpellEntry const* spellInfo, QRegExp rx, QString &str)
     }
 }
 
-void RegExpH(SpellEntry const* spellInfo, QRegExp rx, QString &str)
+void RegExpH(SpellInfo const* spellInfo, QRegExp rx, QString &str)
 {
     if (!rx.cap(4).isEmpty())
     {
-        SpellEntry const* tSpell = sSpellStore.LookupEntry(rx.cap(4).toInt());
+        SpellInfo const* tSpell = GetSpellInfo(rx.cap(4).toInt());
         if (tSpell)
         {
             str.replace(rx.cap(0), QString("%0")
@@ -74,11 +69,11 @@ void RegExpH(SpellEntry const* spellInfo, QRegExp rx, QString &str)
     }
 }
 
-void RegExpV(SpellEntry const* spellInfo, QRegExp rx, QString &str)
+void RegExpV(SpellInfo const* spellInfo, QRegExp rx, QString &str)
 {
     if (!rx.cap(4).isEmpty())
     {
-        SpellEntry const* tSpell = sSpellStore.LookupEntry(rx.cap(4).toInt());
+        SpellInfo const* tSpell = GetSpellInfo(rx.cap(4).toInt());
         if (tSpell)
         {
             str.replace(rx.cap(0), QString("%0")
@@ -92,13 +87,13 @@ void RegExpV(SpellEntry const* spellInfo, QRegExp rx, QString &str)
     }
 }
 
-void RegExpQ(SpellEntry const* spellInfo, QRegExp rx, QString &str)
+void RegExpQ(SpellInfo const* spellInfo, QRegExp rx, QString &str)
 {
     if (!rx.cap(3).isEmpty())
     {
         if (!rx.cap(4).isEmpty())
         {
-            SpellEntry const* tSpell = sSpellStore.LookupEntry(rx.cap(4).toInt());
+            SpellInfo const* tSpell = GetSpellInfo(rx.cap(4).toInt());
             if (tSpell)
             {
                 if (rx.cap(2) == QString("/"))
@@ -129,7 +124,7 @@ void RegExpQ(SpellEntry const* spellInfo, QRegExp rx, QString &str)
     }
     else if (!rx.cap(4).isEmpty())
     {
-        SpellEntry const* tSpell = sSpellStore.LookupEntry(rx.cap(4).toInt());
+        SpellInfo const* tSpell = GetSpellInfo(rx.cap(4).toInt());
         if (tSpell)
         {
             str.replace(rx.cap(0), QString("%0")
@@ -143,11 +138,11 @@ void RegExpQ(SpellEntry const* spellInfo, QRegExp rx, QString &str)
     }
 }
 
-void RegExpI(SpellEntry const* spellInfo, QRegExp rx, QString &str)
+void RegExpI(SpellInfo const* spellInfo, QRegExp rx, QString &str)
 {
     if (!rx.cap(4).isEmpty())
     {
-        SpellEntry const* tSpell = sSpellStore.LookupEntry(rx.cap(4).toInt());
+        SpellInfo const* tSpell = GetSpellInfo(rx.cap(4).toInt());
         if (tSpell)
         {
             if (tSpell->getMaxAffectedTargets() != 0)
@@ -175,13 +170,13 @@ void RegExpI(SpellEntry const* spellInfo, QRegExp rx, QString &str)
     }
 }
 
-void RegExpB(SpellEntry const* spellInfo, QRegExp rx, QString &str)
+void RegExpB(SpellInfo const* spellInfo, QRegExp rx, QString &str)
 {
     if (!rx.cap(3).isEmpty())
     {
         if (!rx.cap(4).isEmpty())
         {
-            SpellEntry const* tSpell = sSpellStore.LookupEntry(rx.cap(4).toInt());
+            SpellInfo const* tSpell = GetSpellInfo(rx.cap(4).toInt());
             if (tSpell)
             {
                 if (rx.cap(2) == QString("/"))
@@ -212,7 +207,7 @@ void RegExpB(SpellEntry const* spellInfo, QRegExp rx, QString &str)
     }
     else if (!rx.cap(4).isEmpty())
     {
-        SpellEntry const* tSpell = sSpellStore.LookupEntry(rx.cap(4).toInt());
+        SpellInfo const* tSpell = GetSpellInfo(rx.cap(4).toInt());
         if (tSpell)
         {
             str.replace(rx.cap(0), QString("%0")
@@ -226,13 +221,13 @@ void RegExpB(SpellEntry const* spellInfo, QRegExp rx, QString &str)
     }
 }
 
-void RegExpA(SpellEntry const* spellInfo, QRegExp rx, QString &str)
+void RegExpA(SpellInfo const* spellInfo, QRegExp rx, QString &str)
 {
     if (!rx.cap(3).isEmpty())
     {
         if (!rx.cap(4).isEmpty())
         {
-            SpellEntry const* tSpell = sSpellStore.LookupEntry(rx.cap(4).toInt());
+            SpellInfo const* tSpell = GetSpellInfo(rx.cap(4).toInt());
             if (tSpell)
             {
                 if (rx.cap(2) == QString("/"))
@@ -263,7 +258,7 @@ void RegExpA(SpellEntry const* spellInfo, QRegExp rx, QString &str)
     }
     else if (!rx.cap(4).isEmpty())
     {
-        SpellEntry const* tSpell = sSpellStore.LookupEntry(rx.cap(4).toInt());
+        SpellInfo const* tSpell = GetSpellInfo(rx.cap(4).toInt());
         if (tSpell)
         {
             str.replace(rx.cap(0), QString("%0")
@@ -277,13 +272,13 @@ void RegExpA(SpellEntry const* spellInfo, QRegExp rx, QString &str)
     }
 }
 
-void RegExpD(SpellEntry const* spellInfo, QRegExp rx, QString &str)
+void RegExpD(SpellInfo const* spellInfo, QRegExp rx, QString &str)
 {
     if (!rx.cap(3).isEmpty())
     {
         if (!rx.cap(4).isEmpty())
         {
-            SpellEntry const* tSpell = sSpellStore.LookupEntry(rx.cap(4).toInt());
+            SpellInfo const* tSpell = GetSpellInfo(rx.cap(4).toInt());
             if (tSpell)
             {
                 if (rx.cap(2) == QString("/"))
@@ -314,7 +309,7 @@ void RegExpD(SpellEntry const* spellInfo, QRegExp rx, QString &str)
     }
     else if (!rx.cap(4).isEmpty())
     {
-        SpellEntry const* tSpell = sSpellStore.LookupEntry(rx.cap(4).toInt());
+        SpellInfo const* tSpell = GetSpellInfo(rx.cap(4).toInt());
         if (tSpell)
         {
             str.replace(rx.cap(0), QString("%0 seconds")
@@ -328,13 +323,13 @@ void RegExpD(SpellEntry const* spellInfo, QRegExp rx, QString &str)
     }
 }
 
-void RegExpO(SpellEntry const* spellInfo, QRegExp rx, QString &str)
+void RegExpO(SpellInfo const* spellInfo, QRegExp rx, QString &str)
 {
     if (!rx.cap(3).isEmpty())
     {
         if (!rx.cap(4).isEmpty())
         {
-            SpellEntry const* tSpell = sSpellStore.LookupEntry(rx.cap(4).toInt());
+            SpellInfo const* tSpell = GetSpellInfo(rx.cap(4).toInt());
             if (tSpell)
             {
                 if (rx.cap(2) == QString("/"))
@@ -365,7 +360,7 @@ void RegExpO(SpellEntry const* spellInfo, QRegExp rx, QString &str)
     }
     else if (!rx.cap(4).isEmpty())
     {
-        SpellEntry const* tSpell = sSpellStore.LookupEntry(rx.cap(4).toInt());
+        SpellInfo const* tSpell = GetSpellInfo(rx.cap(4).toInt());
         if (tSpell)
         {
             str.replace(rx.cap(0), QString("%0")
@@ -379,13 +374,13 @@ void RegExpO(SpellEntry const* spellInfo, QRegExp rx, QString &str)
     }
 }
 
-void RegExpS(SpellEntry const* spellInfo, QRegExp rx, QString &str)
+void RegExpS(SpellInfo const* spellInfo, QRegExp rx, QString &str)
 {
     if (!rx.cap(3).isEmpty())
     {
         if (!rx.cap(4).isEmpty())
         {
-            SpellEntry const* tSpell = sSpellStore.LookupEntry(rx.cap(4).toInt());
+            SpellInfo const* tSpell = GetSpellInfo(rx.cap(4).toInt());
             if (tSpell)
             {
                 if (rx.cap(2) == QString("/"))
@@ -416,7 +411,7 @@ void RegExpS(SpellEntry const* spellInfo, QRegExp rx, QString &str)
     }
     else if (!rx.cap(4).isEmpty())
     {
-        SpellEntry const* tSpell = sSpellStore.LookupEntry(rx.cap(4).toInt());
+        SpellInfo const* tSpell = GetSpellInfo(rx.cap(4).toInt());
         if (tSpell)
         {
             str.replace(rx.cap(0), QString("%0")
@@ -430,13 +425,13 @@ void RegExpS(SpellEntry const* spellInfo, QRegExp rx, QString &str)
     }
 }
 
-void RegExpT(SpellEntry const* spellInfo, QRegExp rx, QString &str)
+void RegExpT(SpellInfo const* spellInfo, QRegExp rx, QString &str)
 {
     if (!rx.cap(3).isEmpty())
     {
         if (!rx.cap(4).isEmpty())
         {
-            SpellEntry const* tSpell = sSpellStore.LookupEntry(rx.cap(4).toInt());
+            SpellInfo const* tSpell = GetSpellInfo(rx.cap(4).toInt());
             if (tSpell)
             {
                 if (rx.cap(2) == QString("/"))
@@ -467,7 +462,7 @@ void RegExpT(SpellEntry const* spellInfo, QRegExp rx, QString &str)
     }
     else if (!rx.cap(4).isEmpty())
     {
-        SpellEntry const* tSpell = sSpellStore.LookupEntry(rx.cap(4).toInt());
+        SpellInfo const* tSpell = GetSpellInfo(rx.cap(4).toInt());
         if (tSpell)
         {
             str.replace(rx.cap(0), QString("%0")
@@ -481,11 +476,11 @@ void RegExpT(SpellEntry const* spellInfo, QRegExp rx, QString &str)
     }
 }
 
-void RegExpN(SpellEntry const* spellInfo, QRegExp rx, QString &str)
+void RegExpN(SpellInfo const* spellInfo, QRegExp rx, QString &str)
 {
     if (!rx.cap(4).isEmpty())
     {
-        SpellEntry const* tSpell = sSpellStore.LookupEntry(rx.cap(4).toInt());
+        SpellInfo const* tSpell = GetSpellInfo(rx.cap(4).toInt());
         if (tSpell)
         {
             str.replace(rx.cap(0), QString("%0")
@@ -499,11 +494,11 @@ void RegExpN(SpellEntry const* spellInfo, QRegExp rx, QString &str)
     }
 }
 
-void RegExpX(SpellEntry const* spellInfo, QRegExp rx, QString &str)
+void RegExpX(SpellInfo const* spellInfo, QRegExp rx, QString &str)
 {
     if (!rx.cap(4).isEmpty())
     {
-        SpellEntry const* tSpell = sSpellStore.LookupEntry(rx.cap(4).toInt());
+        SpellInfo const* tSpell = GetSpellInfo(rx.cap(4).toInt());
         if (tSpell)
         {
             str.replace(rx.cap(0), QString("%0")
@@ -517,7 +512,7 @@ void RegExpX(SpellEntry const* spellInfo, QRegExp rx, QString &str)
     }
 }
 
-QString SWObject::getDescription(QString str, SpellEntry const* spellInfo)
+QString SWObject::getDescription(QString str, SpellInfo const* spellInfo)
 {
     if (!m_form->isRegExp())
         return str;
@@ -537,7 +532,7 @@ QString SWObject::getDescription(QString str, SpellEntry const* spellInfo)
             if (rx.cap(5).toLower() == "spelldesc")
             {
                 quint32 spellId = rx.cap(6).toInt();
-                if (SpellEntry const* other = sSpellStore.LookupEntry(spellId))
+                if (SpellInfo const* other = GetSpellInfo(spellId))
                 {
                     str.replace(rx.cap(0), other->Description);
                 }
@@ -579,31 +574,23 @@ QString SWObject::getDescription(QString str, SpellEntry const* spellInfo)
 std::list<quint32> SWObject::getParentSpellIds(quint32 triggerId)
 {
     std::list<quint32> l;
-    for (quint32 i = 0; i < sSpellStore.GetNumRows(); ++i)
-        if (SpellEntry const* spellInfo = sSpellStore.LookupEntry(i))
-            for (quint8 eff = EFFECT_INDEX_0; eff < MAX_EFFECT_INDEX; ++eff)
-            {
-                if (spellInfo->getEffectTriggerSpell(eff) == triggerId)
-                    l.push_back(spellInfo->Id);
-                else if ((spellInfo->getEffectApplyAuraName(eff) == 332 || spellInfo->getEffectApplyAuraName(eff) == 333) &&
-                         spellInfo->getEffectBasePoints(eff) == triggerId)
-                    l.push_back(spellInfo->Id);
-            }
+    for (auto itr : sSpellInfoStore)
+    {
+        SpellInfo const* spellInfo = itr.second;
+        for (quint8 eff = EFFECT_INDEX_0; eff < MAX_EFFECT_INDEX; ++eff)
+        {
+            if (spellInfo->getEffectTriggerSpell(eff) == triggerId)
+                l.push_back(spellInfo->Id);
+            else if ((spellInfo->getEffectApplyAuraName(eff) == 332 || spellInfo->getEffectApplyAuraName(eff) == 333) &&
+                     spellInfo->getEffectBasePoints(eff) == triggerId)
+                l.push_back(spellInfo->Id);
+        }
+    }
 
     return l;
 }
 
-QString SWObject::getSpellIconName(quint32 iconId)
-{
-    SpellIconEntry const* iconInfo = sSpellIconStore.LookupEntry(iconId);
-
-    if (!iconInfo)
-        return QString("");
-
-    return QString(iconInfo->IconPath).section('\\', -1);
-}
-
-void SWObject::showInfo(SpellEntry const* spellInfo, quint8 num)
+void SWObject::showInfo(SpellInfo const* spellInfo, quint8 num)
 {
     if (!spellInfo)
         return;
@@ -653,7 +640,7 @@ void SWObject::showInfo(SpellEntry const* spellInfo, quint8 num)
                         "</style>"
                         "<div class='icon'><div><div>"
                         "</div></div></div>"
-                        "</div>").arg(getSpellIconName(spellInfo->getSpellIconId()).toLower()));
+                        "</div>").arg(spellInfo->getSpellIconName().toLower()));
 
     html.append("<div class='b-tooltip_body'>");
 
@@ -680,7 +667,7 @@ void SWObject::showInfo(SpellEntry const* spellInfo, quint8 num)
         html.append("<div class='b-vlink'><b>Parent spells:</b><br>");
         for (std::list<quint32>::const_iterator itr = parentSpells.begin(); itr != parentSpells.end(); ++itr)
         {
-            if (SpellEntry const* parentInfo = sSpellStore.LookupEntry(*itr))
+            if (SpellInfo const* parentInfo = GetSpellInfo(*itr))
             {
                 QString sParentName(QString::fromUtf8(parentInfo->SpellName));
                 QString sParentRank(QString::fromUtf8(parentInfo->Rank));
@@ -1031,10 +1018,9 @@ void SWObject::showInfo(SpellEntry const* spellInfo, quint8 num)
     browser->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
 }
 
-void SWObject::appendRangeInfo(SpellEntry const* spellInfo, quint8 /*num*/)
+void SWObject::appendRangeInfo(SpellInfo const* spellInfo, quint8 /*num*/)
 {
-    SpellRangeEntry const* range = sSpellRangeStore.LookupEntry(spellInfo->getRangeIndex());
-    if (range)
+    if (SpellRangeEntry const* range = spellInfo->rangeEntry)
     {
         html.append(QString("<li>SpellRange (Id %0) \"%1\"</li>"
                             "<ul><li>MinRange = %2</li>"
@@ -1046,7 +1032,7 @@ void SWObject::appendRangeInfo(SpellEntry const* spellInfo, quint8 /*num*/)
     }
 }
 
-void SWObject::appendProcInfo(SpellEntry const* spellInfo, quint8 /*num*/)
+void SWObject::appendProcInfo(SpellInfo const* spellInfo, quint8 /*num*/)
 {
     quint8 i = 0;
     quint64 proc = spellInfo->getProcFlags();
@@ -1062,13 +1048,13 @@ void SWObject::appendProcInfo(SpellEntry const* spellInfo, quint8 /*num*/)
     html.append("</ul>");
 }
 
-void SWObject::appendSpellEffectInfo(SpellEntry const* spellInfo, quint8 num)
+void SWObject::appendSpellEffectInfo(SpellInfo const* spellInfo, quint8 num)
 {
     html.append("<div class='b-box-title'>Effects</div>"
                 "<div class='b-box-body'>"
                 "<div class='b-box'>");
 
-    quint8 effectsCount = getEffectsCount(spellInfo->Id);
+    quint8 effectsCount = spellInfo->getMaxEffect();
     for (quint8 eff = 0; eff < effectsCount; ++eff)
     {
         if (!spellInfo->getSpellEffect(eff))
@@ -1163,43 +1149,40 @@ void SWObject::appendSpellEffectInfo(SpellEntry const* spellInfo, quint8 num)
                                 .arg(sClassMask0.toUpper()));
 
                 html.append("<ul>");
-                for (quint32 i = 0; i < sSpellStore.GetNumRows(); ++i)
+                for (auto itr : sSpellInfoStore)
                 {
-                    SpellEntry const* t_spellInfo = sSpellStore.LookupEntry(i);
-                    if (t_spellInfo)
+                    SpellInfo const* t_spellInfo = itr.second;
+                    bool hasSkill = false;
+                    if ((itr.second->getSpellFamilyName() == spellInfo->getSpellFamilyName()) &&
+                        ((itr.second->getSpellFamilyFlags(0) & ClassMask[0]) ||
+                         (itr.second->getSpellFamilyFlags(1) & ClassMask[1]) ||
+                         (itr.second->getSpellFamilyFlags(2) & ClassMask[2]) ||
+                         (itr.second->getSpellFamilyFlags(3) & ClassMask[3])))
                     {
-                        bool hasSkill = false;
-                        if ((t_spellInfo->getSpellFamilyName() == spellInfo->getSpellFamilyName()) &&
-                            ((t_spellInfo->getSpellFamilyFlags(0) & ClassMask[0]) ||
-                             (t_spellInfo->getSpellFamilyFlags(1) & ClassMask[1]) ||
-                             (t_spellInfo->getSpellFamilyFlags(2) & ClassMask[2]) ||
-                             (t_spellInfo->getSpellFamilyFlags(3) & ClassMask[3])))
+                        QString sName(QString::fromUtf8(t_spellInfo->SpellName));
+                        QString sRank(QString::fromUtf8(t_spellInfo->Rank));
+
+                        if (!sRank.isEmpty())
+                            sName.append(" (" + sRank + ")");
+
+                        for (quint32 sk = 0; sk < sSkillLineAbilityStore.GetNumRows(); sk++)
                         {
-                            QString sName(QString::fromUtf8(t_spellInfo->SpellName));
-                            QString sRank(QString::fromUtf8(t_spellInfo->Rank));
-
-                            if (!sRank.isEmpty())
-                                sName.append(" (" + sRank + ")");
-
-                            for (quint32 sk = 0; sk < sSkillLineAbilityStore.GetNumRows(); sk++)
+                            SkillLineAbilityEntry const* skillInfo = sSkillLineAbilityStore.LookupEntry(sk);
+                            if (skillInfo && skillInfo->SpellId == t_spellInfo->Id && skillInfo->SkillId > 0)
                             {
-                                SkillLineAbilityEntry const* skillInfo = sSkillLineAbilityStore.LookupEntry(sk);
-                                if (skillInfo && skillInfo->SpellId == t_spellInfo->Id && skillInfo->SkillId > 0)
-                                {
-                                    hasSkill = true;
-                                    html.append(QString("<li><a href='http://spellwork/%1' class='blue_link'>+ %1 - %2</a></li>")
-                                            .arg(t_spellInfo->Id)
-                                            .arg(sName));
-                                    break;
-                                }
-                            }
-
-                            if (!hasSkill)
-                            {
-                                html.append(QString("<li><a href='http://spellwork/%1' class='red_link'>- %1 - %2</a></li>")
+                                hasSkill = true;
+                                html.append(QString("<li><a href='http://spellwork/%1' class='blue_link'>+ %1 - %2</a></li>")
                                         .arg(t_spellInfo->Id)
                                         .arg(sName));
+                                break;
                             }
+                        }
+
+                        if (!hasSkill)
+                        {
+                            html.append(QString("<li><a href='http://spellwork/%1' class='red_link'>- %1 - %2</a></li>")
+                                    .arg(t_spellInfo->Id)
+                                    .arg(sName));
                         }
                     }
                 }
@@ -1212,12 +1195,12 @@ void SWObject::appendSpellEffectInfo(SpellEntry const* spellInfo, quint8 num)
     html.append("</div></div>");
 }
 
-void SWObject::appendTriggerInfo(SpellEntry const* spellInfo, quint8 index, quint8 num)
+void SWObject::appendTriggerInfo(SpellInfo const* spellInfo, quint8 index, quint8 num)
 {
     quint32 trigger = spellInfo->getEffectTriggerSpell(index);
     if (trigger != 0)
     {
-        SpellEntry const* triggerSpell = sSpellStore.LookupEntry(trigger);
+        SpellInfo const* triggerSpell = GetSpellInfo(trigger);
         if (triggerSpell)
         {
             QString sName(QString::fromUtf8(triggerSpell->SpellName));
@@ -1257,23 +1240,21 @@ void SWObject::appendTriggerInfo(SpellEntry const* spellInfo, quint8 index, quin
     }
 }
 
-void SWObject::appendRadiusInfo(SpellEntry const* spellInfo, quint8 index, quint8 /*num*/)
+void SWObject::appendRadiusInfo(SpellInfo const* spellInfo, quint8 index, quint8 /*num*/)
 {
-    quint16 rIndex = spellInfo->getEffectRadiusIndex(index);
-    quint16 rIndexMax = spellInfo->getEffectRadiusMaxIndex(index);
-    if (!rIndex && !rIndexMax)
+
+    SpellRadiusEntry const* spellRadius = spellInfo->spellRadius[index];
+    SpellRadiusEntry const* spellRadiusMax = spellInfo->spellRadius[index];
+    if (!spellRadius && !spellRadiusMax)
         return;
 
-    SpellRadiusEntry const* spellRadius = sSpellRadiusStore.LookupEntry(rIndex);
-    SpellRadiusEntry const* spellRadiusMax = sSpellRadiusStore.LookupEntry(rIndexMax);
-
     QString str = QString("<li>Radius (Id %0) %1 Max: (Id %2) %3</li>");
-    str = str.arg(rIndex);
+    str = str.arg(spellRadius->Id);
     if (spellRadius)
         str = str.arg(spellRadius->Radius, 0, 'f', 2);
     else
         str = str.arg("Not found");
-    str = str.arg(rIndexMax);
+    str = str.arg(spellRadiusMax->Id);
     if (spellRadiusMax)
         str = str.arg(spellRadiusMax->Radius, 0, 'f', 2);
     else
@@ -1282,7 +1263,7 @@ void SWObject::appendRadiusInfo(SpellEntry const* spellInfo, quint8 index, quint
     html.append(str);
 }
 
-void SWObject::appendAuraInfo(SpellEntry const* spellInfo, quint8 index, quint8 /*num*/)
+void SWObject::appendAuraInfo(SpellInfo const* spellInfo, quint8 index, quint8 /*num*/)
 {
     QString sAura(m_enums->getSpellAuras()[spellInfo->getEffectApplyAuraName(index)]);
     quint32 misc = spellInfo->getEffectMiscValue(index);
@@ -1345,7 +1326,7 @@ void SWObject::appendAuraInfo(SpellEntry const* spellInfo, quint8 index, quint8 
     html.append(_Result + "</li>");
 }
 
-QString SWObject::containAttributes(SpellEntry const* spellInfo, AttrType attr, quint8 index)
+QString SWObject::containAttributes(SpellInfo const* spellInfo, AttrType attr, quint8 index)
 {
     QString str("");
     switch (attr)
@@ -1737,7 +1718,7 @@ QString SWObject::getClassName(quint32 unitClass)
     return entry ? entry->name : "Unknown";
 }
 
-void SWObject::appendSpecInfo(SpellEntry const* spellInfo, quint8 /*num*/)
+void SWObject::appendSpecInfo(SpellInfo const* spellInfo, quint8 /*num*/)
 {
     QString specInfo;
     for (quint32 i = 0; i < sSpecializationSpellsStore.GetNumRows(); ++i)
@@ -1770,56 +1751,48 @@ void SWObject::appendSpecInfo(SpellEntry const* spellInfo, quint8 /*num*/)
     }
 }
 
-void SWObject::appendTalentInfo(SpellEntry const* spellInfo, quint8 /*num*/)
+void SWObject::appendTalentInfo(SpellInfo const* spellInfo, quint8 /*num*/)
 {
-    for (quint32 i = 0; i < sTalentStore.GetNumRows(); ++i)
-    {
-        if (TalentEntry const* entry = sTalentStore.LookupEntry(i))
-        {
-            if (entry->spell == spellInfo->Id)
-            {
-                QString app = QString("<li>Talent Id: %0 Class: \"%1\" (%2)</li>")
-                        .arg(entry->Id).arg(getClassName(entry->Class)).arg(entry->Class);
-                if (entry->replaceSpellId)
-                    app += QString("<ul><li>Overrides spell: %0</li></ul>").arg(getSpellLink(entry->replaceSpellId));
-                html.append(app);
-                break;
-            }
-        }
-    }
+    TalentEntry const* entry = spellInfo->talentEntry;
+    if (!entry)
+        return;
+
+    QString app = QString("<li>Talent Id: %0 Class: \"%1\" (%2)</li>")
+            .arg(entry->Id).arg(getClassName(entry->Class)).arg(entry->Class);
+    if (entry->replaceSpellId)
+        app += QString("<ul><li>Overrides spell: %0</li></ul>").arg(getSpellLink(entry->replaceSpellId));
+    html.append(app);
 }
 
-void SWObject::appendReplacementInfo(SpellEntry const* spellInfo, quint8 /*num*/)
+void SWObject::appendReplacementInfo(SpellInfo const* spellInfo, quint8 /*num*/)
 {
     QString auraReplaceInfo;
-    for (quint32 i = 0; i < sSpellStore.GetNumRows(); ++i)
+    for (auto itr : sSpellInfoStore)
     {
-        if (SpellEntry const* entry = sSpellStore.LookupEntry(i))
+        SpellInfo const* entry = itr.second;
+        if (entry->getSpellFamilyName() != spellInfo->getSpellFamilyName())
+            continue;
+
+        bool matches = false;
+        for (quint32 eff = 0; eff < MAX_EFFECT_INDEX; ++eff)
         {
-            if (entry->getSpellFamilyName() != spellInfo->getSpellFamilyName())
-                continue;
-
-            bool matches = false;
-            for (quint32 eff = 0; eff < MAX_EFFECT_INDEX; ++eff)
+            if (entry->getEffectApplyAuraName(eff) == 332 || entry->getEffectApplyAuraName(eff) == 333)
             {
-                if (entry->getEffectApplyAuraName(eff) == 332 || entry->getEffectApplyAuraName(eff) == 333)
-                {
-                    quint32 replaceSpell = entry->getEffectBasePoints(eff);
-                    if (replaceSpell == spellInfo->Id)
-                        break;
+                quint32 replaceSpell = entry->getEffectBasePoints(eff);
+                if (replaceSpell == spellInfo->Id)
+                    break;
 
-                    for (quint32 j = 0; j < MAX_CLASS_MASK; ++j)
-                        if (entry->getEffectSpellClassMask(eff, j) & spellInfo->getSpellFamilyFlags(j))
-                        {
-                            matches = true;
-                            auraReplaceInfo += QString("<li>Replaced by %0 aura to %1</li>")
-                                    .arg(getSpellLink(entry->Id)
-                                    .arg(getSpellLink(replaceSpell)));
-                            break;
-                        }
-                    if (matches)
+                for (quint32 j = 0; j < MAX_CLASS_MASK; ++j)
+                    if (entry->getEffectSpellClassMask(eff, j) & spellInfo->getSpellFamilyFlags(j))
+                    {
+                        matches = true;
+                        auraReplaceInfo += QString("<li>Replaced by %0 aura to %1</li>")
+                                .arg(getSpellLink(entry->Id)
+                                .arg(getSpellLink(replaceSpell)));
                         break;
-                }
+                    }
+                if (matches)
+                    break;
             }
         }
     }
@@ -1846,7 +1819,7 @@ void SWObject::appendReplacementInfo(SpellEntry const* spellInfo, quint8 /*num*/
             if (entry->OverrideSpell != spellInfo->Id)
                 continue;
 
-            SpellEntry const* replace = sSpellStore.LookupEntry(entry->LearnSpell);
+            SpellInfo const* replace = GetSpellInfo(entry->LearnSpell);
             if (!replace)
                 continue;
 
@@ -1873,7 +1846,7 @@ void SWObject::appendReplacementInfo(SpellEntry const* spellInfo, quint8 /*num*/
         html.append(QString("<ul>%0</ul>").arg(specReplaceInfo));
 }
 
-void SWObject::appendSkillInfo(SpellEntry const* spellInfo, quint8 /*num*/)
+void SWObject::appendSkillInfo(SpellInfo const* spellInfo, quint8 /*num*/)
 {
     for (quint32 i = 0; i < sSkillLineAbilityStore.GetNumRows(); ++i)
     {
@@ -1903,10 +1876,9 @@ void SWObject::appendSkillInfo(SpellEntry const* spellInfo, quint8 /*num*/)
     }
 }
 
-void SWObject::appendCastTimeInfo(SpellEntry const* spellInfo, quint8 /*num*/)
+void SWObject::appendCastTimeInfo(SpellInfo const* spellInfo, quint8 /*num*/)
 {
-    SpellCastTimesEntry const* castInfo = sSpellCastTimesStore.LookupEntry(spellInfo->getCastingTimeIndex());
-    if (castInfo)
+    if (SpellCastTimesEntry const* castInfo = spellInfo->castTimeEntry)
     {
         html.append(QString("<li>CastingTime (Id %0) = %1</li>")
             .arg(castInfo->Id)
@@ -1914,10 +1886,9 @@ void SWObject::appendCastTimeInfo(SpellEntry const* spellInfo, quint8 /*num*/)
     }
 }
 
-void SWObject::appendDurationInfo(SpellEntry const* spellInfo, quint8 /*num*/)
+void SWObject::appendDurationInfo(SpellInfo const* spellInfo, quint8 /*num*/)
 {
-    SpellDurationEntry const* durationInfo = sSpellDurationStore.LookupEntry(spellInfo->getDurationIndex());
-    if (durationInfo)
+    if (SpellDurationEntry const* durationInfo = spellInfo->durationInfo)
     {
         html.append(QString("<li>Duration: ID (%0)  %1, %2, %3</li>")
             .arg(durationInfo->Id)
@@ -2079,12 +2050,12 @@ void SWObject::compare()
 
 QString SWObject::getSpellLink(quint32 spellId)
 {
-    if (SpellEntry const* entry = sSpellStore.LookupEntry(spellId))
+    if (SpellInfo const* entry = GetSpellInfo(spellId))
         return QString("<a href='http://spellwork/%0' class='blue_link'>%0 - %1</a>")
                 .arg(entry->Id)
                 .arg(entry->SpellName);
     else
-        return QString("%0 - not found");
+        return QString("%0 - not found").arg(spellId);
 }
 
 quint64 Converter::getULongLong(QString value)

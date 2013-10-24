@@ -173,7 +173,7 @@ void SWMainForm::slotPrevRow()
 
     QVariant var = SpellList->model()->data(SpellList->model()->index(SpellList->currentIndex().row(), 0));
 
-    if (SpellEntry const* spellInfo = sSpellStore.LookupEntry(var.toInt()))
+    if (SpellInfo const* spellInfo = GetSpellInfo(var.toInt()))
         m_sw->showInfo(spellInfo);
 }
 
@@ -183,7 +183,7 @@ void SWMainForm::slotNextRow()
 
     QVariant var = SpellList->model()->data(SpellList->model()->index(SpellList->currentIndex().row(), 0));
 
-    if (SpellEntry const* spellInfo = sSpellStore.LookupEntry(var.toInt()))
+    if (SpellInfo const* spellInfo = GetSpellInfo(var.toInt()))
         m_sw->showInfo(spellInfo);
 }
 
@@ -191,15 +191,11 @@ void SWMainForm::initializeCompleter()
 {
     QSet<QString> names;
 
-    for (quint32 i = 0; i < sSpellStore.GetNumRows(); ++i)
+    for (auto itr : sSpellInfoStore)
     {
-        SpellEntry const* spellInfo = sSpellStore.LookupEntry(i);
-        if (spellInfo)
-        {
-            QString sName = QString::fromUtf8(spellInfo->SpellName);
-            if (names.find(sName) == names.end())
-                names << sName;
-        }
+        QString sName = QString::fromUtf8(itr.second->SpellName);
+        if (names.find(sName) == names.end())
+            names << sName;
     }
 
     QCompleter* completer = new QCompleter(names.toList(), this);
@@ -240,17 +236,17 @@ void SWMainForm::slotLinkClicked(const QUrl &url)
     {
         case 1:
         {
-            if (SpellEntry const* spellInfo = sSpellStore.LookupEntry(id))
+            if (SpellInfo const* spellInfo = GetSpellInfo(id))
                 m_sw->showInfo(spellInfo, browserId);
             break;
         }
         case 2:
         {
-            if (SpellEntry const* spellInfo = sSpellStore.LookupEntry(id))
+            if (SpellInfo const* spellInfo = GetSpellInfo(id))
                 m_sw->showInfo(spellInfo, browserId);
 
             qint32 id3 = webView3->url().toString().section('/', -1).toInt();
-            if (SpellEntry const* spellInfo = sSpellStore.LookupEntry(id3))
+            if (SpellInfo const* spellInfo = GetSpellInfo(id3))
                 m_sw->showInfo(spellInfo, 3);
 
             m_sw->compare();
@@ -258,11 +254,11 @@ void SWMainForm::slotLinkClicked(const QUrl &url)
         }
         case 3:
         {
-            if (SpellEntry const* spellInfo = sSpellStore.LookupEntry(id))
+            if (SpellInfo const* spellInfo = GetSpellInfo(id))
                 m_sw->showInfo(spellInfo, browserId);
 
             qint32 id2 = webView2->url().toString().section('/', -1).toInt();
-            if (SpellEntry const* spellInfo = sSpellStore.LookupEntry(id2))
+            if (SpellInfo const* spellInfo = GetSpellInfo(id2))
                 m_sw->showInfo(spellInfo, 2);
 
             m_sw->compare();
@@ -436,17 +432,17 @@ void SWMainForm::slotRegExp()
         m_regExp->setText("<font color=red>Off</font>");
     }
 
-    if (SpellEntry const* spellInfo = sSpellStore.LookupEntry(webView1->url().path().remove(0, 1).toInt()))
+    if (SpellInfo const* spellInfo = GetSpellInfo(webView1->url().path().remove(0, 1).toInt()))
         m_sw->showInfo(spellInfo);
 
     bool compared[2] = { false, false };
-    if (SpellEntry const* spellInfo = sSpellStore.LookupEntry(webView2->url().path().remove(0, 1).toInt()))
+    if (SpellInfo const* spellInfo = GetSpellInfo(webView2->url().path().remove(0, 1).toInt()))
     {
         m_sw->showInfo(spellInfo, 2);
         compared[0] = true;
     }
 
-    if (SpellEntry const* spellInfo = sSpellStore.LookupEntry(webView3->url().path().remove(0, 1).toInt()))
+    if (SpellInfo const* spellInfo = GetSpellInfo(webView3->url().path().remove(0, 1).toInt()))
     {
         m_sw->showInfo(spellInfo, 3);
         compared[1] = true;
@@ -496,7 +492,7 @@ void SWMainForm::slotSearchFromList(const QModelIndex &index)
 {
     QVariant var = SpellList->model()->data(SpellList->model()->index(index.row(), 0));
 
-    if (SpellEntry const* spellInfo = sSpellStore.LookupEntry(var.toInt()))
+    if (SpellInfo const* spellInfo = GetSpellInfo(var.toInt()))
         m_sw->showInfo(spellInfo);
 }
 
@@ -527,15 +523,15 @@ bool SWMainForm::event(QEvent* ev)
         case Event::EVENT_SEND_SPELL:
         {
             Event* m_ev = (Event*)ev;
-            m_sw->showInfo(m_ev->getValue(0).value<const SpellEntry*>());
+            m_sw->showInfo(m_ev->getValue(0).value<const SpellInfo*>());
             return true;
         }
         break;
         case Event::EVENT_SEND_CSPELL:
         {
             Event* m_ev = (Event*)ev;
-            m_sw->showInfo(m_ev->getValue(0).value<const SpellEntry*>(), 2);
-            m_sw->showInfo(m_ev->getValue(1).value<const SpellEntry*>(), 3);
+            m_sw->showInfo(m_ev->getValue(0).value<const SpellInfo*>(), 2);
+            m_sw->showInfo(m_ev->getValue(1).value<const SpellInfo*>(), 3);
             m_sw->compare();
             return true;
         }

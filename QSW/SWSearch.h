@@ -18,7 +18,7 @@ class MetaSpell : public QObject
     public:
         MetaSpell();
 
-        void setSpell(SpellEntry const* spellInfo) { m_spellInfo = spellInfo; }
+        void setSpell(SpellInfo const* spellInfo) { m_spellInfo = spellInfo; }
 
     public slots:
         quint32 Id() { return m_spellInfo->Id; }
@@ -125,7 +125,7 @@ class MetaSpell : public QObject
         quint32 SpellDescriptionVariableId() { return m_spellInfo->SpellDescriptionVariableId; }
 
     private:
-        SpellEntry const* m_spellInfo;
+        SpellInfo const* m_spellInfo;
 
         Q_PROPERTY(quint32 Id READ Id)
         Q_PROPERTY(quint32 Category READ Category)
@@ -213,7 +213,7 @@ class SWSearch : public QObject
         ~SWSearch();
 
         void search();
-        bool hasValue(SpellEntry const* spellInfo);
+        bool hasValue(SpellInfo const* spellInfo);
 
     private:
         SWObject* m_sw;
