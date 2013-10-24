@@ -576,14 +576,21 @@ QString SWObject::getDescription(QString str, SpellEntry const* spellInfo)
     return str;
 }
 
-quint32 SWObject::getParentSpellId(quint32 triggerId)
+std::list<quint32> SWObject::getParentSpellIds(quint32 triggerId)
 {
+    std::list<quint32> l;
     for (quint32 i = 0; i < sSpellStore.GetNumRows(); ++i)
         if (SpellEntry const* spellInfo = sSpellStore.LookupEntry(i))
             for (quint8 eff = EFFECT_INDEX_0; eff < MAX_EFFECT_INDEX; ++eff)
+            {
                 if (spellInfo->getEffectTriggerSpell(eff) == triggerId)
-                    return spellInfo->Id;
-    return 0;
+                    l.push_back(spellInfo->Id);
+                else if ((spellInfo->getEffectApplyAuraName(eff) == 332 || spellInfo->getEffectApplyAuraName(eff) == 333) &&
+                         spellInfo->getEffectBasePoints(eff) == triggerId)
+                    l.push_back(spellInfo->Id);
+            }
+
+    return l;
 }
 
 QString SWObject::getSpellIconName(quint32 iconId)
@@ -667,20 +674,23 @@ void SWObject::showInfo(SpellEntry const* spellInfo, quint8 num)
 
     html.append("</div>");
 
-    quint32 parentId = getParentSpellId(spellInfo->Id);
-    if (parentId)
+    std::list<quint32> parentSpells = getParentSpellIds(spellInfo->Id);
+    if (!parentSpells.empty())
     {
-        if (SpellEntry const* parentInfo = sSpellStore.LookupEntry(parentId))
+        for (std::list<quint32>::const_iterator itr = parentSpells.begin(); itr != parentSpells.end(); ++itr)
         {
-            QString sParentName(QString::fromUtf8(parentInfo->SpellName));
-            QString sParentRank(QString::fromUtf8(parentInfo->Rank));
+            if (SpellEntry const* parentInfo = sSpellStore.LookupEntry(*itr))
+            {
+                QString sParentName(QString::fromUtf8(parentInfo->SpellName));
+                QString sParentRank(QString::fromUtf8(parentInfo->Rank));
 
-            if (!sParentRank.isEmpty())
-                sParentName.append(" (" + sParentRank + ")");
+                if (!sParentRank.isEmpty())
+                    sParentName.append(" (" + sParentRank + ")");
 
-            html.append(QString("<div class='b-vlink'><b>Parent spell:</b> <a href='http://spellwork/%0' class='blue_link'>%0 - %1</a></div>")
-                .arg(parentId)
-                .arg(sParentName));
+                html.append(QString("<div class='b-vlink'><b>Parent spell:</b> <a href='http://spellwork/%0' class='blue_link'>%0 - %1</a></div>")
+                    .arg(*itr)
+                    .arg(sParentName));
+            }
         }
     }
 
@@ -796,7 +806,7 @@ void SWObject::showInfo(SpellEntry const* spellInfo, quint8 num)
                 .arg(containAttributes(spellInfo, TYPE_ATTR_EX11)));
 
         html.append("</ul>"
-	                "</div>"
+                    "</div>"
                     "</div>");
     }
 
@@ -804,6 +814,9 @@ void SWObject::showInfo(SpellEntry const* spellInfo, quint8 num)
                 "<div class='b-box-body'>"
                 "<div class='b-box'>"
                 "<ul>");
+
+    appendSpecInfo(spellInfo, num);
+    appendTalentInfo(spellInfo, num);
 
     if (spellInfo->getTargets())
         html.append(QString("<li>Targets Mask = 0x%0 (%1)</li>")
@@ -886,6 +899,10 @@ void SWObject::showInfo(SpellEntry const* spellInfo, quint8 num)
         .arg(m_enums->getMechanics()[spellInfo->getMechanic()]));
 
     appendRangeInfo(spellInfo, num);
+
+    if (quint32 maxTargets = spellInfo->getMaxAffectedTargets())
+        html.append(QString("<li>Max affected targets: %0</li>")
+            .arg(maxTargets));
 
     if (spellInfo->getSpeed())
         html.append(QString("<li>Speed: %0</li>")
@@ -1041,6 +1058,8 @@ void SWObject::showInfo(SpellEntry const* spellInfo, quint8 num)
             .arg(spellInfo->getProcChance())
             .arg(spellInfo->getProcCharges()));
     }
+
+    appendReplacementInfo(spellInfo, num);
 
     html.append("</ul></div></div>");
 
@@ -1326,11 +1345,26 @@ void SWObject::appendAuraInfo(SpellEntry const* spellInfo, quint8 index, quint8 
         return;
     }
 
-    QString _BaseAuraInfo;
-    _BaseAuraInfo = QString("<li>Aura Id %0 (%1), value = %2, misc = %3 ")
-        .arg(spellInfo->getEffectApplyAuraName(index))
+
+    QString sBp = "%0";
+    quint32 auraId = spellInfo->getEffectApplyAuraName(index);
+    if (auraId == 332 || auraId == 333)
+    {
+        quint32 bp = spellInfo->getEffectBasePoints(index);
+        if (SpellEntry const* replace = sSpellStore.LookupEntry(bp))
+            sBp = sBp.arg(QString("<a href='http://spellwork/%0' class='blue_link'>%0 - %1</a>")
+                        .arg(replace->Id)
+                        .arg(replace->SpellName));
+        else
+            sBp = sBp.arg(bp);
+    }
+    else
+        sBp = sBp.arg(spellInfo->getEffectBasePoints(index));
+
+    QString _BaseAuraInfo = QString("<li>Aura Id %0 (%1), value = %2, misc = %3 ")
+        .arg(auraId)
         .arg(sAura)
-        .arg(spellInfo->getEffectBasePoints(index))
+        .arg(sBp)
         .arg(misc);
 
     QString _SpecialAuraInfo;
@@ -1741,6 +1775,185 @@ QString SWObject::containAttributes(SpellEntry const* spellInfo, AttrType attr, 
         break;
     }
     return str;
+}
+
+QString SWObject::getClassName(quint32 unitClass)
+{
+    ChrClassesEntry const* entry = sChrClassesStore.LookupEntry(unitClass);
+
+    return entry ? entry->name : "Unknown";
+}
+
+void SWObject::appendSpecInfo(SpellEntry const* spellInfo, quint8 num)
+{
+    QString specInfo = "";
+
+    for (quint32 i = 0; i < sSpecializationSpellsStore.GetNumRows(); ++i)
+    {
+        if (SpecializationSpellsEntry const* entry = sSpecializationSpellsStore.LookupEntry(i))
+        {
+            if (entry->LearnSpell != spellInfo->Id)
+                continue;
+
+            if (ChrSpecializationsEntry const* spec = sChrSpecializationStore.LookupEntry((entry->Spec)))
+                specInfo += QString("<li>%0 - \"%1\"")
+                        .arg(entry->Spec).arg(spec->specializationName);
+            else
+                specInfo += QString("<li>%0 - \"%1\"")
+                        .arg(entry->Spec).arg("Unknown");
+
+            if (entry->OverrideSpell)
+            {
+                specInfo += QString(", replaces: %0</li>");
+                if (SpellEntry const* replace = sSpellStore.LookupEntry(entry->OverrideSpell))
+                    specInfo = specInfo.arg(QString("<a href='http://spellwork/%0' class='blue_link'> %0 - %1</a>")
+                                            .arg(replace->Id)
+                                            .arg(replace->SpellName));
+                else
+                    specInfo = specInfo.arg("%0 - &ltunknown&gt")
+                            .arg(entry->OverrideSpell);
+            }
+            else
+                specInfo += "</li>";
+
+        }
+    }
+
+    if (specInfo.size() > 0)
+    {
+        html.append(QString("<li>Used in specializations:</li>"
+                            "<ul>%0</ul></li>")
+                    .arg(specInfo));
+    }
+}
+
+void SWObject::appendTalentInfo(SpellEntry const* spellInfo, quint8 /*num*/)
+{
+    for (quint32 i = 0; i < sTalentStore.GetNumRows(); ++i)
+    {
+        if (TalentEntry const* entry = sTalentStore.LookupEntry(i))
+        {
+            if (entry->spell == spellInfo->Id)
+            {
+                QString app = QString("<li>Talent Id: %0 Class: \"%1\" (%2)</li>")
+                        .arg(entry->Id).arg(getClassName(entry->Class)).arg(entry->Class);
+                if (entry->replaceSpellId)
+                {
+                    app += "<ul><li>Overrides spell: %0</li></ul>";
+                    if (SpellEntry const* replace = sSpellStore.LookupEntry(entry->replaceSpellId))
+                        app = app.arg(QString("<a href='http://spellwork/%0' class='blue_link'> %0 - %1</a>")
+                            .arg(replace->Id)
+                            .arg(replace->SpellName));
+                    else
+                        app = app.arg(QString("%0 - &ltunknown&gt").arg(entry->replaceSpellId));
+                }
+                html.append(app);
+                break;
+            }
+        }
+    }
+}
+
+void SWObject::appendReplacementInfo(SpellEntry const* spellInfo, quint8 /*num*/)
+{
+    QString auraReplaceInfo;
+    for (quint32 i = 0; i < sSpellStore.GetNumRows(); ++i)
+    {
+        if (SpellEntry const* entry = sSpellStore.LookupEntry(i))
+        {
+            if (entry->getSpellFamilyName() != spellInfo->getSpellFamilyName())
+                continue;
+
+            bool matches = false;
+            for (quint32 eff = 0; eff < MAX_EFFECT_INDEX; ++eff)
+            {
+                if (entry->getEffectApplyAuraName(eff) == 332 || entry->getEffectApplyAuraName(eff) == 333)
+                {
+                    quint32 replaceSpell = entry->getEffectBasePoints(eff);
+                    if (replaceSpell == spellInfo->Id)
+                        break;
+
+                    for (quint32 j = 0; j < MAX_CLASS_MASK; ++j)
+                        if (entry->getEffectSpellClassMask(eff, j) & spellInfo->getSpellFamilyFlags(j))
+                        {
+                            matches = true;
+                            auraReplaceInfo += QString("<li>Replaced by %0 aura to %1</li>")
+                                                    .arg(QString("<a href='http://spellwork/%0' class='blue_link'> %0 - %1</a>")
+                                                        .arg(entry->Id)
+                                                        .arg(entry->SpellName));
+
+                            if (SpellEntry const* replace = sSpellStore.LookupEntry(replaceSpell))
+                                auraReplaceInfo = auraReplaceInfo.arg(QString("<a href='http://spellwork/%0' class='blue_link'> %0 - %1</a>")
+                                                                      .arg(replace->Id)
+                                                                      .arg(replace->SpellName));
+                            else if (replaceSpell)
+                                auraReplaceInfo = auraReplaceInfo.arg(QString("%0 - &ltunknown&gt").arg(replaceSpell));
+                            else
+                                auraReplaceInfo = auraReplaceInfo.arg(0);
+                            break;
+                        }
+                    if (matches)
+                        break;
+                }
+            }
+        }
+    }
+
+    QString talentReplaceInfo;
+    for (quint32 i = 0; i < sTalentStore.GetNumRows(); ++i)
+    {
+        if (TalentEntry const* entry = sTalentStore.LookupEntry(i))
+        {
+            if (entry->replaceSpellId != spellInfo->Id)
+                continue;
+
+            SpellEntry const* talent = sSpellStore.LookupEntry(entry->spell);
+            if (!talent)
+                continue;
+
+            talentReplaceInfo += QString("<li>Replaced by %0 talent (%1)</li>")
+                    .arg(QString("<a href='http://spellwork/%0' class='blue_link'> %0 - %1</a>")
+                         .arg(talent->Id)
+                         .arg(talent->SpellName))
+                    .arg(entry->Id);
+        }
+    }
+
+    QString specReplaceInfo;
+    for (quint32 i = 0; i < sSpecializationSpellsStore.GetNumRows(); ++i)
+    {
+        if (SpecializationSpellsEntry const* entry = sSpecializationSpellsStore.LookupEntry(i))
+        {
+            if (entry->OverrideSpell != spellInfo->Id)
+                continue;
+
+            SpellEntry const* replace = sSpellStore.LookupEntry(entry->LearnSpell);
+            if (!replace)
+                continue;
+
+            specReplaceInfo += QString("<li>Replaced by %0 spell in \"%1\" (%2) specialization.</li>")
+                    .arg(QString("<a href='http://spellwork/%0' class='blue_link'> %0 - %1</a>")
+                         .arg(replace->Id)
+                         .arg(replace->SpellName));
+
+            if (ChrSpecializationsEntry const* spec = sChrSpecializationStore.LookupEntry(entry->Spec))
+                specReplaceInfo = specReplaceInfo.arg(spec->specializationName).arg(entry->Spec);
+            else
+                specReplaceInfo = specReplaceInfo.arg("Unknown").arg(entry->Spec);
+        }
+    }
+
+    if (!auraReplaceInfo.size() && !talentReplaceInfo.size() && !specReplaceInfo.size())
+        return;
+
+    html.append("<li>Replacements:</li>");
+
+    if (auraReplaceInfo.size() > 0)
+        html.append(QString("<ul>%0</ul>").arg(auraReplaceInfo));
+    if (talentReplaceInfo.size() > 0)
+        html.append(QString("<ul>%0</ul>").arg(talentReplaceInfo));
+    if (specReplaceInfo.size() > 0)
+        html.append(QString("<ul>%0</ul>").arg(specReplaceInfo));
 }
 
 void SWObject::appendSkillInfo(SpellEntry const* spellInfo, quint8 /*num*/)

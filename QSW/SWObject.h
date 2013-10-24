@@ -16,10 +16,13 @@ class SWObject
         ~SWObject();
 
         void showInfo(SpellEntry const* spellInfo, quint8 num = 0);
-        quint32 getParentSpellId(quint32 triggerId);
+        std::list<quint32> getParentSpellIds(quint32 triggerId);
         void compare();
         void search();
 
+        void appendSpecInfo(SpellEntry const* spellInfo, quint8 num);
+        void appendTalentInfo(SpellEntry const* spellInfo, quint8 num);
+        void appendReplacementInfo(SpellEntry const* spellInfo, quint8 num);
         void appendSkillInfo(SpellEntry const* spellInfo, quint8 num);
         void appendCastTimeInfo(SpellEntry const* spellInfo, quint8 num);
         void appendDurationInfo(SpellEntry const* spellInfo, quint8 num);
@@ -33,6 +36,7 @@ class SWObject
         QString containAttributes(SpellEntry const* spellInfo, AttrType attr, quint8 index = 0);
         QString getDescription(QString str, SpellEntry const *spellInfo);
         QString getSpellIconName(quint32 iconId);
+        QString getClassName(quint32 unitClass);
 
         quint8 getType() const { return m_type; }
         void setType(quint8 type) { m_type = type; }

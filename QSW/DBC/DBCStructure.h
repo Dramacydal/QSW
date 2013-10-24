@@ -15,6 +15,57 @@
 #pragma pack(push,1)
 #endif
 
+struct ChrClassesEntry
+{
+    //quint32 classId;                                            // 0
+    //quint32 powerType;                                          // 1
+    //char* petNameToken;                                         // 2
+    char* name;                                                 // 3
+    //char* nameFemale;                                           // 4
+    //char* nameNeutralGender;                                    // 5
+    //char* capitalizedName;                                      // 6
+    //quint32 spellfamily;                                        // 7
+    //quint32 flags;                                              // 8
+    //quint32 CinematicSequence;                                  // 9
+    //quint32 APPerStrenth;                                       // 10
+    //quint32 APPerAgility;                                       // 11
+    //quint32 RAPPerAgility;                                      // 12
+    //quint32                                                     // 13
+    //quint32                                                     // 14
+    //quint32                                                     // 15
+    //quint32                                                     // 16
+    //quint32                                                     // 17
+
+};
+
+struct ChrSpecializationsEntry
+{
+    //quint32 Id;                                                 // 0
+    //char* iconName;                                             // 1
+    //quint32 classId;                                            // 2
+    //quint32 specializationSpell;                                // 3
+    //quint32                                                     // 4
+    //quint32 tabIndex;                                           // 5
+    //quint32                                                     // 6
+    //quint32                                                     // 7
+    //quint32                                                     // 8
+    //quint32                                                     // 9
+    //quint32                                                     // 10
+    char* specializationName;                                   // 11
+    //char* description;                                          // 12
+    //quint32                                                     // 13
+
+};
+
+struct SpecializationSpellsEntry
+{
+    //quint32    Id;                                              // 0
+    quint32    Spec;                                            // 1
+    quint32    LearnSpell;                                      // 2
+    quint32    OverrideSpell;                                   // 3
+    //quint32    field4;                                          // 4
+};
+
 struct SkillLineEntry
 {
     quint32    Id;                                              // 0
@@ -517,6 +568,21 @@ struct SpellIconEntry
 {
     quint32    IconId;
     char*      IconPath;
+};
+
+struct TalentEntry
+{
+    quint32    Id;                                              // 0
+    //quint32    TalentTab;                                       // 1
+    //quint32    row;                                             // 2
+    //quint32    column;                                          // 3
+    quint32    spell;                                           // 4
+    //quint32    needAddInSpellBook;                              // 5
+    //quint32    flags;                                           // 6
+    //quint32    flags2;                                          // 7
+    quint32    Class;                                           // 8
+    quint32    replaceSpellId;                                  // 9
+    //char*      description;                                     // 10
 };
 
 // GCC have alternative #pragma pack() syntax and old gcc version not support pack(pop), also any gcc version not support it at some platform

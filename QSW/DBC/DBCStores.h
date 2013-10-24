@@ -7,8 +7,11 @@
 SpellEffectEntry const* GetSpellEffectEntry(quint32 spellId, quint8 effect);
 quint8 getEffectsCount(quint32 spellId);
 
+extern DBCStorage <ChrClassesEntry>              sChrClassesStore;
+extern DBCStorage <ChrSpecializationsEntry>      sChrSpecializationStore;
 extern DBCStorage <SkillLineEntry>               sSkillLineStore;
 extern DBCStorage <SkillLineAbilityEntry>        sSkillLineAbilityStore;
+extern DBCStorage <SpecializationSpellsEntry>    sSpecializationSpellsStore;
 extern DBCStorage <SpellCastTimesEntry>          sSpellCastTimesStore;
 extern DBCStorage <SpellDurationEntry>           sSpellDurationStore;
 extern DBCStorage <SpellRadiusEntry>             sSpellRadiusStore;
@@ -32,6 +35,7 @@ extern DBCStorage <SpellScalingEntry>            sSpellScalingStore;
 extern DBCStorage <SpellShapeshiftEntry>         sSpellShapeshiftStore;
 extern DBCStorage <SpellTargetRestrictionsEntry> sSpellTargetRestrictionsStore;
 extern DBCStorage <SpellTotemsEntry>             sSpellTotemsStore;
+extern DBCStorage <TalentEntry>                  sTalentStore;
 
 void LoadDBCStores();
 

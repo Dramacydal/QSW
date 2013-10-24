@@ -8,8 +8,10 @@
 
 SpellEffectMap sSpellEffectMap;
 
+DBCStorage <ChrClassesEntry> sChrClassesStore(ChrClassesfmt);
+DBCStorage <ChrSpecializationsEntry> sChrSpecializationStore(ChrSpecializationsfmt);
+DBCStorage <SpecializationSpellsEntry> sSpecializationSpellsStore(SpecializationSpellsfmt);
 DBCStorage <SpellEffectEntry> sSpellEffectStore(SpellEffectEntryfmt);
-
 DBCStorage <SpellAuraOptionsEntry> sSpellAuraOptionsStore(SpellAuraOptionsfmt);
 DBCStorage <SpellAuraRestrictionsEntry> sSpellAuraRestrictionsStore(SpellAuraRestrictionsfmt);
 DBCStorage <SpellCastingRequirementsEntry> sSpellCastingRequirementsStore(SpellCastingRequirementsfmt);
@@ -34,6 +36,7 @@ DBCStorage <SpellDurationEntry> sSpellDurationStore(SpellDurationfmt);
 DBCStorage <SpellRadiusEntry> sSpellRadiusStore(SpellRadiusfmt);
 DBCStorage <SpellRangeEntry> sSpellRangeStore(SpellRangefmt);
 DBCStorage <SpellIconEntry> sSpellIconStore(SpellIconfmt);
+DBCStorage <TalentEntry> sTalentStore(Talentfmt);
 
 typedef QStringList StoreProblemList;
 
@@ -75,8 +78,11 @@ void LoadDBCStores()
 
     StoreProblemList bad_dbc_files;
 
+    LoadDBC(bad_dbc_files, sChrClassesStore,          dbcPath, "ChrClasses.dbc");
+    LoadDBC(bad_dbc_files, sChrSpecializationStore,   dbcPath, "ChrSpecialization.dbc");
     LoadDBC(bad_dbc_files, sSkillLineStore,           dbcPath, "SkillLine.dbc");
     LoadDBC(bad_dbc_files, sSkillLineAbilityStore,    dbcPath, "SkillLineAbility.dbc");
+    LoadDBC(bad_dbc_files, sSpecializationSpellsStore,dbcPath, "SpecializationSpells.dbc");
     LoadDBC(bad_dbc_files, sSpellCastTimesStore,      dbcPath, "SpellCastTimes.dbc");
     LoadDBC(bad_dbc_files, sSpellDurationStore,       dbcPath, "SpellDuration.dbc");
     LoadDBC(bad_dbc_files, sSpellStore,               dbcPath, "Spell.dbc");
@@ -100,6 +106,7 @@ void LoadDBCStores()
     LoadDBC(bad_dbc_files, sSpellTotemsStore,         dbcPath, "SpellTotems.dbc");
     LoadDBC(bad_dbc_files, sSpellEffectStore,         dbcPath, "SpellEffect.dbc");
     LoadDBC(bad_dbc_files, sSpellMiscStore,           dbcPath, "SpellMisc.dbc");
+    LoadDBC(bad_dbc_files, sTalentStore,              dbcPath, "Talent.dbc");
 
     for(quint32 i = 1; i < sSpellEffectStore.GetNumRows(); ++i)
     {

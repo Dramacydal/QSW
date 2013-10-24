@@ -1,12 +1,15 @@
 #ifndef DBCSFRM_H
 #define DBCSFRM_H
 
+const char* ChrClassesfmt = "dxxsxxxxxxxxxxxxxx";
+const char* ChrSpecializationsfmt = "dxxxxxxxxxxsxx";
 #ifdef V505_16135
 const char* SkillLinefmt = "nissisix";
 #else
 const char* SkillLinefmt = "nissisixx";
 #endif
 const char* SkillLineAbilityfmt = "niiiiiiiiiixx";
+const char* SpecializationSpellsfmt = "diiix";
 const char* SpellAuraOptionsfmt = "dixiiii";
 const char* SpellAuraRestrictionsfmt = "dixiiiiiiii";
 const char* SpellCastingRequirementsfmt = "diiiiii";
@@ -30,5 +33,6 @@ const char* SpellRadiusfmt = "nfxxx";
 const char* SpellRangefmt = "nffffiss";
 const char* SpellDurationfmt = "niii";
 const char* SpellIconfmt = "ns";
+const char* Talentfmt = "nxxxixxxiix";
 
 #endif
