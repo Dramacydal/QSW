@@ -1787,8 +1787,8 @@ void SWObject::appendReplacementInfo(SpellInfo const* spellInfo, quint8 /*num*/)
                     {
                         matches = true;
                         auraReplaceInfo += QString("<li>Replaced by %0 aura to %1</li>")
-                                .arg(getSpellLink(entry->Id)
-                                .arg(getSpellLink(replaceSpell)));
+                                .arg(getSpellLink(entry->Id))
+                                .arg(getSpellLink(replaceSpell));
                         break;
                     }
                 if (matches)
