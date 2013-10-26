@@ -534,7 +534,7 @@ QString SWObject::getDescription(QString str, SpellInfo const* spellInfo)
                 quint32 spellId = rx.cap(6).toInt();
                 if (SpellInfo const* other = GetSpellInfo(spellId))
                 {
-                    str.replace(rx.cap(0), other->Description);
+                    str.replace(rx.cap(0), QString::fromUtf8(other->Description));
                 }
                 else
                     str.replace(rx.cap(0), QString("<Spell %0 needed for description not found>").arg(spellId));
@@ -2053,7 +2053,7 @@ QString SWObject::getSpellLink(quint32 spellId)
     if (SpellInfo const* entry = GetSpellInfo(spellId))
         return QString("<a href='http://spellwork/%0' class='blue_link'>%0 - %1</a>")
                 .arg(entry->Id)
-                .arg(entry->SpellName);
+                .arg(QString::fromUtf8(entry->SpellName));
     else
         return QString("%0 - not found").arg(spellId);
 }
