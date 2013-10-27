@@ -524,20 +524,46 @@ QString SWObject::getDescription(QString str, SpellInfo const* spellInfo)
         {
             /*QString st = "";
             for (auto i = 0; i < rx.captureCount(); ++i)
-                st += QString("%0 ").arg(i) + rx.cap(i) + "\n";
+                st += QString("%0 '%1'\n").arg(i).arg(rx.cap(i));
 
             QMessageBox::warning(NULL, "Desc", st);
-            return str;*/
+            //return str;
+            str.replace(rx.cap(0),rx.cap(5));
+            continue;*/
 
-            if (rx.cap(5).toLower() == "spelldesc")
+            QString cap = rx.cap(5).toLower();
+            if (cap == "spelldesc")
+            {
+                quint32 spellId = rx.cap(6).toInt();
+                if (SpellInfo const* other = GetSpellInfo(spellId))
+                    str.replace(rx.cap(0), QString::fromUtf8(other->Description));
+                else
+                    str.replace(rx.cap(0), QString("<Spell %0 needed for description not found>").arg(spellId));
+                str = getDescription(str, spellInfo);
+            }
+            else if (cap == "spellname")
+            {
+                quint32 spellId = rx.cap(6).toInt();
+                if (SpellInfo const* other = GetSpellInfo(spellId))
+                    str.replace(rx.cap(0), QString::fromUtf8(other->SpellName) + "<br>");
+                else
+                    str.replace(rx.cap(0), QString("<Spell %0 needed for spell name not found>").arg(spellId));
+                str = getDescription(str, spellInfo);
+            }
+            else if (cap == "spellicon")
             {
                 quint32 spellId = rx.cap(6).toInt();
                 if (SpellInfo const* other = GetSpellInfo(spellId))
                 {
-                    str.replace(rx.cap(0), QString::fromUtf8(other->Description));
+                    QString iconStr = QString(
+                                        "<br><br><img src=\"http://wow.zamimg.com/images/wow/icons/small/%0.jpg\"><br>"
+                                        ).arg(other->getSpellIconName().toLower());
+
+                    str.replace(rx.cap(0), iconStr);
                 }
                 else
-                    str.replace(rx.cap(0), QString("<Spell %0 needed for description not found>").arg(spellId));
+                    str.replace(rx.cap(0), QString("<Spell %0 needed for icon link not found>").arg(spellId));
+                str = getDescription(str, spellInfo);
             }
             else
             {
@@ -567,6 +593,7 @@ QString SWObject::getDescription(QString str, SpellInfo const* spellInfo)
                 }
             }
         }
+        //QMessageBox::warning(NULL, "Desc", str);
     }
     return str;
 }
