@@ -698,8 +698,9 @@ void SWObject::showInfo(SpellInfo const* spellInfo, quint8 num)
         .arg(spellInfo->getSpellVisual(0))
         .arg(spellInfo->getSpellVisual(1)));
 
-    html.append(QString("<li>SpellFamilyName = %0, SpellFamilyFlags = 0x%1 %2 %3 %4 (%5 %6 %7 %8)</li>")
+    html.append(QString("<li>SpellFamilyName = %0 (%1), SpellFamilyFlags = 0x%2 %3 %4 %5 (%6 %7 %8 %9)</li>")
         .arg(m_enums->getSpellFamilies()[spellInfo->getSpellFamilyName()])
+        .arg(spellInfo->getSpellFamilyName())
         .arg(sSpellFamilyFlags[3].toUpper())
         .arg(sSpellFamilyFlags[2].toUpper())
         .arg(sSpellFamilyFlags[1].toUpper())
