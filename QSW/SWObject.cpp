@@ -1111,6 +1111,9 @@ void SWObject::appendSpellEffectInfo(SpellInfo const* spellInfo, quint8 num)
         {
             QString _BasePoints(QString("<li>BasePoints = %0").arg(spellInfo->getEffectBasePoints(eff)));
 
+            if (spellInfo->getAttributesEx8() & 0x20000000)
+                _BasePoints += QString(" <b>(%0 per CR_MASTERY)</b>").arg(spellInfo->getEffectBonusCoefficient(eff));
+
             QString _RealPoints;
             if (spellInfo->getEffectRealPointsPerLevel(eff) != 0)
                 _RealPoints = QString(" + Level * %0").arg(spellInfo->getEffectRealPointsPerLevel(eff), 0, 'f', 2);
