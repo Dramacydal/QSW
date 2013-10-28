@@ -268,7 +268,15 @@ struct SpellReagentsEntry
     // quint32 Unk19                                         // 19
 };
 
-// FIXME: structure is not updated
+struct SpellEffectScalingEntry
+{
+    //uint32    Id;                                         // 0
+    float     Multiplier;                                   // 1
+    float     RandomMultiplier;                             // 2
+    float     OtherMultiplier;                              // 3
+    quint32   SpellEffectId;                                // 4
+};
+
 struct SpellScalingEntry
 {
     // quint32    Id;                                        // 0        m_ID
@@ -276,11 +284,10 @@ struct SpellScalingEntry
     quint32    CastTimeMax;                                  // 2
     quint32    CastScalingMaxLevel;                          // 3
     quint32    PlayerClass;                                  // 4        (index * 100) + charLevel => gtSpellScaling.dbc
-    float      Coeff1[3];                                    // 5-7
-    float      Coeff2[3];                                    // 8-10
-    float      Coeff3[3];                                    // 11-13
     float      CoefBase;                                     // 14        some coefficient, mostly 1.0f
     quint32    CoefLevelBase;                                // 15        some level
+    //quint32                                                  // 16
+    //quint32                                                  // 17
 };
 
 struct SpellShapeshiftEntry
