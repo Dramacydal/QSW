@@ -532,23 +532,38 @@ QString SWObject::getDescription(QString str, SpellInfo const* spellInfo)
             continue;*/
 
             QString cap = rx.cap(5).toLower();
-            if (cap == "spelldesc")
+            if (cap == "spellaura")
             {
                 quint32 spellId = rx.cap(6).toInt();
                 if (SpellInfo const* other = GetSpellInfo(spellId))
+                {
+                    str.replace(rx.cap(0), QString::fromUtf8(other->ToolTip));
+                    str = getDescription(str, other);
+                }
+                else
+                    str.replace(rx.cap(0), QString("<Spell %0 needed for tooltip not found>").arg(spellId));
+            }
+            else if (cap == "spelldesc")
+            {
+                quint32 spellId = rx.cap(6).toInt();
+                if (SpellInfo const* other = GetSpellInfo(spellId))
+                {
                     str.replace(rx.cap(0), QString::fromUtf8(other->Description));
+                    str = getDescription(str, other);
+                }
                 else
                     str.replace(rx.cap(0), QString("<Spell %0 needed for description not found>").arg(spellId));
-                str = getDescription(str, spellInfo);
             }
             else if (cap == "spellname")
             {
                 quint32 spellId = rx.cap(6).toInt();
                 if (SpellInfo const* other = GetSpellInfo(spellId))
+                {
                     str.replace(rx.cap(0), QString::fromUtf8(other->SpellName) + "<br>");
+                    str = getDescription(str, other);
+                }
                 else
                     str.replace(rx.cap(0), QString("<Spell %0 needed for spell name not found>").arg(spellId));
-                str = getDescription(str, spellInfo);
             }
             else if (cap == "spellicon")
             {
@@ -560,10 +575,10 @@ QString SWObject::getDescription(QString str, SpellInfo const* spellInfo)
                                         ).arg(other->getSpellIconName().toLower());
 
                     str.replace(rx.cap(0), iconStr);
+                    str = getDescription(str, other);
                 }
                 else
                     str.replace(rx.cap(0), QString("<Spell %0 needed for icon link not found>").arg(spellId));
-                str = getDescription(str, spellInfo);
             }
             else
             {
@@ -592,8 +607,8 @@ QString SWObject::getDescription(QString str, SpellInfo const* spellInfo)
                     default: return str;
                 }
             }
+            QMessageBox::warning(NULL, "Desc", str + "\n------------------\n" + cap);
         }
-        //QMessageBox::warning(NULL, "Desc", str);
     }
     return str;
 }
@@ -1139,6 +1154,9 @@ void SWObject::appendSpellEffectInfo(SpellInfo const* spellInfo, quint8 num)
                 .arg(spellInfo->getEffectImplicitTargetB(eff))
                 .arg(m_enums->getTargets()[spellInfo->getEffectImplicitTargetA(eff)])
                 .arg(m_enums->getTargets()[spellInfo->getEffectImplicitTargetB(eff)]));
+
+            if (spellInfo->getEffect(eff) == 24 || spellInfo->getEffect(eff) == 66 || spellInfo->getEffect(eff) == 157)
+                html.append(QString("<li>EffectItemType: %0</li>").arg(spellInfo->getEffectItemType(eff)));
 
             appendAuraInfo(spellInfo, eff, num);
 
