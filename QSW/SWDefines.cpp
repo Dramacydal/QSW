@@ -56,8 +56,10 @@ QString ProcFlagDesc[] =
     "22 Taken off-hand melee attacks",
     // 23 0x00800000
     "23 Successful off-hand melee attacks",
-    "24",
-    "25",
+    // 24 0x01000000
+    "24 On death",
+    // 25 0x02000000
+    "25 On jump",
     "26",
     "27",
     "28",

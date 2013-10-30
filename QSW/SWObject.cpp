@@ -1158,7 +1158,7 @@ void SWObject::appendSpellEffectInfo(SpellInfo const* spellInfo, quint8 num)
                 .arg(m_enums->getTargets()[spellInfo->getEffectImplicitTargetA(eff)])
                 .arg(m_enums->getTargets()[spellInfo->getEffectImplicitTargetB(eff)]));
 
-            if (spellInfo->getEffect(eff) == 24 || spellInfo->getEffect(eff) == 66 || spellInfo->getEffect(eff) == 157)
+            if (spellInfo->getEffect(eff) == 24 || spellInfo->getEffect(eff) == 66 || spellInfo->getEffect(eff) == 157 || spellInfo->getEffect(eff) == 169)
                 html.append(QString("<li>EffectItemType: %0</li>").arg(spellInfo->getEffectItemType(eff)));
 
             appendAuraInfo(spellInfo, eff, num);
