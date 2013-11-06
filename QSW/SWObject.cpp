@@ -1296,19 +1296,18 @@ void SWObject::appendTriggerInfo(SpellInfo const* spellInfo, quint8 index, quint
 
 void SWObject::appendRadiusInfo(SpellInfo const* spellInfo, quint8 index, quint8 /*num*/)
 {
-
     SpellRadiusEntry const* spellRadius = spellInfo->spellRadius[0][index];
     SpellRadiusEntry const* spellRadiusMax = spellInfo->spellRadiusMax[0][index];
     if (!spellRadius && !spellRadiusMax)
         return;
 
     QString str = QString("<li>Radius (Id %0) %1 Max: (Id %2) %3</li>");
-    str = str.arg(spellRadius->Id);
+    str = str.arg(spellInfo->getEffectRadiusIndex(index, 0));
     if (spellRadius)
         str = str.arg(spellRadius->Radius, 0, 'f', 2);
     else
         str = str.arg("Not found");
-    str = str.arg(spellRadiusMax->Id);
+    str = str.arg(spellInfo->getEffectRadiusMaxIndex(index, 0));
     if (spellRadiusMax)
         str = str.arg(spellRadiusMax->Radius, 0, 'f', 2);
     else
