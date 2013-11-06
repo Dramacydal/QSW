@@ -1048,6 +1048,8 @@ void SWObject::showInfo(SpellInfo const* spellInfo, quint8 num)
 
     appendReplacementInfo(spellInfo, num);
 
+    appendAffectsInfo(spellInfo, num);
+
     html.append("</ul></div></div>");
 
     appendSpellEffectInfo(spellInfo, num);
@@ -1111,9 +1113,6 @@ void SWObject::appendSpellEffectInfo(SpellInfo const* spellInfo, quint8 num)
         {
             QString _BasePoints(QString("<li>BasePoints = %0").arg(spellInfo->getEffectBasePoints(eff)));
 
-            if (spellInfo->getAttributesEx8() & 0x20000000)
-                _BasePoints += QString(" <b>(%0 per CR_MASTERY)</b>").arg(spellInfo->getEffectBonusCoefficient(eff));
-
             QString _RealPoints;
             if (spellInfo->getEffectRealPointsPerLevel(eff) != 0)
                 _RealPoints = QString(" + Level * %0").arg(spellInfo->getEffectRealPointsPerLevel(eff), 0, 'f', 2);
@@ -1152,14 +1151,15 @@ void SWObject::appendSpellEffectInfo(SpellInfo const* spellInfo, quint8 num)
 
             html.append(_Result);
 
+            html.append(QString("<li>EffectBonusCoefficient = %0</li>").arg(spellInfo->getEffectBonusCoefficient(eff)));
             html.append(QString("<li>Targets (%0, %1) (%2, %3)</li>")
                 .arg(spellInfo->getEffectImplicitTargetA(eff))
                 .arg(spellInfo->getEffectImplicitTargetB(eff))
                 .arg(m_enums->getTargets()[spellInfo->getEffectImplicitTargetA(eff)])
                 .arg(m_enums->getTargets()[spellInfo->getEffectImplicitTargetB(eff)]));
 
-            if (spellInfo->getEffect(eff) == 24 || spellInfo->getEffect(eff) == 66 || spellInfo->getEffect(eff) == 157 || spellInfo->getEffect(eff) == 169)
-                html.append(QString("<li>EffectItemType: %0</li>").arg(spellInfo->getEffectItemType(eff)));
+            if (quint32 effectItemType = spellInfo->getEffectItemType(eff))
+                html.append(QString("<li>EffectItemType: %0</li>").arg(effectItemType));
 
             appendAuraInfo(spellInfo, eff, num);
 
@@ -1925,6 +1925,40 @@ void SWObject::appendSkillInfo(SpellInfo const* spellInfo, quint8 /*num*/)
     }
 }
 
+void SWObject::appendAffectsInfo(SpellInfo const* spellInfo, quint8 /*num*/)
+{
+    if (!spellInfo->getSpellFamilyName())
+        return;
+
+    QString body;
+    for (auto itr : sSpellInfoStore)
+    {
+        SpellInfo const* spell = itr.second;
+
+        if (spell->getSpellFamilyName() != spellInfo->getSpellFamilyName())
+            continue;
+
+        if (spell->Id == spellInfo->Id)
+            continue;
+
+        bool _break = false;
+        for (quint32 j = 0; j < MAX_EFFECT_INDEX; ++j)
+        {
+            for (quint32 k = 0; k < MAX_CLASS_MASK; ++k)
+                if (spell->getEffectSpellClassMask(j, k) & spellInfo->getSpellFamilyFlags(k))
+                {
+                    body += getSpellLink(spell) + "\n";
+                    _break =true;
+                    break;
+                }
+            if (_break)
+                break;
+        }
+    }
+    html.append(QString("<br><details><summary>This spell is affected by:</summary><pre>%0</pre></details>")
+                .arg(body));
+}
+
 void SWObject::appendCastTimeInfo(SpellInfo const* spellInfo, quint8 /*num*/)
 {
     if (SpellCastTimesEntry const* castInfo = spellInfo->castTimeEntry)
@@ -2099,12 +2133,17 @@ void SWObject::compare()
 
 QString SWObject::getSpellLink(quint32 spellId)
 {
-    if (SpellInfo const* entry = GetSpellInfo(spellId))
-        return QString("<a href='http://spellwork/%0' class='blue_link'>%0 - %1</a>")
-                .arg(entry->Id)
-                .arg(QString::fromUtf8(entry->SpellName));
+    if (SpellInfo const* info = GetSpellInfo(spellId))
+        return getSpellLink(info);
     else
         return QString("%0 - not found").arg(spellId);
+}
+
+QString SWObject::getSpellLink(SpellInfo const* entry)
+{
+    return QString("<a href='http://spellwork/%0' class='blue_link'>%0 - %1</a>")
+            .arg(entry->Id)
+            .arg(QString::fromUtf8(entry->SpellName));
 }
 
 quint64 Converter::getULongLong(QString value)

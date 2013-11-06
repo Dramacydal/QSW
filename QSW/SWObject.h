@@ -24,6 +24,7 @@ class SWObject
         void appendTalentInfo(SpellInfo const* spellInfo, quint8 num);
         void appendReplacementInfo(SpellInfo const* spellInfo, quint8 num);
         void appendSkillInfo(SpellInfo const* spellInfo, quint8 num);
+        void appendAffectsInfo(SpellInfo const* spellInfo, quint8 num);
         void appendCastTimeInfo(SpellInfo const* spellInfo, quint8 num);
         void appendDurationInfo(SpellInfo const* spellInfo, quint8 num);
         void appendRangeInfo(SpellInfo const* spellInfo, quint8 num);
@@ -37,6 +38,7 @@ class SWObject
         QString getDescription(QString str, SpellInfo const *spellInfo);
         QString getClassName(quint32 unitClass);
         QString getSpellLink(quint32 spellId);
+        QString getSpellLink(SpellInfo const* entry);
 
         quint8 getType() const { return m_type; }
         void setType(quint8 type) { m_type = type; }
