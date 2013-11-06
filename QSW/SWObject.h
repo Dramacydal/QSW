@@ -29,9 +29,10 @@ class SWObject
         void appendDurationInfo(SpellInfo const* spellInfo, quint8 num);
         void appendRangeInfo(SpellInfo const* spellInfo, quint8 num);
         void appendSpellEffectInfo(SpellInfo const* spellInfo, quint8 num);
-        void appendAuraInfo(SpellInfo const* spellInfo, quint8 index, quint8 num);
-        void appendRadiusInfo(SpellInfo const* spellInfo, quint8 index, quint8 num);
-        void appendTriggerInfo(SpellInfo const* spellInfo, quint8 index, quint8 num);
+        void appendSpellEffectInfo(SpellInfo const* spellInfo, quint8 num, quint8 eff, quint8 diff);
+        void appendAuraInfo(SpellInfo const* spellInfo, quint8 index, quint8 num, quint8 diff);
+        void appendRadiusInfo(SpellInfo const* spellInfo, quint8 index, quint8 num, quint8 diff);
+        void appendTriggerInfo(SpellInfo const* spellInfo, quint8 index, quint8 num, quint8 diff);
         void appendProcInfo(SpellInfo const *spellInfo, quint8 num);
 
         QString containAttributes(SpellInfo const* spellInfo, AttrType attr, quint8 index = 0);

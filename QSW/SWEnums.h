@@ -51,6 +51,7 @@ class SWEnums
         Enumerator getSpellEffects() const { return m_enums["SpellEffect"]; }
         Enumerator getSpellAuras() const { return m_enums["SpellAura"]; }
         Enumerator getCombatRatings() const { return m_enums["CombatRating"]; }
+        Enumerator getDifficulties() const { return m_enums["Difficulty"]; }
 
         void loadEnums();
 

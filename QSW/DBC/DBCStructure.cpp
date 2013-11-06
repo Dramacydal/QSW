@@ -633,11 +633,15 @@ SpellInfo::SpellInfo(SpellEntry const* spellInfo)
 
     SpellEffects const* effect = GetSpellEffects(spellEntry->Id);
 
+    hasDifficultyData = false;
+
     for (quint8 i = 0; i < MAX_EFFECT_INDEX; ++i)
     {
         for (quint8 j = 0; j < MAX_DIFFICULTY; ++j)
         {
             spellEffects[j][i] = effect ? effect->effects[j][i] : NULL;
+            if (effect && j != 0)
+                hasDifficultyData = true;
             spellRadius[j][i] = sSpellRadiusStore.LookupEntry(getEffectRadiusIndex(i, j));
             spellRadiusMax[j][i] = sSpellRadiusStore.LookupEntry(getEffectRadiusMaxIndex(i, j));
         }

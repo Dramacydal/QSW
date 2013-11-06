@@ -1585,4 +1585,16 @@
         <value value="CR_MASTERY" key="25" />
         <value value="CR_PVP_POWER" key="26" />
     </CombatRating>
+    <Difficulty>
+        <value value="NONE_DIFFICULTY" key="0" />
+        <value value="REGULAR_DIFFICULTY" key="1" />
+        <value value="HEROIC_DIFFICULTY" key="2" />
+        <value value="MAN10_DIFFICULTY" key="3" />
+        <value value="MAN25_DIFFICULTY" key="4" />
+        <value value="MAN10_HEROIC_DIFFICULTY" key="5" />
+        <value value="MAN25_HEROIC_DIFFICULTY" key="6" />
+        <value value="RAID_TOOL_DIFFICULTY" key="7" />
+        <value value="CHALLENGE_MODE_DIFFICULTY" key="8" />
+        <value value="MAN40_DIFFICULTY" key="9" />
+    </Difficulty>
 </Enums>

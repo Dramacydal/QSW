@@ -497,6 +497,8 @@ struct SpellInfo
 
     TalentEntry const* talentEntry;
 
+    bool hasDifficultyData;
+
     // SpellMisc methods
     quint32 getAttributes() const;
     quint32 getAttributesEx1() const;
