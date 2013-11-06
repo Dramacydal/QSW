@@ -83,4 +83,6 @@ enum SpellEffectIndex
     MAX_EFFECT_INDEX   = 32,
 };
 
+#define MAX_DIFFICULTY 10
+
 #endif // SWDEFINES_H

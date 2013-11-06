@@ -4,7 +4,7 @@
 #include "DBCStore.h"
 #include "DBCStructure.h"
 
-SpellEffectEntry const* GetSpellEffectEntry(quint32 spellId, quint8 effect);
+SpellEffects const* GetSpellEffects(quint32 spellId);
 SpellInfo const* GetSpellInfo(quint32 id);
 
 extern DBCStorage <ChrClassesEntry>              sChrClassesStore;

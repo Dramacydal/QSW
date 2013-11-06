@@ -15,9 +15,14 @@ void SWObject::search()
     delete search;
 }
 
-float getRadius(SpellInfo const* spellInfo, quint8 effIndex)
+float getRadius(SpellInfo const* spellInfo, quint8 effIndex, quint8 diff = 0)
 {
-    return spellInfo->spellRadius[effIndex] ? spellInfo->spellRadius[effIndex]->Radius : 0.0f;
+    return spellInfo->spellRadius[diff][effIndex] ? spellInfo->spellRadius[diff][effIndex]->Radius : 0.0f;
+}
+
+float getRadiusMax(SpellInfo const* spellInfo, quint8 effIndex, quint8 diff = 0)
+{
+    return spellInfo->spellRadiusMax[diff][effIndex] ? spellInfo->spellRadiusMax[diff][effIndex]->Radius : 0.0f;
 }
 
 quint32 getDuration(SpellInfo const* spellInfo)
@@ -1292,8 +1297,8 @@ void SWObject::appendTriggerInfo(SpellInfo const* spellInfo, quint8 index, quint
 void SWObject::appendRadiusInfo(SpellInfo const* spellInfo, quint8 index, quint8 /*num*/)
 {
 
-    SpellRadiusEntry const* spellRadius = spellInfo->spellRadius[index];
-    SpellRadiusEntry const* spellRadiusMax = spellInfo->spellRadius[index];
+    SpellRadiusEntry const* spellRadius = spellInfo->spellRadius[0][index];
+    SpellRadiusEntry const* spellRadiusMax = spellInfo->spellRadiusMax[0][index];
     if (!spellRadius && !spellRadiusMax)
         return;
 

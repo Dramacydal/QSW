@@ -422,126 +422,126 @@ float SpellInfo::getMaxTargetRadius() const
     SpellEffect methods
  */
 
-quint32 SpellInfo::getEffectSpellClassMask(quint8 eff, quint8 index) const
+quint32 SpellInfo::getEffectSpellClassMask(quint8 eff, quint8 index, quint8 diff) const
 {
-    return spellEffects[eff] ? spellEffects[eff]->EffectSpellClassMask[index] : 0;
+    return spellEffects[diff][eff] ? spellEffects[diff][eff]->EffectSpellClassMask[index] : 0;
 }
 
-quint32 SpellInfo::getEffect(quint8 index) const
+quint32 SpellInfo::getEffect(quint8 index, quint8 diff) const
 {
-    return spellEffects[index] ? spellEffects[index]->Effect : 0;
+    return spellEffects[diff][index] ? spellEffects[diff][index]->Effect : 0;
 }
 
-float SpellInfo::getEffectValueMultiplier(quint8 index) const
+float SpellInfo::getEffectValueMultiplier(quint8 index, quint8 diff) const
 {
-    return spellEffects[index] ? spellEffects[index]->EffectValueMultiplier : 0.0f;
+    return spellEffects[diff][index] ? spellEffects[diff][index]->EffectValueMultiplier : 0.0f;
 }
 
-quint32 SpellInfo::getEffectApplyAuraName(quint8 index) const
+quint32 SpellInfo::getEffectApplyAuraName(quint8 index, quint8 diff) const
 {
-    return spellEffects[index] ? spellEffects[index]->EffectApplyAuraName : 0;
+    return spellEffects[diff][index] ? spellEffects[diff][index]->EffectApplyAuraName : 0;
 }
 
-quint32 SpellInfo::getEffectAmplitude(quint8 index) const
+quint32 SpellInfo::getEffectAmplitude(quint8 index, quint8 diff) const
 {
-    return spellEffects[index] ? spellEffects[index]->EffectAmplitude : 0;
+    return spellEffects[diff][index] ? spellEffects[diff][index]->EffectAmplitude : 0;
 }
 
-qint32 SpellInfo::getEffectBasePoints(quint8 index) const
+qint32 SpellInfo::getEffectBasePoints(quint8 index, quint8 diff) const
 {
-    return spellEffects[index] ? spellEffects[index]->EffectBasePoints : 0;
+    return spellEffects[diff][index] ? spellEffects[diff][index]->EffectBasePoints : 0;
 }
 
-float SpellInfo::getEffectBonusCoefficient(quint8 index) const
+float SpellInfo::getEffectBonusCoefficient(quint8 index, quint8 diff) const
 {
-    return spellEffects[index] ? spellEffects[index]->EffectBonusCoefficient : 0;
+    return spellEffects[diff][index] ? spellEffects[diff][index]->EffectBonusCoefficient : 0;
 }
 
-float SpellInfo::getEffectDamageMultiplier(quint8 index) const
+float SpellInfo::getEffectDamageMultiplier(quint8 index, quint8 diff) const
 {
-    return spellEffects[index] ? spellEffects[index]->EffectDamageMultiplier : 0;
+    return spellEffects[diff][index] ? spellEffects[diff][index]->EffectDamageMultiplier : 0;
 }
 
-quint32 SpellInfo::getEffectChainTarget(quint8 index) const
+quint32 SpellInfo::getEffectChainTarget(quint8 index, quint8 diff) const
 {
-    return spellEffects[index] ? spellEffects[index]->EffectChainTarget : 0;
+    return spellEffects[diff][index] ? spellEffects[diff][index]->EffectChainTarget : 0;
 }
 
-qint32 SpellInfo::getEffectDieSides(quint8 index) const
+qint32 SpellInfo::getEffectDieSides(quint8 index, quint8 diff) const
 {
-    return spellEffects[index] ? spellEffects[index]->EffectDieSides : 0;
+    return spellEffects[diff][index] ? spellEffects[diff][index]->EffectDieSides : 0;
 }
 
-quint32 SpellInfo::getEffectItemType(quint8 index) const
+quint32 SpellInfo::getEffectItemType(quint8 index, quint8 diff) const
 {
-    return spellEffects[index] ? spellEffects[index]->EffectItemType : 0;
+    return spellEffects[diff][index] ? spellEffects[diff][index]->EffectItemType : 0;
 }
 
-quint32 SpellInfo::getEffectMechanic(quint8 index) const
+quint32 SpellInfo::getEffectMechanic(quint8 index, quint8 diff) const
 {
-    return spellEffects[index] ? spellEffects[index]->EffectMechanic : 0;
+    return spellEffects[diff][index] ? spellEffects[diff][index]->EffectMechanic : 0;
 }
 
-qint32 SpellInfo::getEffectMiscValue(quint8 index) const
+qint32 SpellInfo::getEffectMiscValue(quint8 index, quint8 diff) const
 {
-    return spellEffects[index] ? spellEffects[index]->EffectMiscValue : 0;
+    return spellEffects[diff][index] ? spellEffects[diff][index]->EffectMiscValue : 0;
 }
 
-qint32 SpellInfo::getEffectMiscValueB(quint8 index) const
+qint32 SpellInfo::getEffectMiscValueB(quint8 index, quint8 diff) const
 {
-    return spellEffects[index] ? spellEffects[index]->EffectMiscValueB : 0;
+    return spellEffects[diff][index] ? spellEffects[diff][index]->EffectMiscValueB : 0;
 }
 
-float SpellInfo::getEffectPointsPerComboPoint(quint8 index) const
+float SpellInfo::getEffectPointsPerComboPoint(quint8 index, quint8 diff) const
 {
-    return spellEffects[index] ? spellEffects[index]->EffectPointsPerComboPoint : 0.0f;
+    return spellEffects[diff][index] ? spellEffects[diff][index]->EffectPointsPerComboPoint : 0.0f;
 }
 
-quint32 SpellInfo::getEffectRadiusIndex(quint8 index) const
+quint32 SpellInfo::getEffectRadiusIndex(quint8 index, quint8 diff) const
 {
-    return spellEffects[index] ? spellEffects[index]->EffectRadiusIndex : 0;
+    return spellEffects[diff][index] ? spellEffects[diff][index]->EffectRadiusIndex : 0;
 }
 
-quint32 SpellInfo::getEffectRadiusMaxIndex(quint8 index) const
+quint32 SpellInfo::getEffectRadiusMaxIndex(quint8 index, quint8 diff) const
 {
-    return spellEffects[index] ? spellEffects[index]->EffectRadiusMaxIndex : 0;
+    return spellEffects[diff][index] ? spellEffects[diff][index]->EffectRadiusMaxIndex : 0;
 }
 
-float SpellInfo::getEffectRealPointsPerLevel(quint8 index) const
+float SpellInfo::getEffectRealPointsPerLevel(quint8 index, quint8 diff) const
 {
-    return spellEffects[index] ? spellEffects[index]->EffectRealPointsPerLevel : 0.0f;
+    return spellEffects[diff][index] ? spellEffects[diff][index]->EffectRealPointsPerLevel : 0.0f;
 }
 
-const quint32* SpellInfo::getEffectSpellClassMask(quint8 index) const
+/*const quint32* SpellInfo::getEffectSpellClassMask(quint8 index, quint8 diff) const
 {
     static quint32 nullClassMask[MAX_CLASS_MASK];
     memset(nullClassMask, 0, sizeof(nullClassMask));
-    return spellEffects[index] ? spellEffects[index]->EffectSpellClassMask : nullClassMask;
+    return spellEffects[diff][index] ? spellEffects[diff][index]->EffectSpellClassMask : nullClassMask;
+}*/
+
+quint32 SpellInfo::getEffectTriggerSpell(quint8 index, quint8 diff) const
+{
+    return spellEffects[diff][index] ? spellEffects[diff][index]->EffectTriggerSpell : 0;
 }
 
-quint32 SpellInfo::getEffectTriggerSpell(quint8 index) const
+quint32 SpellInfo::getEffectImplicitTargetA(quint8 index, quint8 diff) const
 {
-    return spellEffects[index] ? spellEffects[index]->EffectTriggerSpell : 0;
+    return spellEffects[diff][index] ? spellEffects[diff][index]->EffectImplicitTargetA : 0;
 }
 
-quint32 SpellInfo::getEffectImplicitTargetA(quint8 index) const
+quint32 SpellInfo::getEffectImplicitTargetB(quint8 index, quint8 diff) const
 {
-    return spellEffects[index] ? spellEffects[index]->EffectImplicitTargetA : 0;
+    return spellEffects[diff][index] ? spellEffects[diff][index]->EffectImplicitTargetB : 0;
 }
 
-quint32 SpellInfo::getEffectImplicitTargetB(quint8 index) const
+quint32 SpellInfo::getEffectSpellId(quint8 index, quint8 diff) const
 {
-    return spellEffects[index] ? spellEffects[index]->EffectImplicitTargetB : 0;
+    return spellEffects[diff][index] ? spellEffects[diff][index]->EffectSpellId : 0;
 }
 
-quint32 SpellInfo::getEffectSpellId(quint8 index) const
+quint32 SpellInfo::getEffectIndex(quint8 index, quint8 diff) const
 {
-    return spellEffects[index] ? spellEffects[index]->EffectSpellId : 0;
-}
-
-quint32 SpellInfo::getEffectIndex(quint8 index) const
-{
-    return spellEffects[index] ? spellEffects[index]->EffectIndex : 0;
+    return spellEffects[diff][index] ? spellEffects[diff][index]->EffectIndex : 0;
 }
 
 /**
@@ -631,11 +631,16 @@ SpellInfo::SpellInfo(SpellEntry const* spellInfo)
     castTimeEntry = sSpellCastTimesStore.LookupEntry(getCastingTimeIndex());
     rangeEntry = sSpellRangeStore.LookupEntry(getRangeIndex());
 
+    SpellEffects const* effect = GetSpellEffects(spellEntry->Id);
+
     for (quint8 i = 0; i < MAX_EFFECT_INDEX; ++i)
     {
-        spellEffects[i] = GetSpellEffectEntry(spellEntry->Id, i);
-        spellRadius[i] = sSpellRadiusStore.LookupEntry(getEffectRadiusIndex(i));
-        spellRadiusMax[i] = sSpellRadiusStore.LookupEntry(getEffectRadiusMaxIndex(i));
+        for (quint8 j = 0; j < MAX_DIFFICULTY; ++j)
+        {
+            spellEffects[j][i] = effect ? effect->effects[j][i] : NULL;
+            spellRadius[j][i] = sSpellRadiusStore.LookupEntry(getEffectRadiusIndex(i, j));
+            spellRadiusMax[j][i] = sSpellRadiusStore.LookupEntry(getEffectRadiusMaxIndex(i, j));
+        }
     }
 
     talentEntry = NULL;
@@ -653,17 +658,18 @@ SpellInfo::SpellInfo(SpellEntry const* spellInfo)
     }
 }
 
-SpellEffectEntry const* SpellInfo::getSpellEffect(quint8 idx) const
+SpellEffectEntry const* SpellInfo::getSpellEffect(quint8 idx, quint8 diff) const
 {
-    return spellEffects[idx];
+    return spellEffects[diff][idx];
 }
 
 quint8 SpellInfo::getMaxEffect() const
 {
     quint8 eff = 0;
-    for (quint32 i = 0; i < MAX_EFFECT_INDEX; ++i)
-        if (spellEffects[i])
-            eff = i + 1;
+    for (quint8 i = 0; i < MAX_EFFECT_INDEX; ++i)
+        for (quint8 j = 0; j < MAX_DIFFICULTY; ++j)
+            if (spellEffects[j][i])
+                eff = i + 1;
 
     return eff;
 }

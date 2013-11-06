@@ -168,7 +168,7 @@ struct SpellCooldownsEntry
 struct SpellEffectEntry
 {
     // quint32    Id;                                        // 0        m_ID
-    // quint32    Unk1;                                      // 1        flags ?
+    quint32    EffectDifficulty;                             // 1        m_difficulty
     quint32    Effect;                                       // 2        m_effect
     float      EffectValueMultiplier;                        // 3        m_effectAmplitude
     quint32    EffectApplyAuraName;                          // 4        m_effectAura
@@ -177,7 +177,7 @@ struct SpellEffectEntry
     float      EffectBonusCoefficient;                       // 7        m_effectBonusCoefficient
     float      EffectDamageMultiplier;                       // 8        m_effectChainAmplitude
     quint32    EffectChainTarget;                            // 9        m_effectChainTargets
-    qint32     EffectDieSides;                               // 10        m_effectDieSides
+    qint32     EffectDieSides;                               // 10       m_effectDieSides
     quint32    EffectItemType;                               // 11       m_effectItemType
     quint32    EffectMechanic;                               // 12       m_effectMechanic
     qint32     EffectMiscValue;                              // 13       m_effectMiscValue
@@ -196,19 +196,20 @@ struct SpellEffectEntry
     //quint32    unk;                                        // 29 - 4.2.0
 };
 
-struct SpellEffect
+struct SpellEffects
 {
-    SpellEffect()
+    SpellEffects()
     {
         count = 0;
         for (quint8 i = 0; i < MAX_EFFECT_INDEX; ++i)
-            effects[i] = NULL;
+            for (quint8 j = 0; j < MAX_DIFFICULTY; ++j)
+                effects[j][i] = NULL;
     }
-    SpellEffectEntry const* effects[MAX_EFFECT_INDEX];
+    SpellEffectEntry const* effects[MAX_DIFFICULTY][MAX_EFFECT_INDEX];
     quint8 count;
 };
 
-typedef std::map<quint32, SpellEffect> SpellEffectMap;
+typedef std::map<quint32, SpellEffects> SpellEffectMap;
 
 struct SpellEquippedItemsEntry
 {
@@ -439,7 +440,7 @@ struct TalentEntry
 struct SpellInfo
 {
     SpellInfo(SpellEntry const* spellInfo);
-    SpellEffectEntry const* getSpellEffect(quint8 idx) const;
+    SpellEffectEntry const* getSpellEffect(quint8 idx, quint8 diff = 0) const;
     quint8 getMaxEffect() const;
 
     quint32     Id;                                           // 0        m_ID
@@ -490,9 +491,9 @@ struct SpellInfo
     SpellCastTimesEntry const* castTimeEntry;
     SpellRangeEntry const* rangeEntry;
 
-    SpellRadiusEntry const* spellRadius[MAX_EFFECT_INDEX];
-    SpellRadiusEntry const* spellRadiusMax[MAX_EFFECT_INDEX];
-    SpellEffectEntry const* spellEffects[MAX_EFFECT_INDEX];
+    SpellRadiusEntry const* spellRadius[MAX_DIFFICULTY][MAX_EFFECT_INDEX];
+    SpellRadiusEntry const* spellRadiusMax[MAX_DIFFICULTY][MAX_EFFECT_INDEX];
+    SpellEffectEntry const* spellEffects[MAX_DIFFICULTY][MAX_EFFECT_INDEX];
 
     TalentEntry const* talentEntry;
 
@@ -607,30 +608,30 @@ struct SpellInfo
     quint32 getMaxTargetLevel() const;
 
     // SpellEffect methods
-    quint32 getEffect(quint8 index) const;                                       // 1        m_effect
-    float   getEffectValueMultiplier(quint8 index) const;                        // 2        m_effectAmplitude
-    quint32 getEffectApplyAuraName(quint8 index) const;                          // 3        m_effectAura
-    quint32 getEffectAmplitude(quint8 index) const;                              // 4        m_effectAuraPeriod
-    qint32  getEffectBasePoints(quint8 index) const;                             // 5        m_effectBasePoints (don't must be used in spell/auras explicitly, must be used cached Spell::m_currentBasePoints)
-    float   getEffectBonusCoefficient(quint8 index) const;                       // 6        m_effectBonusCoefficient
-    float   getEffectDamageMultiplier(quint8 index) const;                       // 7        m_effectChainAmplitude
-    quint32 getEffectChainTarget(quint8 index) const;                            // 8        m_effectChainTargets
-    qint32  getEffectDieSides(quint8 index) const;                               // 9        m_effectDieSides
-    quint32 getEffectItemType(quint8 index) const;                               // 10       m_effectItemType
-    quint32 getEffectMechanic(quint8 index) const;                               // 11       m_effectMechanic
-    qint32  getEffectMiscValue(quint8 index) const;                              // 12       m_effectMiscValue
-    qint32  getEffectMiscValueB(quint8 index) const;                             // 13       m_effectMiscValueB
-    float   getEffectPointsPerComboPoint(quint8 index) const;                    // 14       m_effectPointsPerCombo
-    quint32 getEffectRadiusIndex(quint8 index) const;                            // 15       m_effectRadiusIndex - spellradius.dbc
-    quint32 getEffectRadiusMaxIndex(quint8 index) const;                         // 16       4.0.0
-    float   getEffectRealPointsPerLevel(quint8 index) const;                     // 17       m_effectRealPointsPerLevel
-    const quint32* getEffectSpellClassMask(quint8 index) const;                  // 18       m_effectSpellClassMask, effect 0
-    quint32 getEffectTriggerSpell(quint8 index) const;                           // 19       m_effectTriggerSpell
-    quint32 getEffectImplicitTargetA(quint8 index) const;                        // 20       m_implicitTargetA
-    quint32 getEffectImplicitTargetB(quint8 index) const;                        // 21       m_implicitTargetB
-    quint32 getEffectSpellId(quint8 index) const;                                // 22       new 4.0.0
-    quint32 getEffectIndex(quint8 index) const;                                  // 23       new 4.0.0
-    quint32 getEffectSpellClassMask(quint8 eff, quint8 index) const;
+    quint32 getEffect(quint8 index, quint8 diff = 0) const;                      // 1        m_effect
+    float   getEffectValueMultiplier(quint8 index, quint8 diff = 0) const;       // 2        m_effectAmplitude
+    quint32 getEffectApplyAuraName(quint8 index, quint8 diff = 0) const;         // 3        m_effectAura
+    quint32 getEffectAmplitude(quint8 index, quint8 diff = 0) const;             // 4        m_effectAuraPeriod
+    qint32  getEffectBasePoints(quint8 index, quint8 diff = 0) const;            // 5        m_effectBasePoints (don't must be used in spell/auras explicitly, must be used cached Spell::m_currentBasePoints)
+    float   getEffectBonusCoefficient(quint8 index, quint8 diff = 0) const;      // 6        m_effectBonusCoefficient
+    float   getEffectDamageMultiplier(quint8 index, quint8 diff = 0) const;      // 7        m_effectChainAmplitude
+    quint32 getEffectChainTarget(quint8 index, quint8 diff = 0) const;           // 8        m_effectChainTargets
+    qint32  getEffectDieSides(quint8 index, quint8 diff = 0) const;              // 9        m_effectDieSides
+    quint32 getEffectItemType(quint8 index, quint8 diff = 0) const;              // 10       m_effectItemType
+    quint32 getEffectMechanic(quint8 index, quint8 diff = 0) const;              // 11       m_effectMechanic
+    qint32  getEffectMiscValue(quint8 index, quint8 diff = 0) const;             // 12       m_effectMiscValue
+    qint32  getEffectMiscValueB(quint8 index, quint8 diff = 0) const;            // 13       m_effectMiscValueB
+    float   getEffectPointsPerComboPoint(quint8 index, quint8 diff = 0) const;   // 14       m_effectPointsPerCombo
+    quint32 getEffectRadiusIndex(quint8 index, quint8 diff = 0) const;           // 15       m_effectRadiusIndex - spellradius.dbc
+    quint32 getEffectRadiusMaxIndex(quint8 index, quint8 diff = 0) const;        // 16       4.0.0
+    float   getEffectRealPointsPerLevel(quint8 index, quint8 diff = 0) const;    // 17       m_effectRealPointsPerLevel
+    //const quint32* getEffectSpellClassMask(quint8 index, quint8 diff = 0) const; // 18       m_effectSpellClassMask, effect 0
+    quint32 getEffectTriggerSpell(quint8 index, quint8 diff = 0) const;          // 19       m_effectTriggerSpell
+    quint32 getEffectImplicitTargetA(quint8 index, quint8 diff = 0) const;       // 20       m_implicitTargetA
+    quint32 getEffectImplicitTargetB(quint8 index, quint8 diff = 0) const;       // 21       m_implicitTargetB
+    quint32 getEffectSpellId(quint8 index, quint8 diff = 0) const;               // 22       new 4.0.0
+    quint32 getEffectIndex(quint8 index, quint8 diff = 0) const;                 // 23       new 4.0.0
+    quint32 getEffectSpellClassMask(quint8 eff, quint8 index, quint8 diff = 0) const;
 
     QString getSpellIconName() const;
 };
