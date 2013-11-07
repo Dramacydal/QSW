@@ -1227,8 +1227,8 @@ void SWObject::appendSpellEffectInfo(SpellInfo const* spellInfo, quint8 num, qui
                                 .arg(sName));
                     }
                 }
-                html.append("</ul>");
             }
+            html.append("</ul>");
             break;
         }
         html.append("</ul>");
