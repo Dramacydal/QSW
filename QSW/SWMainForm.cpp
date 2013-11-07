@@ -34,6 +34,11 @@ SWMainForm::SWMainForm(QWidget* parent)
     createModeButton();
     initializeCompleter();
 
+    m_back = mainToolBar->addAction(QIcon(":/SpellWork/Recources/back.png"), "Back");
+    m_forward = mainToolBar->addAction(QIcon(":/SpellWork/Recources/forward.png"), "Forward");
+    m_back->setDisabled(true);
+    m_forward->setDisabled(true);
+
     mainToolBar->addSeparator();
     mainToolBar->addWidget(m_modeButton);
     mainToolBar->addSeparator();
@@ -41,7 +46,7 @@ SWMainForm::SWMainForm(QWidget* parent)
     m_regExp->setCheckable(true);
     mainToolBar->addSeparator();
     m_about = mainToolBar->addAction(QIcon(":/SpellWork/Recources/about.png"), "About");
-    
+
     webView1->pageAction(QWebPage::Copy)->setShortcut(QKeySequence::Copy);
     webView2->pageAction(QWebPage::Copy)->setShortcut(QKeySequence::Copy);
     webView3->pageAction(QWebPage::Copy)->setShortcut(QKeySequence::Copy);
@@ -88,6 +93,10 @@ SWMainForm::SWMainForm(QWidget* parent)
     connect(webView1, SIGNAL(linkClicked(QUrl)), this, SLOT(slotLinkClicked(QUrl)));
     connect(webView2, SIGNAL(linkClicked(QUrl)), this, SLOT(slotLinkClicked(QUrl)));
     connect(webView3, SIGNAL(linkClicked(QUrl)), this, SLOT(slotLinkClicked(QUrl)));
+
+    m_history = new SimpleHistory();
+    connect(m_back, SIGNAL(triggered()), this, SLOT(slotGoBack()));
+    connect(m_forward, SIGNAL(triggered()), this, SLOT(slotGoForward()));
 
     webView1->setHtml(QString("Load time: %0 ms").arg(m_time.elapsed()));
 
@@ -174,7 +183,10 @@ void SWMainForm::slotPrevRow()
     QVariant var = SpellList->model()->data(SpellList->model()->index(SpellList->currentIndex().row(), 0));
 
     if (SpellInfo const* spellInfo = GetSpellInfo(var.toInt()))
+    {
+        AddHistory(spellInfo->Id);
         m_sw->showInfo(spellInfo);
+    }
 }
 
 void SWMainForm::slotNextRow()
@@ -184,7 +196,10 @@ void SWMainForm::slotNextRow()
     QVariant var = SpellList->model()->data(SpellList->model()->index(SpellList->currentIndex().row(), 0));
 
     if (SpellInfo const* spellInfo = GetSpellInfo(var.toInt()))
+    {
+        AddHistory(spellInfo->Id);
         m_sw->showInfo(spellInfo);
+    }
 }
 
 void SWMainForm::initializeCompleter()
@@ -237,7 +252,10 @@ void SWMainForm::slotLinkClicked(const QUrl &url)
         case 1:
         {
             if (SpellInfo const* spellInfo = GetSpellInfo(id))
+            {
+                AddHistory(id);
                 m_sw->showInfo(spellInfo, browserId);
+            }
             break;
         }
         case 2:
@@ -493,7 +511,10 @@ void SWMainForm::slotSearchFromList(const QModelIndex &index)
     QVariant var = SpellList->model()->data(SpellList->model()->index(index.row(), 0));
 
     if (SpellInfo const* spellInfo = GetSpellInfo(var.toInt()))
+    {
+        AddHistory(spellInfo->Id);
         m_sw->showInfo(spellInfo);
+    }
 }
 
 void SWMainForm::slotResetRelate()
@@ -506,6 +527,24 @@ void SWMainForm::slotAutoRelate()
     ((RelationModel*)fieldsView->model())->autoRelate();
 }
 
+void SWMainForm::slotGoBack()
+{
+    if (SpellInfo const* spellInfo = GetSpellInfo(m_history->back()))
+        m_sw->showInfo(spellInfo, 1);
+
+    m_back->setDisabled(!m_history->canGoBack());
+    m_forward->setDisabled(!m_history->canGoForward());
+}
+
+void SWMainForm::slotGoForward()
+{
+    if (SpellInfo const* spellInfo = GetSpellInfo(m_history->forward()))
+        m_sw->showInfo(spellInfo, 1);
+
+    m_back->setDisabled(!m_history->canGoBack());
+    m_forward->setDisabled(!m_history->canGoForward());
+}
+
 bool SWMainForm::event(QEvent* ev)
 {
     switch (Event::Events(ev->type()))
@@ -515,15 +554,17 @@ bool SWMainForm::event(QEvent* ev)
             Event* m_ev = (Event*)ev;
             m_sortedModel->sourceModel()->deleteLater();
             m_sortedModel->setSourceModel(m_ev->getValue(0).value<SpellListModel*>());
-            SpellList->setColumnWidth(0, 40);
-            SpellList->setColumnWidth(1, 150);
+            SpellList->setColumnWidth(0, 45);
+            SpellList->setColumnWidth(1, 145);
             return true;
         }
         break;
         case Event::EVENT_SEND_SPELL:
         {
             Event* m_ev = (Event*)ev;
-            m_sw->showInfo(m_ev->getValue(0).value<const SpellInfo*>());
+            const SpellInfo* spellInfo = m_ev->getValue(0).value<const SpellInfo*>();
+            AddHistory(spellInfo->Id);
+            m_sw->showInfo(spellInfo);
             return true;
         }
         break;
@@ -541,6 +582,16 @@ bool SWMainForm::event(QEvent* ev)
     }
 
     return QWidget::event(ev);
+}
+
+void SWMainForm::AddHistory(quint32 id)
+{
+    if (m_history->current() == id)
+        return;
+
+    m_history->addHistory(id);
+    m_back->setDisabled(!m_history->canGoBack());
+    m_forward->setDisabled(!m_history->canGoForward());
 }
 
 TextEdit::TextEdit(QWidget *parent)

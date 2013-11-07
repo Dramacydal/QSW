@@ -6,6 +6,7 @@
 #include "SWEvent.h"
 #include "DBC/DBCStores.h"
 #include "SWDefines.h"
+#include "SimpleHistory.h"
 
 class SWMainForm;
 
@@ -49,6 +50,7 @@ class SWObject
     private:
         SWMainForm *m_form;
         SWEnums* m_enums;
+        SimpleHistory* m_history;
 
         QString html;
 

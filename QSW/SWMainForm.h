@@ -23,6 +23,7 @@
 #include "SWEnums.h"
 #include "SWObject.h"
 #include "ui_SWMainUI.h"
+#include "SimpleHistory.h"
 
 class TextEdit;
 class SWObject;
@@ -55,6 +56,8 @@ class SWMainForm : public QMainWindow, public Ui::SWMainUI
             }
         }
 
+        SimpleHistory* getHistory() { return m_history; }
+
     signals:
         void signalSearch(quint8 type);
 
@@ -74,7 +77,9 @@ class SWMainForm : public QMainWindow, public Ui::SWMainUI
         void slotModeCompare();
         void slotPrevRow();
         void slotNextRow();
-        
+        void slotGoBack();
+        void slotGoForward();
+
         void slotConnectToDatabase();
         void slotSpellTable();
         void slotAutoRelate();
@@ -86,7 +91,8 @@ class SWMainForm : public QMainWindow, public Ui::SWMainUI
         void loadComboBoxes();
         void createModeButton();
         void initializeCompleter();
-        
+        void AddHistory(quint32 id);
+
         SWEnums* m_enums;
 
         QSettings* m_settings;
@@ -97,6 +103,10 @@ class SWMainForm : public QMainWindow, public Ui::SWMainUI
         QAction* m_regExp;
         QAction* m_about;
         QAction* m_update;
+        QAction* m_back;
+        QAction* m_forward;
+
+        SimpleHistory* m_history;
 
         TextEdit *m_advancedTextEdit;
 };

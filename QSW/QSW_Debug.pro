@@ -41,7 +41,8 @@ HEADERS += \
     DBC/DBCFileLoader.h \
     Includes/Define.h \
     Includes/CompilerDefs.h \
-    Includes/ByteConverter.h
+    Includes/ByteConverter.h \
+    SimpleHistory.h
 
 SOURCES += \
     Main.cpp \
@@ -55,7 +56,8 @@ SOURCES += \
     SWEnums.cpp \
     DBC/DBCStores.cpp \
     DBC/DBCFileLoader.cpp \
-    DBC/DBCStructure.cpp
+    DBC/DBCStructure.cpp \
+    SimpleHistory.cpp
 
 FORMS += \
     SWMainUI.ui \

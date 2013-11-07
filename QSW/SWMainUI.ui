@@ -203,7 +203,7 @@
                 <bool>false</bool>
                </property>
                <property name="currentIndex">
-                <number>140</number>
+                <number>163</number>
                </property>
                <property name="maxVisibleItems">
                 <number>20</number>
@@ -232,7 +232,7 @@
                 <bool>false</bool>
                </property>
                <property name="currentIndex">
-                <number>140</number>
+                <number>163</number>
                </property>
                <property name="maxVisibleItems">
                 <number>20</number>
@@ -260,7 +260,7 @@
                 <bool>false</bool>
                </property>
                <property name="currentIndex">
-                <number>140</number>
+                <number>163</number>
                </property>
                <property name="maxVisibleItems">
                 <number>20</number>
@@ -285,7 +285,7 @@
                 <bool>false</bool>
                </property>
                <property name="currentIndex">
-                <number>140</number>
+                <number>163</number>
                </property>
                <property name="maxVisibleItems">
                 <number>20</number>
@@ -310,7 +310,7 @@
                 <bool>false</bool>
                </property>
                <property name="currentIndex">
-                <number>140</number>
+                <number>163</number>
                </property>
                <property name="maxVisibleItems">
                 <number>20</number>
@@ -910,20 +910,6 @@
     <bool>false</bool>
    </attribute>
   </widget>
-  <action name="actionExit">
-   <property name="checkable">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>Exit</string>
-   </property>
-   <property name="visible">
-    <bool>true</bool>
-   </property>
-   <property name="iconVisibleInMenu">
-    <bool>false</bool>
-   </property>
-  </action>
   <action name="actionAbout">
    <property name="text">
     <string>About...</string>
@@ -968,6 +954,19 @@
    </property>
    <property name="text">
     <string>Use RegExp</string>
+   </property>
+  </action>
+  <action name="actionBack">
+   <property name="icon">
+    <iconset>
+     <normalon>:/SpellWork/Recources/database.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Back</string>
+   </property>
+   <property name="toolTip">
+    <string>Back</string>
    </property>
   </action>
  </widget>

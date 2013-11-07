@@ -3,7 +3,7 @@
 #include <QMessageBox>
 
 SWObject::SWObject(SWMainForm* form)
-    : m_form(form), m_regExp(false), m_type(0), m_enums(form->getEnums())
+    : m_form(form), m_regExp(false), m_type(0), m_enums(form->getEnums()), m_history(form->getHistory())
 {
     LoadDBCStores();
 }
@@ -1969,6 +1969,10 @@ void SWObject::appendAffectsInfo(SpellInfo const* spellInfo, quint8 /*num*/)
                 break;
         }
     }
+
+    if (body.isEmpty())
+        return;
+
     html.append(QString("<br><details><summary>This spell is affected by:</summary><pre>%0</pre></details>")
                 .arg(body));
 }
