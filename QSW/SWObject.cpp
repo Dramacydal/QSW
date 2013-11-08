@@ -612,7 +612,7 @@ QString SWObject::getDescription(QString str, SpellInfo const* spellInfo)
                     default: return str;
                 }
             }
-            QMessageBox::warning(NULL, "Desc", str + "\n------------------\n" + cap);
+            //QMessageBox::warning(NULL, "Desc", str + "\n------------------\n" + cap);
         }
     }
     return str;
