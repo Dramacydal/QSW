@@ -34,6 +34,12 @@ quint32 const& SimpleHistory::forward()
     return *++curr;
 }
 
+void SimpleHistory::clear()
+{
+    data.clear();
+    curr = data.end();
+}
+
 bool SimpleHistory::empty() const
 {
     return data.empty();

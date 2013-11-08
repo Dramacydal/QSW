@@ -14,6 +14,7 @@ public:
     quint32 const& back();
     quint32 const& forward();
 
+    void clear();
     bool empty() const;
     quint32 const& current() const;
 
