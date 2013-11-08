@@ -956,19 +956,6 @@
     <string>Use RegExp</string>
    </property>
   </action>
-  <action name="actionBack">
-   <property name="icon">
-    <iconset>
-     <normalon>:/SpellWork/Recources/database.png</normalon>
-    </iconset>
-   </property>
-   <property name="text">
-    <string>Back</string>
-   </property>
-   <property name="toolTip">
-    <string>Back</string>
-   </property>
-  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
