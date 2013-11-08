@@ -68,6 +68,7 @@ class SWMainForm : public QMainWindow, public Ui::SWMainUI
         void slotFilterSearch();
         void slotButtonSearch();
         void slotCompareSearch();
+        void slotFamilySearch();
         void slotSearch(quint8 type);
         void slotSearchFromList(const QModelIndex &index);
         void slotLinkClicked(const QUrl &url);

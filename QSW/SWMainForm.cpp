@@ -98,6 +98,12 @@ SWMainForm::SWMainForm(QWidget* parent)
     connect(m_back, SIGNAL(triggered()), this, SLOT(slotGoBack()));
     connect(m_forward, SIGNAL(triggered()), this, SLOT(slotGoForward()));
 
+    connect(fs_family, SIGNAL(returnPressed()), this, SLOT(slotFamilySearch()));
+    connect(fs_flags0, SIGNAL(returnPressed()), this, SLOT(slotFamilySearch()));
+    connect(fs_flags1, SIGNAL(returnPressed()), this, SLOT(slotFamilySearch()));
+    connect(fs_flags2, SIGNAL(returnPressed()), this, SLOT(slotFamilySearch()));
+    connect(fs_flags3, SIGNAL(returnPressed()), this, SLOT(slotFamilySearch()));
+
     webView1->setHtml(QString("Load time: %0 ms").arg(m_time.elapsed()));
 
     // Load settings at end
@@ -489,6 +495,11 @@ void SWMainForm::slotFilterSearch()
 void SWMainForm::slotCompareSearch()
 {
     emit signalSearch(2);
+}
+
+void SWMainForm::slotFamilySearch()
+{
+    emit signalSearch(4);
 }
 
 void SWMainForm::slotSearch(quint8 type)

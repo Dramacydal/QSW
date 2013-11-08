@@ -177,6 +177,84 @@ void SWSearch::search()
         ev->addValue(QVariant::fromValue(model));
         QApplication::postEvent(m_form, ev);
     }
+    else if (m_sw->getType() == 4)
+    {
+        bool bFamily = false;
+        quint32 family;
+        if (!m_form->fs_family->text().isEmpty())
+        {
+            family = m_form->fs_family->text().toLong(&bFamily);
+            if (!bFamily)
+                family = m_form->fs_family->text().toLong(&bFamily, 16);
+        }
+
+        bool bFlags0 = false;
+        quint32 flags0;
+        if (!m_form->fs_flags0->text().isEmpty())
+        {
+            flags0 = m_form->fs_flags0->text().toLong(&bFlags0);
+            if (!bFlags0)
+                flags0 = m_form->fs_flags0->text().toLong(&bFlags0, 16);
+        }
+
+        bool bFlags1 = false;
+        quint32 flags1;
+        if (!m_form->fs_flags1->text().isEmpty())
+        {
+            flags1 = m_form->fs_flags1->text().toLong(&bFlags1);
+            if (!bFlags1)
+                flags1 = m_form->fs_flags1->text().toLong(&bFlags1, 16);
+        }
+
+        bool bFlags2 = false;
+        quint32 flags2;
+        if (!m_form->fs_flags2->text().isEmpty())
+        {
+            flags2 = m_form->fs_flags2->text().toLong(&bFlags2);
+            if (!bFlags2)
+                flags2 = m_form->fs_flags2->text().toLong(&bFlags2, 16);
+        }
+
+        bool bFlags3 = false;
+        quint32 flags3;
+        if (!m_form->fs_flags3->text().isEmpty())
+        {
+            flags3 = m_form->fs_flags3->text().toLong(&bFlags3);
+            if (!bFlags3)
+                flags3 = m_form->fs_flags3->text().toLong(&bFlags3, 16);
+        }
+
+        for (auto itr : sSpellInfoStore)
+        {
+            SpellInfo const* spellInfo = itr.second;
+
+            if (bFamily && spellInfo->getSpellFamilyName() != family)
+                continue;
+            if (bFlags0 && (spellInfo->getSpellFamilyFlags(0) & flags0) == 0)
+                continue;
+            if (bFlags1 && (spellInfo->getSpellFamilyFlags(1) & flags1) == 0)
+                continue;
+            if (bFlags2 && (spellInfo->getSpellFamilyFlags(2) & flags2) == 0)
+                continue;
+            if (bFlags3 && (spellInfo->getSpellFamilyFlags(3) & flags3) == 0)
+                continue;
+
+            QString sRank(QString::fromUtf8(spellInfo->Rank));
+            QString sFullName(QString::fromUtf8(spellInfo->SpellName));
+
+            if (!sRank.isEmpty())
+                sFullName.append(QString(" (%0)").arg(sRank));
+
+            QStringList spellRecord;
+            spellRecord << QString("%0").arg(spellInfo->Id) << sFullName;
+
+            model->appendRecord(spellRecord);
+        }
+
+        Event* ev = new Event(Event::Type(Event::EVENT_SEND_MODEL));
+        ev->addValue(QVariant::fromValue(model));
+        QApplication::postEvent(m_form, ev);
+    }
     else
     {
         if (!m_form->findLine_e1->text().isEmpty())
