@@ -17,7 +17,7 @@ class SWObject
         ~SWObject();
 
         void showInfo(SpellInfo const* spellInfo, quint8 num = 0);
-        std::list<quint32> getParentSpellIds(quint32 triggerId);
+        std::set<SpellInfo const*> getParentSpellIds(quint32 triggerId);
         void compare();
         void search();
 

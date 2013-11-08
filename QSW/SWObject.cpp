@@ -618,19 +618,19 @@ QString SWObject::getDescription(QString str, SpellInfo const* spellInfo)
     return str;
 }
 
-std::list<quint32> SWObject::getParentSpellIds(quint32 triggerId)
+std::set<SpellInfo const*> SWObject::getParentSpellIds(quint32 triggerId)
 {
-    std::list<quint32> l;
+    std::set<SpellInfo const*> l;
     for (auto itr : sSpellInfoStore)
     {
         SpellInfo const* spellInfo = itr.second;
         for (quint8 eff = EFFECT_INDEX_0; eff < MAX_EFFECT_INDEX; ++eff)
         {
             if (spellInfo->getEffectTriggerSpell(eff) == triggerId)
-                l.push_back(spellInfo->Id);
+                l.insert(spellInfo);
             else if ((spellInfo->getEffectApplyAuraName(eff) == 332 || spellInfo->getEffectApplyAuraName(eff) == 333) &&
                      spellInfo->getEffectBasePoints(eff) == triggerId)
-                l.push_back(spellInfo->Id);
+                l.insert(spellInfo);
         }
     }
 
@@ -708,24 +708,14 @@ void SWObject::showInfo(SpellInfo const* spellInfo, quint8 num)
 
     html.append("</div>");
 
-    std::list<quint32> parentSpells = getParentSpellIds(spellInfo->Id);
+    std::set<SpellInfo const*> parentSpells = getParentSpellIds(spellInfo->Id);
     if (!parentSpells.empty())
     {
         html.append("<div class='b-vlink'><b>Parent spells:</b><br>");
-        for (std::list<quint32>::const_iterator itr = parentSpells.begin(); itr != parentSpells.end(); ++itr)
-        {
-            if (SpellInfo const* parentInfo = GetSpellInfo(*itr))
-            {
-                QString sParentName(QString::fromUtf8(parentInfo->SpellName));
-                QString sParentRank(QString::fromUtf8(parentInfo->Rank));
+        for (auto parentInfo : parentSpells)
+            html.append(QString("&nbsp;&nbsp;&nbsp;&nbsp;%0</br>")
+                        .arg(getSpellLink(parentInfo)));
 
-                if (!sParentRank.isEmpty())
-                    sParentName.append(" (" + sParentRank + ")");
-
-                html.append(QString("&nbsp;&nbsp;&nbsp;&nbsp;%0</br>")
-                            .arg(getSpellLink(*itr)));
-            }
-        }
         html.append("</div>");
     }
 
@@ -1808,7 +1798,7 @@ void SWObject::appendSpecInfo(SpellInfo const* spellInfo, quint8 /*num*/)
 
     if (specInfo.size() > 0)
     {
-        html.append(QString("<li>Used in specializations:</li>"
+        html.append(QString("<li>Learned in specializations:</li>"
                             "<ul>%0</ul></li>")
                     .arg(specInfo));
     }
