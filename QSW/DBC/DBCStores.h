@@ -7,8 +7,11 @@
 SpellEffects const* GetSpellEffects(quint32 spellId);
 SpellInfo const* GetSpellInfo(quint32 id);
 
+extern DBCStorage <AreaGroupEntry>               sAreaGroupStore;
+extern DBCStorage <AreaTableEntry>               sAreaTableStore;
 extern DBCStorage <ChrClassesEntry>              sChrClassesStore;
 extern DBCStorage <ChrSpecializationsEntry>      sChrSpecializationStore;
+extern DBCStorage <MapEntry>                     sMapStore;
 extern DBCStorage <SkillLineEntry>               sSkillLineStore;
 extern DBCStorage <SkillLineAbilityEntry>        sSkillLineAbilityStore;
 extern DBCStorage <SpecializationSpellsEntry>    sSpecializationSpellsStore;

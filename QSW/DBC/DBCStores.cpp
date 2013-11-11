@@ -8,8 +8,11 @@
 
 SpellEffectMap sSpellEffectMap;
 
+DBCStorage <AreaGroupEntry> sAreaGroupStore(AreaGroupfmt);
+DBCStorage <AreaTableEntry> sAreaTableStore(AreaTablefmt);
 DBCStorage <ChrClassesEntry> sChrClassesStore(ChrClassesfmt);
 DBCStorage <ChrSpecializationsEntry> sChrSpecializationStore(ChrSpecializationsfmt);
+DBCStorage <MapEntry> sMapStore(MapEntryfmt);
 DBCStorage <SpecializationSpellsEntry> sSpecializationSpellsStore(SpecializationSpellsfmt);
 DBCStorage <SpellEffectEntry> sSpellEffectStore(SpellEffectEntryfmt);
 DBCStorage <SpellAuraOptionsEntry> sSpellAuraOptionsStore(SpellAuraOptionsfmt);
@@ -81,8 +84,11 @@ void LoadDBCStores()
 
     StoreProblemList bad_dbc_files;
 
+    LoadDBC(bad_dbc_files, sAreaGroupStore,           dbcPath, "AreaGroup.dbc");
+    LoadDBC(bad_dbc_files, sAreaTableStore,           dbcPath, "AreaTable.dbc");
     LoadDBC(bad_dbc_files, sChrClassesStore,          dbcPath, "ChrClasses.dbc");
     LoadDBC(bad_dbc_files, sChrSpecializationStore,   dbcPath, "ChrSpecialization.dbc");
+    LoadDBC(bad_dbc_files, sMapStore,                 dbcPath, "Map.dbc");
     LoadDBC(bad_dbc_files, sSkillLineStore,           dbcPath, "SkillLine.dbc");
     LoadDBC(bad_dbc_files, sSkillLineAbilityStore,    dbcPath, "SkillLineAbility.dbc");
     LoadDBC(bad_dbc_files, sSpecializationSpellsStore,dbcPath, "SpecializationSpells.dbc");

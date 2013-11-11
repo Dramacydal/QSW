@@ -25,6 +25,7 @@ class SWObject
         void appendTalentInfo(SpellInfo const* spellInfo, quint8 num);
         void appendReplacementInfo(SpellInfo const* spellInfo, quint8 num);
         void appendSkillInfo(SpellInfo const* spellInfo, quint8 num);
+        void appendAreaGroupInfo(SpellInfo const* spellInfo, quint8 /*num*/);
         void appendAffectsInfo(SpellInfo const* spellInfo, quint8 num);
         void appendCastTimeInfo(SpellInfo const* spellInfo, quint8 num);
         void appendDurationInfo(SpellInfo const* spellInfo, quint8 num);

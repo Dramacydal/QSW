@@ -1044,6 +1044,8 @@ void SWObject::showInfo(SpellInfo const* spellInfo, quint8 num)
 
     appendReplacementInfo(spellInfo, num);
 
+    appendAreaGroupInfo(spellInfo, num);
+
     appendAffectsInfo(spellInfo, num);
 
     html.append("</ul></div></div>");
@@ -1928,6 +1930,49 @@ void SWObject::appendSkillInfo(SpellInfo const* spellInfo, quint8 /*num*/)
             break;
         }
     }
+}
+
+void SWObject::appendAreaGroupInfo(SpellInfo const* spellInfo, quint8 /*num*/)
+{
+    qint32 areaGroupId = spellInfo->getAreaGroupId();
+    if (areaGroupId <= 0)
+        return;
+
+    QString body = "<ul>";
+
+    AreaGroupEntry const* areaGroup = sAreaGroupStore.LookupEntry(areaGroupId);
+    while (areaGroup)
+    {
+        for (quint8 i = 0; i < MAX_GROUP_AREA_IDS; ++i)
+        {
+            quint32 areaId = areaGroup->AreaId[i];
+            if (!areaId)
+                continue;
+
+            AreaTableEntry const* area = sAreaTableStore.LookupEntry(areaId);
+            if (!area)
+            {
+                body += QString("<li>Unknown area %u\n").arg(areaId);
+                continue;
+            }
+
+            AreaTableEntry const* zone = area->zone == area->ID ? area : sAreaTableStore.LookupEntry(area->zone);
+            MapEntry const* map = sMapStore.LookupEntry(area->mapid);
+
+            body += QString("<li>Area: %0 (%1) Zone: %2 (%3) Map: %4 (%5)")
+                    .arg(area->area_name).arg(area->ID)
+                    .arg(zone ? zone->area_name : "Unknown").arg(area->zone)
+                    .arg(map ? map->name : "Unknown").arg(area->mapid);
+        }
+
+        areaGroup = areaGroup->nextGroup ? sAreaGroupStore.LookupEntry(areaGroup->nextGroup) : NULL;
+    }
+
+    body += "</ul>";
+
+    html.append(QString("<br><details><summary>Area group id: %0</summary><pre>%1</pre></details>")
+                .arg(areaGroupId)
+                .arg(body));
 }
 
 void SWObject::appendAffectsInfo(SpellInfo const* spellInfo, quint8 /*num*/)

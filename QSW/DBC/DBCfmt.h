@@ -1,8 +1,11 @@
 #ifndef DBCSFRM_H
 #define DBCSFRM_H
 
+const char* AreaGroupfmt = "niiiiiii";
+const char* AreaTablefmt = "niixxxxxxxxxxsxxxxxxxxxxxxxx";
 const char* ChrClassesfmt = "dxxsxxxxxxxxxxxxxx";
 const char* ChrSpecializationsfmt = "dxxxxxxxxxxsxx";
+const char* MapEntryfmt = "nxxxxsxxxxxxxxxxxxx";
 #ifdef V505_16135
 const char* SkillLinefmt = "nissisix";
 #else

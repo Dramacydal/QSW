@@ -15,6 +15,44 @@
 #pragma pack(push,1)
 #endif
 
+#define MAX_GROUP_AREA_IDS 6
+
+struct AreaGroupEntry
+{
+    quint32  AreaGroupId;                                       // 0
+    quint32  AreaId[MAX_GROUP_AREA_IDS];                        // 1-6
+    quint32  nextGroup;                                         // 7 index of next group
+};
+
+struct AreaTableEntry
+{
+    quint32  ID;                                                // 0
+    quint32  mapid;                                             // 1
+    quint32  zone;                                              // 2 if 0 then it's zone, else it's zone id of this area
+    //quint32  exploreFlag;                                       // 3 main index
+    //quint32  flags;                                             // 4
+    //quint32 unk505_1;                                           // 5
+    //quint32 unk5;                                               // 6
+    //quint32 unk6;                                               // 7
+    //quint32 unk7;                                               // 8
+    //quint32 unk8;                                               // 9
+    //char*  unk505_2                                             // 10   Area name
+    //quint32 unk9;                                               // 11
+    //qint32   area_level;                                        // 12
+    char*   area_name;                                          // 13   Area name loc
+    //quint32  team;                                              // 14
+    //quint32  LiquidTypeOverride[4];                             // 15-18 liquid override by type
+    //float   MaxDepth;                                           // 19 determine the maximum depth that a player an reach in an area before being teleported back up.
+    //float  unk13;                                               // 20
+    //quint32 unk19;                                              // 21 All zeros (4.2.2)
+    //quint32 mountFlags;                                         // 20
+    //quint32 unk21;                                              // 23 4.0.0
+    //quint32 unk22;                                              // 24 4.0.0
+    //quint32 unk23;                                              // 25 4.0.0
+    //quint32 unk24;                                              // 26 worldStateId
+    //quint32 unk25                                               // 27
+};
+
 struct ChrClassesEntry
 {
     //quint32 classId;                                            // 0
@@ -55,6 +93,29 @@ struct ChrSpecializationsEntry
     //char* description;                                          // 12
     //quint32                                                     // 13
 
+};
+
+struct MapEntry
+{
+    quint32  MapID;                                             // 0
+    //char*       internalname;                                   // 1 unused
+    //quint32  map_type;                                          // 2
+    //quint32 unk_330;                                            // 3
+    //quint32 unk4;                                               // 4 4.0.1
+    char* name;                                                   // 5        m_MapName_lang
+    //quint32  linked_zone;                                       // 6        m_areaTableID
+    //char*     hordeIntro;                                       // 7        m_MapDescription0_lang
+    //char*     allianceIntro;                                    // 8        m_MapDescription1_lang
+    //quint32  multimap_id;                                       // 9       m_LoadingScreenID (LoadingScreens.dbc)
+    //float   BattlefieldMapIconScale;                            // 10       m_minimapIconScale
+    //qint32   entrance_map;                                      // 11       m_corpseMapID map_id of entrance map in ghost mode (continent always and in most cases = normal entrance)
+    //float   entrance_x;                                         // 12       m_corpseX entrance x coordinate in ghost mode  (in most cases = normal entrance)
+    //float   entrance_y;                                         // 13       m_corpseY entrance y coordinate in ghost mode  (in most cases = normal entrance)
+    //quint32  timeOfDayOverride;                                 // 14       m_timeOfDayOverride
+    //quint32  addon;                                             // 15       m_expansionID
+    //quint32 unk_time;                                           // 16       m_raidOffset
+    //quint32 maxPlayers;                                         // 17       m_maxPlayers
+    //qint32 rootPhaseMap;                                        // 18 new 4.0.0, mapid, related to phasing
 };
 
 struct SpecializationSpellsEntry
