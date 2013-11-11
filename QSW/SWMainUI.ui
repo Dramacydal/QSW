@@ -483,7 +483,7 @@
           <property name="minimumSize">
            <size>
             <width>207</width>
-            <height>133</height>
+            <height>136</height>
            </size>
           </property>
           <property name="maximumSize">
@@ -499,14 +499,17 @@
            <property name="geometry">
             <rect>
              <x>6</x>
-             <y>15</y>
+             <y>12</y>
              <width>267</width>
-             <height>113</height>
+             <height>123</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout_15">
             <item row="2" column="1">
              <widget class="QLineEdit" name="fs_flags1"/>
+            </item>
+            <item row="4" column="1">
+             <widget class="QLineEdit" name="fs_flags3"/>
             </item>
             <item row="0" column="0">
              <widget class="QLabel" name="label_6">
@@ -551,9 +554,6 @@
                <string>Flags3</string>
               </property>
              </widget>
-            </item>
-            <item row="4" column="1">
-             <widget class="QLineEdit" name="fs_flags3"/>
             </item>
            </layout>
           </widget>

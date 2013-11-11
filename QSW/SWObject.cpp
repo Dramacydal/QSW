@@ -677,6 +677,7 @@ void SWObject::showInfo(SpellInfo const* spellInfo, quint8 num)
                 "<link rel='stylesheet' type='text/css' href='qrc:///SpellWork/Recources/styles.css'>"
                 "</head>");
 
+    QString spellIconName = spellInfo->getSpellIconName();
     html.append(QString("<body>"
                         "<div class='b-tooltip_icon'>"
                         "<style>"
@@ -685,9 +686,9 @@ void SWObject::showInfo(SpellInfo const* spellInfo, quint8 num)
                         "div.icon div div:hover { background: url(http://wow.zamimg.com/images/Icon/large/hilite/default.png) no-repeat center; }"
                         "div.icon div div {width: 68px; height: 68px;}"
                         "</style>"
-                        "<div class='icon'><div><div>"
+                        "<div class='icon' title=\"%1\"><div><div>"
                         "</div></div></div>"
-                        "</div>").arg(spellInfo->getSpellIconName().toLower()));
+                        "</div>").arg(spellIconName.toLower()).arg(spellIconName));
 
     html.append("<div class='b-tooltip_body'>");
 
