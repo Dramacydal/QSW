@@ -118,7 +118,7 @@ class MetaSpell : public QObject
         quint32 MinFactionId() { return m_spellInfo->getMinFactionId(); }
         quint32 MinReputation() { return m_spellInfo->getMinReputation(); }
         quint32 RequiredAuraVision() { return m_spellInfo->getRequiredAuraVision(); }
-        quint32 AreaGroupId() { return m_spellInfo->getAreaGroupId(); }
+        qint32 AreaGroupId() { return m_spellInfo->getAreaGroupId(); }
         quint32 SchoolMask() { return m_spellInfo->getSchoolMask(); }
         quint32 RuneCostId() { return m_spellInfo->RuneCostId; }
         quint32 SpellMissileId() { return m_spellInfo->SpellMissileId; }
@@ -199,7 +199,7 @@ class MetaSpell : public QObject
         Q_PROPERTY(quint32 MinFactionId READ MinFactionId)
         Q_PROPERTY(quint32 MinReputation READ MinReputation)
         Q_PROPERTY(quint32 RequiredAuraVision READ RequiredAuraVision)
-        Q_PROPERTY(quint32 AreaGroupId READ AreaGroupId)
+        Q_PROPERTY(qint32 AreaGroupId READ AreaGroupId)
         Q_PROPERTY(quint32 SchoolMask READ SchoolMask)
         Q_PROPERTY(quint32 RuneCostId READ RuneCostId)
         Q_PROPERTY(quint32 SpellMissileId READ SpellMissileId)
