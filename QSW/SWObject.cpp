@@ -1956,12 +1956,12 @@ void SWObject::appendAreaGroupInfo(SpellInfo const* spellInfo, quint8 /*num*/)
                 continue;
             }
 
-            AreaTableEntry const* zone = area->zone == area->ID ? area : sAreaTableStore.LookupEntry(area->zone);
+            AreaTableEntry const* zone = !area->zone || area->zone == area->ID ? area : sAreaTableStore.LookupEntry(area->zone);
             MapEntry const* map = sMapStore.LookupEntry(area->mapid);
 
             body += QString("<li>Area: \"%0\" (%1) Zone: \"%2\" (%3) Map: \"%4\" (%5)")
                     .arg(area->area_name).arg(area->ID)
-                    .arg(zone ? zone->area_name : "Unknown").arg(area->zone)
+                    .arg(zone ? zone->area_name : "Unknown").arg(zone ? zone->ID : area->zone)
                     .arg(map ? map->name : "Unknown").arg(area->mapid);
         }
 
