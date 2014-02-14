@@ -40,6 +40,9 @@ class SWEnums
         Enumerator getAttributesEx9() const { return m_enums["AttributesEx9"]; }
         Enumerator getAttributesEx10() const { return m_enums["AttributesEx10"]; }
         Enumerator getAttributesEx11() const { return m_enums["AttributesEx11"]; }
+#if _BUILD >= 17538
+        Enumerator getAttributesEx12() const { return m_enums["AttributesEx12"]; }
+#endif
         Enumerator getTargets() const { return m_enums["Target"]; }
         Enumerator getInventoryTypes() const { return m_enums["InventoryType"]; }
         Enumerator getItemSubClassMiscs() const { return m_enums["ItemSubClassMisc"]; }

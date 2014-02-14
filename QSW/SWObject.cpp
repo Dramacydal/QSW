@@ -664,6 +664,9 @@ void SWObject::showInfo(SpellInfo const* spellInfo, quint8 num)
     QString sAttributesEx9(QString("%0").arg(spellInfo->getAttributesEx9(), 8, 16, QChar('0')));
     QString sAttributesEx10(QString("%0").arg(spellInfo->getAttributesEx10(), 8, 16, QChar('0')));
     QString sAttributesEx11(QString("%0").arg(spellInfo->getAttributesEx11(), 8, 16, QChar('0')));
+#if _BUILD >= 17538
+    QString sAttributesEx12(QString("%0").arg(spellInfo->getAttributesEx12(), 8, 16, QChar('0')));
+#endif
     QString sTargetMask(QString("%0").arg(spellInfo->getTargets(), 8, 16, QChar('0')));
     QString sCreatureTypeMask(QString("%0").arg(spellInfo->getTargetCreatureType(), 8, 16, QChar('0')));
     QString sFormMask(QString("%0").arg(spellInfo->getStances(), 8, 16, QChar('0')));
@@ -765,7 +768,11 @@ void SWObject::showInfo(SpellInfo const* spellInfo, quint8 num)
     if (spellInfo->getAttributes() || spellInfo->getAttributesEx1() || spellInfo->getAttributesEx2() ||
         spellInfo->getAttributesEx3() || spellInfo->getAttributesEx4() || spellInfo->getAttributesEx5() ||
         spellInfo->getAttributesEx6() || spellInfo->getAttributesEx7() || spellInfo->getAttributesEx8() ||
-        spellInfo->getAttributesEx9() ||  spellInfo->getAttributesEx10() ||  spellInfo->getAttributesEx11())
+        spellInfo->getAttributesEx9() ||  spellInfo->getAttributesEx10() ||  spellInfo->getAttributesEx11()
+#if _BUILD >= 17538
+        || spellInfo->getAttributesEx12()
+#endif
+            )
     {
         html.append("<div class='b-box-title'>Attributes</div>"
                     "<div class='b-box-body'>"
@@ -831,6 +838,13 @@ void SWObject::showInfo(SpellInfo const* spellInfo, quint8 num)
             html.append(QString("<li>AttributesEx11: 0x%0 (%1)</li>")
                 .arg(sAttributesEx11.toUpper())
                 .arg(containAttributes(spellInfo, TYPE_ATTR_EX11)));
+
+#if _BUILD >= 17538
+        if (spellInfo->getAttributesEx12())
+            html.append(QString("<li>AttributesEx12: 0x%0 (%1)</li>")
+                .arg(sAttributesEx12.toUpper())
+                .arg(containAttributes(spellInfo, TYPE_ATTR_EX12)));
+#endif
 
         html.append("</ul>"
                     "</div>"
@@ -1591,6 +1605,25 @@ QString SWObject::containAttributes(SpellInfo const* spellInfo, AttrType attr, q
             return str;
         }
         break;
+#if _BUILD >= 17538
+        case TYPE_ATTR_EX12:
+        {
+            EnumIterator itr(m_enums->getAttributesEx12());
+            while (itr.hasNext())
+            {
+                itr.next();
+                if (spellInfo->getAttributesEx12() & itr.key())
+                {
+                    QString tstr(QString("%0, ").arg(itr.value()));
+                    str += tstr;
+                }
+            }
+            if (!str.isEmpty())
+                str.chop(2);
+            return str;
+        }
+        break;
+#endif
         case TYPE_TARGETS:
         {
             EnumIterator itr(m_enums->getTargetFlags());

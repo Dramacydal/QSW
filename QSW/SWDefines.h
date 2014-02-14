@@ -33,6 +33,9 @@ enum AttrType
     TYPE_ATTR_EX9,
     TYPE_ATTR_EX10,
     TYPE_ATTR_EX11,
+#if _BUILD >= 17538
+    TYPE_ATTR_EX12,
+#endif
     TYPE_TARGETS,
     TYPE_CREATURE,
     TYPE_FORMS,

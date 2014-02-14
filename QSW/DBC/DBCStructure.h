@@ -399,6 +399,9 @@ struct SpellMiscEntry
     quint32 AttributesEx9;                                      // 12 - Attributes
     quint32 AttributesEx10;                                     // 13 - Attributes
     quint32 AttributesEx11;                                     // 14 - Attributes
+#if _BUILD >= 17538
+    quint32 AttributesEx12;                                     // 15 - Attributes
+#endif
     quint32 CastTimeIndex;                                      // 15 - Attributes
     quint32 DurationIndex;                                      // 16 - Attributes
     quint32 RangeIndex;                                         // 17 - Attributes
@@ -573,6 +576,9 @@ struct SpellInfo
     quint32 getAttributesEx9() const;
     quint32 getAttributesEx10() const;
     quint32 getAttributesEx11() const;
+#if _BUILD >= 17538
+    quint32 getAttributesEx12() const;
+#endif
     quint32 getCastingTimeIndex() const;
     quint32 getDurationIndex() const;
     quint32 getRangeIndex() const;

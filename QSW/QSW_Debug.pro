@@ -66,11 +66,5 @@ FORMS += \
 RESOURCES += \
     SpellWork.qrc
 
-DEFINES += V505_16135
-
-
-
-
-
-
+DEFINES += _BUILD=17538
 

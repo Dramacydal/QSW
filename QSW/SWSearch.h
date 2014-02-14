@@ -37,6 +37,9 @@ class MetaSpell : public QObject
         quint32 AttributesEx9() { return m_spellInfo->getAttributesEx9(); }
         quint32 AttributesEx10() { return m_spellInfo->getAttributesEx10(); }
         quint32 AttributesEx11() { return m_spellInfo->getAttributesEx11(); }
+#if _BUILD >= 17538
+        quint32 AttributesEx12() { return m_spellInfo->getAttributesEx12(); }
+#endif
         quint32 Stances() { return m_spellInfo->getStances(); }
         quint32 StancesNot() { return m_spellInfo->getStancesNot(); }
         quint32 Targets() { return m_spellInfo->getTargets(); }
@@ -143,6 +146,9 @@ class MetaSpell : public QObject
         Q_PROPERTY(quint32 AttributesEx9 READ AttributesEx9)
         Q_PROPERTY(quint32 AttributesEx10 READ AttributesEx10)
         Q_PROPERTY(quint32 AttributesEx11 READ AttributesEx11)
+#if _BUILD >= 17538
+        Q_PROPERTY(quint32 AttributesEx12 READ AttributesEx12)
+#endif
         Q_PROPERTY(quint32 Stances READ Stances)
         Q_PROPERTY(quint32 StancesNot READ StancesNot)
         Q_PROPERTY(quint32 Targets READ Targets)

@@ -65,6 +65,13 @@ quint32 SpellInfo::getAttributesEx11() const
     return spellMisc ? spellMisc->AttributesEx11 : 0;
 }
 
+#if _BUILD >= 17538
+quint32 SpellInfo::getAttributesEx12() const
+{
+    return spellMisc ? spellMisc->AttributesEx12 : 0;
+}
+#endif
+
 quint32 SpellInfo::getCastingTimeIndex() const
 {
     return spellMisc ? spellMisc->CastTimeIndex : 0;
