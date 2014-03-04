@@ -141,6 +141,10 @@
         <value value="SPELLMOD_SPELL_COST_REFUND_ON_FAIL" key="30" />
         <value value="SPELLMOD_CHARGES_COUNT" key="31" />
         <value value="SPELLMOD_EFFECT4" key="32" />
+        <value value="SPELLMOD_EFFECT5" key="33" />
+        <value value="SPELLMOD_UNK34" key="34" />
+        <value value="SPELLMOD_UNK35" key="35" />
+        <value value="SPELLMOD_JUMP_DISTANCE" key="36" />
     </SpellMod>
     <UnitMod>
         <value value="UNIT_MOD_STAT_STRENGTH" key="0" />
@@ -607,38 +611,72 @@
         <value value="SPELL_ATTR10_UNK31" key="0x80000000" />
     </AttributesEx10>
     <AttributesEx11>
-        <value value="SPELL_ATTR_EX11_UNK0" key="0x00000001" />
-        <value value="SPELL_ATTR_EX11_UNK1" key="0x00000002" />
-        <value value="SPELL_ATTR_EX11_UNK2" key="0x00000004" />
-        <value value="SPELL_ATTR_EX11_UNK3" key="0x00000008" />
-        <value value="SPELL_ATTR_EX11_UNK4" key="0x00000010" />
-        <value value="SPELL_ATTR_EX11_UNK5" key="0x00000020" />
-        <value value="SPELL_ATTR_EX11_UNK6" key="0x00000040" />
-        <value value="SPELL_ATTR_EX11_UNK7" key="0x00000080" />
-        <value value="SPELL_ATTR_EX11_UNK8" key="0x00000100" />
-        <value value="SPELL_ATTR_EX11_UNK9" key="0x00000200" />
-        <value value="SPELL_ATTR_EX11_UNK10" key="0x00000400" />
-        <value value="SPELL_ATTR_EX11_UNK11" key="0x00000800" />
-        <value value="SPELL_ATTR_EX11_UNK12" key="0x00001000" />
-        <value value="SPELL_ATTR_EX11_UNK13" key="0x00002000" />
-        <value value="SPELL_ATTR_EX11_UNK14" key="0x00004000" />
-        <value value="SPELL_ATTR_EX11_UNK15" key="0x00008000" />
-        <value value="SPELL_ATTR_EX11_UNK16" key="0x00010000" />
-        <value value="SPELL_ATTR_EX11_UNK17" key="0x00020000" />
-        <value value="SPELL_ATTR_EX11_UNK18" key="0x00040000" />
-        <value value="SPELL_ATTR_EX11_UNK19" key="0x00080000" />
-        <value value="SPELL_ATTR_EX11_UNK20" key="0x00100000" />
-        <value value="SPELL_ATTR_EX11_UNK21" key="0x00200000" />
-        <value value="SPELL_ATTR_EX11_UNK22" key="0x00400000" />
-        <value value="SPELL_ATTR_EX11_UNK23" key="0x00800000" />
-        <value value="SPELL_ATTR_EX11_UNK24" key="0x01000000" />
-        <value value="SPELL_ATTR_EX11_UNK25" key="0x02000000" />
-        <value value="SPELL_ATTR_EX11_UNK26" key="0x04000000" />
-        <value value="SPELL_ATTR_EX11_UNK27" key="0x08000000" />
-        <value value="SPELL_ATTR_EX11_UNK28" key="0x10000000" />
-        <value value="SPELL_ATTR_EX11_UNK29" key="0x20000000" />
-        <value value="SPELL_ATTR_EX11_UNK30" key="0x40000000" />
-        <value value="SPELL_ATTR_EX11_UNK31" key="0x80000000" />
+        <value value="SPELL_ATTR11_UNK0" key="0x00000001" />
+        <value value="SPELL_ATTR11_UNK1" key="0x00000002" />
+        <value value="SPELL_ATTR11_UNK2" key="0x00000004" />
+        <value value="SPELL_ATTR11_UNK3" key="0x00000008" />
+        <value value="SPELL_ATTR11_UNK4" key="0x00000010" />
+        <value value="SPELL_ATTR11_UNK5" key="0x00000020" />
+        <value value="SPELL_ATTR11_UNK6" key="0x00000040" />
+        <value value="SPELL_ATTR11_UNK7" key="0x00000080" />
+        <value value="SPELL_ATTR11_UNK8" key="0x00000100" />
+        <value value="SPELL_ATTR11_UNK9" key="0x00000200" />
+        <value value="SPELL_ATTR11_UNK10" key="0x00000400" />
+        <value value="SPELL_ATTR11_UNK11" key="0x00000800" />
+        <value value="SPELL_ATTR11_UNK12" key="0x00001000" />
+        <value value="SPELL_ATTR11_UNK13" key="0x00002000" />
+        <value value="SPELL_ATTR11_UNK14" key="0x00004000" />
+        <value value="SPELL_ATTR11_UNK15" key="0x00008000" />
+        <value value="SPELL_ATTR11_UNK16" key="0x00010000" />
+        <value value="SPELL_ATTR11_UNK17" key="0x00020000" />
+        <value value="SPELL_ATTR11_UNK18" key="0x00040000" />
+        <value value="SPELL_ATTR11_UNK19" key="0x00080000" />
+        <value value="SPELL_ATTR11_UNK20" key="0x00100000" />
+        <value value="SPELL_ATTR11_UNK21" key="0x00200000" />
+        <value value="SPELL_ATTR11_UNK22" key="0x00400000" />
+        <value value="SPELL_ATTR11_UNK23" key="0x00800000" />
+        <value value="SPELL_ATTR11_UNK24" key="0x01000000" />
+        <value value="SPELL_ATTR11_UNK25" key="0x02000000" />
+        <value value="SPELL_ATTR11_UNK26" key="0x04000000" />
+        <value value="SPELL_ATTR11_UNK27" key="0x08000000" />
+        <value value="SPELL_ATTR11_UNK28" key="0x10000000" />
+        <value value="SPELL_ATTR11_UNK29" key="0x20000000" />
+        <value value="SPELL_ATTR11_UNK30" key="0x40000000" />
+        <value value="SPELL_ATTR11_UNK31" key="0x80000000" />
+    </AttributesEx11>
+    <AttributesEx12>
+        <value value="SPELL_ATTR12_UNK0" key="0x00000001" />
+        <value value="SPELL_ATTR12_UNK1" key="0x00000002" />
+        <value value="SPELL_ATTR12_UNK2" key="0x00000004" />
+        <value value="SPELL_ATTR12_UNK3" key="0x00000008" />
+        <value value="SPELL_ATTR12_UNK4" key="0x00000010" />
+        <value value="SPELL_ATTR12_UNK5" key="0x00000020" />
+        <value value="SPELL_ATTR12_UNK6" key="0x00000040" />
+        <value value="SPELL_ATTR12_UNK7" key="0x00000080" />
+        <value value="SPELL_ATTR12_UNK8" key="0x00000100" />
+        <value value="SPELL_ATTR12_UNK9" key="0x00000200" />
+        <value value="SPELL_ATTR12_UNK10" key="0x00000400" />
+        <value value="SPELL_ATTR12_UNK11" key="0x00000800" />
+        <value value="SPELL_ATTR12_UNK12" key="0x00001000" />
+        <value value="SPELL_ATTR12_UNK13" key="0x00002000" />
+        <value value="SPELL_ATTR12_UNK14" key="0x00004000" />
+        <value value="SPELL_ATTR12_UNK15" key="0x00008000" />
+        <value value="SPELL_ATTR12_UNK16" key="0x00010000" />
+        <value value="SPELL_ATTR12_UNK17" key="0x00020000" />
+        <value value="SPELL_ATTR12_UNK18" key="0x00040000" />
+        <value value="SPELL_ATTR12_UNK19" key="0x00080000" />
+        <value value="SPELL_ATTR12_UNK20" key="0x00100000" />
+        <value value="SPELL_ATTR12_UNK21" key="0x00200000" />
+        <value value="SPELL_ATTR12_UNK22" key="0x00400000" />
+        <value value="SPELL_ATTR12_UNK23" key="0x00800000" />
+        <value value="SPELL_ATTR12_UNK24" key="0x01000000" />
+        <value value="SPELL_ATTR12_UNK25" key="0x02000000" />
+        <value value="SPELL_ATTR12_UNK26" key="0x04000000" />
+        <value value="SPELL_ATTR12_UNK27" key="0x08000000" />
+        <value value="SPELL_ATTR12_UNK28" key="0x10000000" />
+        <value value="SPELL_ATTR12_UNK29" key="0x20000000" />
+        <value value="SPELL_ATTR12_UNK30" key="0x40000000" />
+        <value value="SPELL_ATTR12_UNK31" key="0x80000000" />
     </AttributesEx11>
     <Target>
         <value value="NO_TARGET" key="0" />
@@ -781,6 +819,10 @@
         <value value="TARGET_137" key="137" />
         <value value="TARGET_138" key="138" />
         <value value="TARGET_139" key="139" />
+        <value value="TARGET_140" key="140" />
+        <value value="TARGET_141" key="141" />
+        <value value="TARGET_142" key="142" />
+        <value value="TARGET_143" key="143" />
     </Target>
     <InventoryType>
         <value value="NONE_EQUIP" key="0x00000001" />
@@ -907,6 +949,8 @@
         <value value="TOTEM_CREATURE" key="0x0400" />
         <value value="NON_COMBAT_PET" key="0x0800" />
         <value value="GAS_CLOUD" key="0x1000" />
+        <value value="WILD_PET" key="0x2000" />
+        <value value="ABBERATION" key="0x4000" />
     </CreatureType>
     <TargetFlag>
         <value value="TARGET_FLAG_SELF" key="0x00000" />
@@ -1133,7 +1177,14 @@
         <value value="SPELL_EFFECT_198" key="198" />
         <value value="SPELL_EFFECT_199" key="199" />
         <value value="SPELL_EFFECT_HEAL_BATTLEPET_PCT" key="200" />
-        <value value="SPELL_EFFECT_BATTLE_PET" key="201" />
+        <value value="SPELL_EFFECT_BATTLE_PET" key="201" />        
+        <value value="SPELL_EFFECT_202" key="202" />
+        <value value="SPELL_EFFECT_203" key="203" />
+        <value value="SPELL_EFFECT_204" key="204" />
+        <value value="SPELL_EFFECT_205" key="205" />
+        <value value="SPELL_EFFECT_206" key="206" />
+        <value value="SPELL_EFFECT_207" key="207" />
+        <value value="SPELL_EFFECT_208" key="208" />
     </SpellEffect>
     <SpellAura>
         <value value="SPELL_AURA_NONE" key="0" />
@@ -1554,7 +1605,26 @@
         <value value="SPELL_AURA_415" key="415" />
         <value value="SPELL_AURA_416" key="416" />
         <value value="SPELL_AURA_417" key="417" />
-        <value value="SPELL_AURA_418" key="418" />
+        <value value="SPELL_AURA_418" key="418" />        
+        <value value="SPELL_AURA_419" key="419" />
+        <value value="SPELL_AURA_420" key="420" />
+        <value value="SPELL_AURA_421" key="421" />
+        <value value="SPELL_AURA_422" key="422" />
+        <value value="SPELL_AURA_423" key="423" />
+        <value value="SPELL_AURA_424" key="424" />
+        <value value="SPELL_AURA_425" key="425" />
+        <value value="SPELL_AURA_426" key="426" />
+        <value value="SPELL_AURA_427" key="427" />
+        <value value="SPELL_AURA_428" key="428" />
+        <value value="SPELL_AURA_429" key="429" />
+        <value value="SPELL_AURA_430" key="430" />
+        <value value="SPELL_AURA_431" key="431" />
+        <value value="SPELL_AURA_432" key="432" />
+        <value value="SPELL_AURA_433" key="433" />
+        <value value="SPELL_AURA_434" key="434" />
+        <value value="SPELL_AURA_435" key="435" />
+        <value value="SPELL_AURA_436" key="436" />
+        <value value="SPELL_AURA_437" key="437" />
     </SpellAura>
     <CombatRating>
         <value value="CR_WEAPON_SKILL" key="0x000000" />
@@ -1596,5 +1666,8 @@
         <value value="RAID_TOOL_DIFFICULTY" key="7" />
         <value value="CHALLENGE_MODE_DIFFICULTY" key="8" />
         <value value="MAN40_DIFFICULTY" key="9" />
+        <value value="HEROIC_SCENARIO_DIFFICULTY" key="11" />
+        <value value="NORMAL_SCENARIO_DIFFICULTY" key="12" />
+        <value value="FLEXIBLE_DIFFICULTY" key="14" />
     </Difficulty>
 </Enums>
