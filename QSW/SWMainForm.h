@@ -3,17 +3,17 @@
 
 #include <QtCore/QSettings>
 
-#include <QtGui/QTextBrowser>
-#include <QtGui/QTextEdit>
-#include <QtGui/QMainWindow>
-#include <QtGui/QToolButton>
-#include <QtGui/QCompleter>
+#include <QTextBrowser>
+#include <QTextEdit>
+#include <QMainWindow>
+#include <QToolButton>
+#include <QCompleter>
 #include <QtGui/QIcon>
 #include <QtGui/QKeyEvent>
-#include <QtGui/QScrollBar>
+#include <QScrollBar>
 
-#include <QtWebKit/QWebView>
-#include <QtWebKit/QWebFrame>
+#include <QWebView>
+#include <QWebFrame>
 
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQuery>

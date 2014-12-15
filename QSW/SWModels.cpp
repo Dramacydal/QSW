@@ -1,8 +1,8 @@
 #include "SWModels.h"
 #include "Alphanum.h"
 
-#include <QtGui/QFontComboBox>
-#include <QtGui/QLineEdit>
+#include <QFontComboBox>
+#include <QLineEdit>
 
 #include <QtCore/QMetaEnum>
 

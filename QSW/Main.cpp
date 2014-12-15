@@ -1,6 +1,6 @@
 #include "SWMainForm.h"
-#include <QtGui/QApplication>
-#include <QtGui/QDesktopWidget>
+#include <QApplication>
+#include <QDesktopWidget>
 
 int main(int argc, char *argv[])
 {

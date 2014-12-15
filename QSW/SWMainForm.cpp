@@ -3,13 +3,13 @@
 #include "SWModels.h"
 #include "SWSearch.h"
 
-#include <QtCore/QtConcurrentRun>
+#include <QtConcurrent/QtConcurrentRun>
 #include <QtCore/QTime>
-#include <QtGui/QStandardItemModel>
-#include <QtGui/QMessageBox>
-#include <QtGui/QStringListModel>
+#include <QStandardItemModel>
+#include <QMessageBox>
+#include <QStringListModel>
 
-#include <QtCore/QMetaProperty>
+#include <QMetaProperty>
 
 SWMainForm::SWMainForm(QWidget* parent)
     : QMainWindow(parent)
@@ -751,7 +751,7 @@ QAbstractItemModel* TextEdit::setupModel()
 
     for (qint32 i = 0; i < methodCount; ++i)
     {
-        QString methodName = spell.metaObject()->method(i).signature();
+        QString methodName = spell.metaObject()->method(i).methodSignature();
         if (methodName.contains("(quint8)"))
             fields << methodName.replace("(quint8)", "(index)");
     }
