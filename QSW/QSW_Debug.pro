@@ -66,5 +66,3 @@ FORMS += \
 RESOURCES += \
     SpellWork.qrc
 
-DEFINES += _BUILD=17538
-

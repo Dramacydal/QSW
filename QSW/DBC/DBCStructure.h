@@ -26,54 +26,53 @@ struct AreaGroupEntry
 
 struct AreaTableEntry
 {
-    quint32  ID;                                                // 0
-    quint32  mapid;                                             // 1
-    quint32  zone;                                              // 2 if 0 then it's zone, else it's zone id of this area
-    //quint32  exploreFlag;                                       // 3 main index
-    //quint32  flags;                                             // 4
-    //quint32 unk505_1;                                           // 5
-    //quint32 unk5;                                               // 6
-    //quint32 unk6;                                               // 7
-    //quint32 unk7;                                               // 8
-    //quint32 unk8;                                               // 9
-    //char*  unk505_2                                             // 10   Area name
-    //quint32 unk9;                                               // 11
-    //qint32   area_level;                                        // 12
-    char*   area_name;                                          // 13   Area name loc
-    //quint32  team;                                              // 14
-    //quint32  LiquidTypeOverride[4];                             // 15-18 liquid override by type
-    //float   MaxDepth;                                           // 19 determine the maximum depth that a player an reach in an area before being teleported back up.
-    //float  unk13;                                               // 20
-    //quint32 unk19;                                              // 21 All zeros (4.2.2)
-    //quint32 mountFlags;                                         // 20
-    //quint32 unk21;                                              // 23 4.0.0
-    //quint32 unk22;                                              // 24 4.0.0
-    //quint32 unk23;                                              // 25 4.0.0
-    //quint32 unk24;                                              // 26 worldStateId
-    //quint32 unk25                                               // 27
+    quint32      ID;                                         // 0
+    quint32      mapid;                                      // 1
+    quint32      ParentAreaID;                               // 2 if 0 then it's zone, else it's zone id of this area
+    quint32      AreaBit;                                    // 3, main index
+    quint32      Flags[2];                                   // 4-5,
+    //quint32    SoundProviderPref;                          // 6,
+    //quint32    SoundProviderPrefUnderwater;                // 7,
+    //quint32    AmbienceID;                                 // 8,
+    //quint32    ZoneMusic;                                  // 9,
+    char*       ZoneName;                                   // 10
+    //quint32    IntroSound;                                 // 11
+    quint32      ExplorationLevel;                           // 12
+    char*     AreaName_lang;                               // 13
+    quint32      FactionGroupMask;                           // 14
+    quint32      LiquidTypeID[4];                            // 15-18
+    //float     AmbientMultiplier;                          // 19
+    quint32    MountFlags;                                   // 20
+    //quint32    UWIntroMusic;                               // 21
+    //quint32    UWZoneMusic;                                // 22
+    //quint32    UWAmbience;                                 // 23
+    //quint32    WorldPvPID;                                 // 24 World_PVP_Area.dbc
+    //quint32    PvPCombastWorldStateID;                     // 25
+    //quint32    WildBattlePetLevelMin;                      // 26
+    //quint32    WildBattlePetLevelMax;                      // 27
+    //quint32    WindSettingsID;                             // 28
 };
 
 struct ChrClassesEntry
 {
-    //quint32 classId;                                            // 0
-    //quint32 powerType;                                          // 1
-    //char* petNameToken;                                         // 2
-    char* name;                                                 // 3
-    //char* nameFemale;                                           // 4
-    //char* nameNeutralGender;                                    // 5
-    //char* capitalizedName;                                      // 6
-    //quint32 spellfamily;                                        // 7
-    //quint32 flags;                                              // 8
-    //quint32 CinematicSequence;                                  // 9
-    //quint32 APPerStrenth;                                       // 10
-    //quint32 APPerAgility;                                       // 11
-    //quint32 RAPPerAgility;                                      // 12
-    //quint32                                                     // 13
-    //quint32                                                     // 14
-    //quint32                                                     // 15
-    //quint32                                                     // 16
-    //quint32                                                     // 17
-
+    quint32  ClassID;                                        // 0
+    quint32  powerType;                                      // 1        m_DisplayPower
+                                                            // 2        m_petNameToken
+    char* name;                                             // 3        m_name_lang
+    //char*       nameFemale;                               // 4        m_name_female_lang
+    //char*       nameNeutralGender;                        // 5        m_name_male_lang
+    //char*       capitalizedName                           // 6,       m_filename
+    quint32  spellfamily;                                    // 7        m_spellClassSet
+    //quint32 flags2;                                        // 8        m_flags (0x08 HasRelicSlot)
+    quint32  CinematicSequence;                              // 9        m_cinematicSequenceID
+    quint32 APPerStrenth;                                    // 11       Attack Power bonus per point of strength
+    quint32 APPerAgility;                                    // 12       Attack Power bonus per point of agility
+    quint32 RAPPerAgility;                                   // 13       Ranged Attack Power bonus per point of agility
+    //quint32 m_defaultSpec                                  // 14       m_defaultSpec
+    //quint32 m_createScreenFileDataID                       // 15       m_createScreenFileDataID
+    //quint32 m_selectScreenFileDataID                       // 16       m_selectScreenFileDataID
+    //quint32 m_lowResScreenFileDataID                       // 17       m_lowResScreenFileDataID
+    //quint32 m_iconFileDataID                               // 18       m_iconFileDataID
 };
 
 struct ChrSpecializationsEntry
@@ -92,6 +91,8 @@ struct ChrSpecializationsEntry
     char* specializationName;                                   // 11
     //char* description;                                          // 12
     //quint32                                                     // 13
+    //quint32                                                     // 14
+    //quint32                                                     // 15
 
 };
 
@@ -100,22 +101,25 @@ struct MapEntry
     quint32  MapID;                                             // 0
     //char*       internalname;                                   // 1 unused
     //quint32  map_type;                                          // 2
-    //quint32 unk_330;                                            // 3
-    //quint32 unk4;                                               // 4 4.0.1
-    char* name;                                                   // 5        m_MapName_lang
-    //quint32  linked_zone;                                       // 6        m_areaTableID
-    //char*     hordeIntro;                                       // 7        m_MapDescription0_lang
-    //char*     allianceIntro;                                    // 8        m_MapDescription1_lang
-    //quint32  multimap_id;                                       // 9       m_LoadingScreenID (LoadingScreens.dbc)
-    //float   BattlefieldMapIconScale;                            // 10       m_minimapIconScale
-    //qint32   entrance_map;                                      // 11       m_corpseMapID map_id of entrance map in ghost mode (continent always and in most cases = normal entrance)
-    //float   entrance_x;                                         // 12       m_corpseX entrance x coordinate in ghost mode  (in most cases = normal entrance)
-    //float   entrance_y;                                         // 13       m_corpseY entrance y coordinate in ghost mode  (in most cases = normal entrance)
-    //quint32  timeOfDayOverride;                                 // 14       m_timeOfDayOverride
-    //quint32  addon;                                             // 15       m_expansionID
-    //quint32 unk_time;                                           // 16       m_raidOffset
-    //quint32 maxPlayers;                                         // 17       m_maxPlayers
-    //qint32 rootPhaseMap;                                        // 18 new 4.0.0, mapid, related to phasing
+    //quint32 flags;                                              // 3
+    //quint32 flags2;                                             // 4
+    //quint32 unk4;                                               // 5 4.0.1
+    char* name;                                                   // 6        m_MapName_lang
+    //quint32  linked_zone;                                       // 7        m_areaTableID
+    //char*     hordeIntro;                                       // 8        m_MapDescription0_lang
+    //char*     allianceIntro;                                    // 9        m_MapDescription1_lang
+    //quint32  multimap_id;                                       // 10      m_LoadingScreenID (LoadingScreens.dbc)
+    //float   BattlefieldMapIconScale;                            // 11       m_minimapIconScale
+    //qint32   entrance_map;                                      // 12       m_corpseMapID map_id of entrance map in ghost mode (continent always and in most cases = normal entrance)
+    //float   entrance_x;                                         // 13       m_corpseX entrance x coordinate in ghost mode  (in most cases = normal entrance)
+    //float   entrance_y;                                         // 14       m_corpseY entrance y coordinate in ghost mode  (in most cases = normal entrance)
+    //quint32  timeOfDayOverride;                                 // 15       m_timeOfDayOverride
+    //quint32  addon;                                             // 16       m_expansionID
+    //quint32 unk_time;                                           // 17       m_raidOffset
+    //quint32 maxPlayers;                                         // 18       m_maxPlayers
+    //qint32 rootPhaseMap;                                        // 19 new 4.0.0, mapid, related to phasing
+    //qint32                                                      // 20
+    //qint32                                                      // 21
 };
 
 struct SpecializationSpellsEntry
@@ -138,6 +142,7 @@ struct SkillLineEntry
     quint32    CanLink;                                         // 6
     // quint32    Unk7                                          // 7
     // quint32    Unk8                                          // 8
+    //quint32                                                   // 9
 };
 
 struct SkillLineAbilityEntry
@@ -253,8 +258,9 @@ struct SpellEffectEntry
     quint32    EffectImplicitTargetA;                        // 25       m_implicitTargetA
     quint32    EffectImplicitTargetB;                        // 26       m_implicitTargetB
     quint32    EffectSpellId;                                // 27       new 4.0.0
-    quint32    EffectIndex;                                  // 27       new 4.0.0
+    quint32    EffectIndex;                                  // 28       new 4.0.0
     //quint32    unk;                                        // 29 - 4.2.0
+    //float                                                  // 30
 };
 
 struct SpellEffects
@@ -399,9 +405,7 @@ struct SpellMiscEntry
     quint32 AttributesEx9;                                      // 12 - Attributes
     quint32 AttributesEx10;                                     // 13 - Attributes
     quint32 AttributesEx11;                                     // 14 - Attributes
-#if _BUILD >= 17538
     quint32 AttributesEx12;                                     // 15 - Attributes
-#endif
     quint32 CastTimeIndex;                                      // 15 - Attributes
     quint32 DurationIndex;                                      // 16 - Attributes
     quint32 RangeIndex;                                         // 17 - Attributes
@@ -422,7 +426,6 @@ struct SpellEntry
     quint32     RuneCostId;                                   // 5 - m_runeCostID
     quint32     SpellMissileId;                               // 6 - m_spellMissileID not used
     quint32     SpellDescriptionVariableId;                   // 7 - m_spellDescriptionVariableID, 3.2.0
-    // float       unk_f1;                                    // 8 - 4.0.1
     quint32     SpellScalingId;                               // 9 - SpellScaling.dbc
     quint32     SpellAuraOptionsId;                           // 10 - SpellAuraOptions.dbc
     quint32     SpellAuraRestrictionsId;                      // 11 - SpellAuraRestrictions.dbc
@@ -576,9 +579,7 @@ struct SpellInfo
     quint32 getAttributesEx9() const;
     quint32 getAttributesEx10() const;
     quint32 getAttributesEx11() const;
-#if _BUILD >= 17538
     quint32 getAttributesEx12() const;
-#endif
     quint32 getCastingTimeIndex() const;
     quint32 getDurationIndex() const;
     quint32 getRangeIndex() const;
